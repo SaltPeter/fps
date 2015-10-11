@@ -1,9 +1,5 @@
-﻿/////////////////////////////////////////////////////////////////////////////////
-////////////////////////////bl_DamageIndicator.cs////////////////////////////////
+﻿////////////////////////////bl_DamageIndicator.cs////////////////////////////////
 ////////////////////Use this to to signal the last attack received///////////////
-/////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////Briner Games/////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////
 using UnityEngine;
 using System.Collections;
 
@@ -29,9 +25,6 @@ public class bl_DamageIndicator : MonoBehaviour {
     private float offset = 350f;
     private float rotationOffset;
 
-    /// <summary>
-    /// 
-    /// </summary>
     void OnGUI()
     {
         if (this.alpha > 0)
@@ -81,22 +74,14 @@ public class bl_DamageIndicator : MonoBehaviour {
         else
         {
             if (Camera.current != null)
-            {
                 forward = Camera.current.transform.forward;
-            }
             else
-            {
                 forward = this.transform.forward;
-            }
         }    
         float GetPos = Vector3.Dot(forward, rhs);
         if (Vector3.Cross(forward, rhs).y > 0)
-        {
             this.rotationOffset = (1f - GetPos) * 90;
-        }
         else
-        {
             this.rotationOffset = (1f - GetPos) * -90;
-        }
     }
 }

@@ -25,66 +25,45 @@ public class bl_WeaponsUI : MonoBehaviour {
     private List<string> Notifications = new List<string>();
     private List<float> Noti_Time = new List<float>();
 
-    /// <summary>
-    /// 
-    /// </summary>
     void Awake()
     {
         GManager = this.GetComponent<bl_GunManager>();
         AmmoTextUI = GameObject.Find("Ammo_UI").GetComponentInChildren<Text>();
     }
-    /// <summary>
-    /// 
-    /// </summary>
+
     void OnEnable()
     {
         bl_EventHandler.OnKitAmmo += this.OnPickUpAmmo;
         bl_EventHandler.OnPickUp += this.OnPicUpMedKit;
     }
-    /// <summary>
-    /// 
-    /// </summary>
+
     void OnDisable()
     {
         bl_EventHandler.OnKitAmmo -= this.OnPickUpAmmo;
         bl_EventHandler.OnPickUp -= this.OnPicUpMedKit;
     }
-    /// <summary>
-    /// 
-    /// </summary>
+
     void Update()
     {
         CurrentGun = GManager.CurrentGun;
         if (BulletLeft != CurrentGun.bulletsLeft)
-        {
             BulletLeft = Mathf.Lerp(BulletLeft, CurrentGun.bulletsLeft, Time.deltaTime * BulletFactorReconpen);
-        }
        // BulletLeft = CurrentGun.bulletsLeft;
         Clips = CurrentGun.numberOfClips;
 
         if (BulletLeft <= isLowBullet && CurrentGun.typeOfGun == bl_Gun.weaponType.Machinegun || BulletLeft <= isLowBullet && CurrentGun.typeOfGun == bl_Gun.weaponType.Burst || BulletLeft <= isLowBullet && CurrentGun.typeOfGun == bl_Gun.weaponType.Pistol)
-        {
             m_color = Color.Lerp(m_color, AmmoLow, (Seno(6.0f, 0.1f, 0.0f) * 5) + 0.5f);
-        }
         else if (CurrentGun.typeOfGun == bl_Gun.weaponType.Shotgun && BulletLeft <= isLowBulletSniper || CurrentGun.typeOfGun == bl_Gun.weaponType.Sniper && BulletLeft <= isLowBulletSniper)
-        {
             m_color = Color.Lerp(m_color, AmmoLow, (Seno(6.0f, 0.1f, 0.0f) * 5) + 0.5f);
-        }
         else
-        {
             m_color = Color.Lerp(m_color, AmmoNormal, (Seno(6.0f, 0.1f, 0.0f) * 5) + 0.5f);
-        }
 
         if (AmmoTextUI != null)
         {
             if (CurrentGun.typeOfGun != bl_Gun.weaponType.Knife)
-            {
                 AmmoTextUI.text = bl_UtilityHelper.GetThreefoldChar(BulletLeft) + "/<size=10>" + Clips + "</size>";
-            }
             else
-            {
                 AmmoTextUI.text = "-- / <size=10>--</size>";
-            }
             AmmoTextUI.color = m_color;
         }
 
@@ -102,10 +81,6 @@ public class bl_WeaponsUI : MonoBehaviour {
         }
     }
 
-/// <summary>
-/// 
-/// </summary>
-    
     void OnGUI()
     {
         GUI.skin = Skin;
@@ -115,9 +90,7 @@ public class bl_WeaponsUI : MonoBehaviour {
         GUI.color = Color.white;*/
         NotifyUI();
     }
-    /// <summary>
-    /// 
-    /// </summary>
+
     void NotifyUI()
     {
         GUILayout.BeginArea(new Rect(5, Screen.height / 2 - 150, 200, 300));
@@ -133,27 +106,21 @@ public class bl_WeaponsUI : MonoBehaviour {
         }
         GUILayout.EndArea();
     }
-    /// <summary>
-    /// 
-    /// </summary>
+
     /// <param name="m_clips"></param>
     void OnPickUpAmmo(int m_clips)
     {
         Notifications.Add(PickAmmoMsn + " <size=20><color=orange>"+m_clips+"</color></size>");
         Noti_Time.Add(TimeToShowNotify);
     }
-    /// <summary>
-    /// 
-    /// </summary>
+
     /// <param name="t_amount"></param>
     void OnPicUpMedKit(float t_amount)
     {
         Notifications.Add(PickMedKitMsn + " <size=20><color=orange>" + t_amount + "</color></size>");
         Noti_Time.Add(TimeToShowNotify);
     }
-    /// <summary>
-    /// 
-    /// </summary>
+
     public GUIStyle BoxStyle
     {
         get
@@ -161,9 +128,7 @@ public class bl_WeaponsUI : MonoBehaviour {
             return Skin.customStyles[2];
         }
     }
-    /// <summary>
-    /// 
-    /// </summary>
+
     public static float Seno(float rate, float amp, float offset = 0.0f)
     {
         return (Mathf.Cos((Time.time + offset) * rate) * amp);

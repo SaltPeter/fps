@@ -1,10 +1,6 @@
-﻿///////////////////////////////////////////////////////////////////////////////////////
-// bl_OnVisible.cs
-//
+﻿// bl_OnVisible.cs
 // This script helps to optimize the game as it makes the players remote script
 // only run when they are viewed by our player.
-//                             Lovatto Studio
-///////////////////////////////////////////////////////////////////////////////////////
 using UnityEngine;
 
 public class bl_OnVisible : MonoBehaviour {

@@ -7,9 +7,7 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(UnityEngine.AudioSource))]
-public class bl_Gun : MonoBehaviour
-{
-
+public class bl_Gun : MonoBehaviour {
     //General Vars
     [HideInInspector]
     public bool CanFire = true;
@@ -116,16 +114,12 @@ public class bl_Gun : MonoBehaviour
     //Network Parts 
     public bool localPlayer = true; //set to false // Am I a local player... or networked
     public string localPlayerName = "";            // what's my name
-    private Slider m_AmmoSlider = null;
-    private float SliderFactor = 3.7f;
     private Text TypeFireText = null;
     private string s_TypeFire = "Full";
     private bl_Crosshair Cross;
     private bool activeGrenade = true;
     private bool alreadyKnife = false;
-    /// <summary>
-    /// 
-    /// </summary>
+
     void Awake()
     {
         m_mouse = transform.root.GetComponentInChildren<bl_MouseLook>();
@@ -150,15 +144,10 @@ public class bl_Gun : MonoBehaviour
         CanAim = true;
         TypeFireText = GameObject.Find("TypeFireText").GetComponent<Text>(); //Get the Text for show bullet of scene
         if (muzzleFlash)
-        {
             muzzleFlash.gameObject.SetActive(false);
-        }
         if (lightFlash)
-        {
             lightFlash.enabled = false;
-        }
     }
-
 
     /// <summary>
     /// check whats the player is doing every frame
@@ -170,9 +159,7 @@ public class bl_Gun : MonoBehaviour
             return false;
 
         if (!localPlayer)
-        {
             return false;  // if not the local player.... exit function
-        }
         if (!m_enabled)
             return false;
 
@@ -181,24 +168,10 @@ public class bl_Gun : MonoBehaviour
         CameraShakeLerp();
         SyncState();
 
-
         if (isFiring) // if the gun is firing
-        {
             spread += spreadPerSecond; // gun is less accurate with the trigger held down
-        }
         else
-        {
             spread -= decreaseSpreadPerSec; // gun regains accuracy when trigger is released
-        }
-        if (m_AmmoSlider != null)
-        {
-            if (m_AmmoSlider.value != bulletsLeft)
-            {
-                m_AmmoSlider.value = Mathf.Lerp(m_AmmoSlider.value, bulletsLeft, Time.deltaTime * SliderFactor);
-            }
-            //m_AmmoSlider.value = bulletsLeft;                
-        }
-        //===========================================================================================
         return true;
     }
     /// <summary>
@@ -208,9 +181,7 @@ public class bl_Gun : MonoBehaviour
     void FixedUpdate()
     {
         if (typeOfGun == weaponType.Launcher)
-        {
             OnLauncherNotAmmo();
-        }
     }
     /// <summary>
     /// All Input events 
@@ -222,87 +193,59 @@ public class bl_Gun : MonoBehaviour
         {
             case weaponType.Shotgun:
                 if (Input.GetMouseButtonDown(0) && m_CanFire)
-                {
                     ShotGun_Fire();  // fire shotgun
-                }
                 break;
             case weaponType.Machinegun:
                 if (Input.GetMouseButton(0) && m_CanFire)
-                {
                     MachineGun_Fire();   // fire machine gun                 
-                }
                 break;
             case weaponType.Burst:
                 if (Input.GetMouseButtonDown(0) && m_CanFire && !isBursting)
-                {
                     StartCoroutine(Burst_Fire()); // fire off a burst of rounds                   
-                }
                 break;
 
             case weaponType.Launcher:
                 if (Input.GetMouseButtonDown(0) && m_CanFire && !grenadeFired)
-                {
                     GrenadeFire();
-                }
                 break;
             case weaponType.Pistol:
                 if (Input.GetMouseButtonDown(0) && m_CanFire)
-                {
                     MachineGun_Fire();   // fire Pistol gun     
-                }
                 break;
             case weaponType.Sniper:
                 if (Input.GetMouseButtonDown(0) && m_CanFire)
-                {
                     Sniper_Fire();
-                }
                 break;
             case weaponType.Knife:
                 if (Input.GetMouseButtonDown(0) && m_CanFire)
-                {
                     Knife_Fire();
-                }
                 break;
         }//=========================================================================================
         if (Input.GetButton("Fire2") && m_CamAim)
-        {
             isAmed = true;
-        }
         else
-        {
             isAmed = false;
-        }
         if (Input.GetKeyDown(KeyCode.R) && m_CanReload)
-        {
             StartCoroutine(reload());
-        }
         if (typeOfGun == weaponType.Machinegun || typeOfGun == weaponType.Burst || typeOfGun == weaponType.Pistol)
         {
             ChangeTypeFire();
             TypeFireText.text = s_TypeFire;
         }
         else
-        {
             TypeFireText.text = "Single";
-        }
         //used to decrease weapon accuracy as long as the trigger remains down =====================
         if (typeOfGun != weaponType.Launcher && typeOfGun != weaponType.Knife)
         {
             if (Input.GetMouseButton(0) && m_CanFire)
-            {
                 isFiring = true; // fire is down, gun is firing
-            }
             else
-            {
                 isFiring = false;
-            }
         }
         else if(typeOfGun == weaponType.Launcher)
         {
             if (Input.GetMouseButtonDown(0) && m_CanFire)
-            {
                 isFiring = true; // fire is down, gun is firing
-            }
         }
         else
         {
@@ -332,16 +275,12 @@ public class bl_Gun : MonoBehaviour
                 case weaponType.Machinegun:
                     typeOfGun = weaponType.Burst;
                     if (TypeFireText != null)
-                    {
                         s_TypeFire = "Semi";
-                    }
                     break;
                 case weaponType.Burst:
                     typeOfGun = weaponType.Pistol;
                     if (TypeFireText != null)
-                    {
                         s_TypeFire = "Single";
-                    }
                     break;
                 case weaponType.Pistol:
                     typeOfGun = weaponType.Machinegun;
@@ -361,50 +300,37 @@ public class bl_Gun : MonoBehaviour
         if (isFiring && !isReloading)
         {
             if (m_playersync)
-            {
                 m_playersync.WeaponState = "Firing";
-            }
         }
         else if (isAmed && !isFiring && !isReloading)
         {
             if (m_playersync)
-            {
                 m_playersync.WeaponState = "Aimed";
-            }
         }
         else if (isReloading)
         {
             if (m_playersync)
-            {
                 m_playersync.WeaponState = "Reloading";
-            }
         }
         else if (controller.run && !isReloading && !isFiring && !isAmed)
         {
             if (m_playersync)
-            {
                 m_playersync.WeaponState = "Running";
-            }
         }
         else
         {
             if (m_playersync)
-            {
                 m_playersync.WeaponState = "Idle";
-            }
         }
     }
 
     /// <summary>
     /// update weapon flashes after checking user inout in update function
     /// </summary>
-    void LateUpdate()
-    {
+    void LateUpdate() {
 
         if (spread >= maxSpread)
-        {
             spread = maxSpread;  //if current spread is greater then max... set to max
-        }
         else
         {
             if (spread <= baseSpread)
@@ -481,13 +407,9 @@ public class bl_Gun : MonoBehaviour
             if (Animat != null)
             {
                 if (isAmed)
-                {
                     Animat.AimFire();
-                }
                 else
-                {
                     Animat.Fire();
-                }
             }
             if (Sync)
             {
@@ -507,9 +429,7 @@ public class bl_Gun : MonoBehaviour
             StartCoroutine(MuzzleFlash());
             //is Auto reload
             if (bulletsLeft <= 0 && numberOfClips > 0 && AutoReload)
-            {
                 StartCoroutine(reload());
-            }
         }
 
     }
@@ -544,9 +464,7 @@ public class bl_Gun : MonoBehaviour
                     break;
             }
             if (Animat != null)
-            {
                 Animat.Fire();
-            }
             if (Sync)
             {
                 Vector3 position = (typeOfGun == weaponType.Knife) ? Camera.main.transform.position : muzzlePoint.position;
@@ -560,20 +478,14 @@ public class bl_Gun : MonoBehaviour
             Kick();
             StartCoroutine(CamShake());
             if (!isAmed)
-            {
                 StartCoroutine(MuzzleFlash());
-            }
             //is Auto reload
             if (bulletsLeft <= 0 && numberOfClips > 0 && AutoReload)
-            {
                 StartCoroutine(reload());
-            }
         }
 
     }
-    /// <summary>
-    /// 
-    /// </summary>
+
     void Knife_Fire()
     {
         // If there is more than one shot  between the last and this frame
@@ -599,13 +511,9 @@ public class bl_Gun : MonoBehaviour
             if (Animat != null)
             {
                 if (isAmed)
-                {
                     Animat.AimFire();
-                }
                 else
-                {
                     Animat.Fire();
-                }
             }
             if (Sync)
             {
@@ -693,26 +601,20 @@ public class bl_Gun : MonoBehaviour
                     Sync.Firing(weaponType.Burst.ToString(), spread, position, transform.parent.rotation);
                 }
                 if (Animat != null)
-                {
                     Animat.Fire();
-                }
                 if (FireSound)
                 {
                     GetComponent<AudioSource>().clip = FireSound;
                     GetComponent<AudioSource>().spread = Random.Range(1.0f, 1.5f);
                     GetComponent<AudioSource>().Play();
                 }
-
                 yield return new WaitForSeconds(lagBetweenShots);
-
             }
 
             nextFireTime += fireRate;
             //is Auto reload
             if (bulletsLeft <= 0 && numberOfClips > 0 && AutoReload)
-            {
                 StartCoroutine(reload());
-            }
         }
         isBursting = false;
     }
@@ -736,12 +638,9 @@ public class bl_Gun : MonoBehaviour
             nextFireTime = Time.time - Time.deltaTime;
 
         // Keep firing until we used up the fire time
-        while (nextFireTime < Time.time)
-        {
-            do
-            {
-                switch (typeOfBullet)
-                {
+        while (nextFireTime < Time.time) {
+            do {
+                switch (typeOfBullet) {
                     case BulletType.Physical:
                         StartCoroutine(FireOneShot());  // fire a physical bullet
                         break;
@@ -763,9 +662,7 @@ public class bl_Gun : MonoBehaviour
 
             StartCoroutine(DelayFireSound());
             if (Animat != null)
-            {
                 Animat.Fire();
-            }
             StartCoroutine(CamShake());
             EjectShell(); // eject 1 shell 
             nextFireTime += fireRate;  // can fire another shot in "firerate" number of frames
@@ -773,9 +670,7 @@ public class bl_Gun : MonoBehaviour
             Kick();
             //is Auto reload
             if (bulletsLeft <= 0 && numberOfClips > 0 && AutoReload)
-            {
                 StartCoroutine(reload());
-            }
         }
     }
     /// <summary>
@@ -831,9 +726,7 @@ public class bl_Gun : MonoBehaviour
             {
                 nextFireTime += fireRate;  // can fire another shot in "firerate" number of frames
                 if (Animat != null)
-                {
                     Animat.Fire();
-                }
                 yield return new WaitForSeconds(DelayFire);
                 StartCoroutine(FireOneProjectile()); // fire 1 round            
                 bulletsLeft--; // subtract a bullet
@@ -853,15 +746,11 @@ public class bl_Gun : MonoBehaviour
                 isFiring = false;
                 //is Auto reload
                 if (bulletsLeft <= 0 && numberOfClips > 0 && AutoReload)
-                {
                     StartCoroutine(reload());
-                }
                 already = true;
             }
             else
-            {
                 yield break;
-            }
         }
        
     }
@@ -897,17 +786,13 @@ public class bl_Gun : MonoBehaviour
             if (shotsFired >= roundsPerTracer) // tracer round every so many rounds fired... is there a tracer this round fired?
             {
                 if (newBullet.GetComponent<Renderer>() != null)
-                {
                     newBullet.GetComponent<Renderer>().enabled = true; // turn on tracer effect
-                }
                 shotsFired = 0;                    // reset tracer counter
             }
             else
             {
                 if (newBullet.GetComponent<Renderer>() != null)
-                {
                     newBullet.GetComponent<Renderer>().enabled = false; // turn off tracer effect
-                }
             }
             GetComponent<AudioSource>().clip = FireSound;
             GetComponent<AudioSource>().spread = Random.Range(1.0f, 1.5f);
@@ -929,19 +814,14 @@ public class bl_Gun : MonoBehaviour
     /// <returns></returns>
     IEnumerator FireOneRay()
     {
-
         int hitCount = 0;
         bool tracerWasFired = false;
         Vector3 position = (typeOfGun == weaponType.Knife) ? Camera.main.transform.position : muzzlePoint.position; // position to spawn bullet is at the muzzle point of the gun       
         Vector3 direction;
         if (typeOfGun != weaponType.Knife)
-        {
             direction = muzzlePoint.TransformDirection(Random.Range(-maxSpread, maxSpread) * spread, Random.Range(-maxSpread, maxSpread) * spread, 1);
-        }
         else
-        {
             direction = Camera.main.transform.TransformDirection(Vector3.forward);
-        }
         //Vector3 dir = (weaponTarget.transform.position - position) + direction;
 
         // set the gun's info into an array to send to the bullet
@@ -969,9 +849,7 @@ public class bl_Gun : MonoBehaviour
         for (int i = 0; i < hits.Length; i++)
         {
             if (hitCount >= maxPenetration)
-            {
                 yield break;
-            }
 
             RaycastHit hit = hits[i];
             Debug.Log("Bullet hit " + hit.collider.gameObject.name + " at " + hit.point.ToString());
@@ -1084,11 +962,8 @@ public class bl_Gun : MonoBehaviour
                 break;
         }
     }
-    /// <summary>
-    /// ADS
-    /// </summary>
-    void Aim()
-    {
+
+    void Aim() {
         if (isAmed)
         {
             CurrentPos = AimPosition; //Place in the center ADS
@@ -1113,7 +988,6 @@ public class bl_Gun : MonoBehaviour
         //apply position
         transform.localPosition = useSmooth ? Vector3.Lerp(transform.localPosition, CurrentPos, Time.deltaTime * AimSmooth) : //with smoot effect
         Vector3.MoveTowards(transform.localPosition, CurrentPos, Time.deltaTime * AimSmooth); // with snap effect
-
 
         Camera.main.fieldOfView = useSmooth ? Mathf.Lerp(Camera.main.fieldOfView, CurrentFog, Time.deltaTime * (AimSmooth * 3)) : //apply fog distance
          Mathf.Lerp(Camera.main.fieldOfView, CurrentFog, Time.deltaTime * AimSmooth);
@@ -1152,14 +1026,10 @@ public class bl_Gun : MonoBehaviour
                     Animat.ReloadRepeat(reloadTime, t_repeat);
                 }
                 else
-                {
                     Animat.Reload(reloadTime);
-                }
             }
             if (!SoundReloadByAnim)
-            {
                 StartCoroutine(ReloadSoundIE());
-            }
             isReloading = true; // we are now reloading
             numberOfClips--; // take away a clip
             yield return new WaitForSeconds(reloadTime); // wait for set reload time
@@ -1184,10 +1054,7 @@ public class bl_Gun : MonoBehaviour
             GetComponent<AudioSource>().clip = ReloadSound;
             GetComponent<AudioSource>().Play();
             if (GManager != null)
-            {
                 GManager.heatReloadAnim(1);
-            }
-
         }
         if (ReloadSound2 != null)
         {
@@ -1199,7 +1066,6 @@ public class bl_Gun : MonoBehaviour
                     yield return new WaitForSeconds(t_time / t_repeat + 0.025f);
                     GetComponent<AudioSource>().clip = ReloadSound2;
                     GetComponent<AudioSource>().Play();
-
                 }
             }
             else
@@ -1215,15 +1081,11 @@ public class bl_Gun : MonoBehaviour
             GetComponent<AudioSource>().clip = ReloadSound3;
             GetComponent<AudioSource>().Play();
             if (GManager != null)
-            {
                 GManager.heatReloadAnim(2);
-            }
         }
         yield return new WaitForSeconds(0.65f);
         if (GManager != null)
-        {
             GManager.heatReloadAnim(0);
-        }
     }
 
     /// <summary>
@@ -1233,7 +1095,6 @@ public class bl_Gun : MonoBehaviour
     /// <returns></returns>
     IEnumerator CamShake()
     {
-
         float shakeIntensity = 0.1f;
         while (shakeIntensity > 0)
         {
@@ -1241,9 +1102,7 @@ public class bl_Gun : MonoBehaviour
                          Random.Range(-ShakeIntense * 2.5f, ShakeIntense * 2.5f),
                          Random.Range(-ShakeIntense * 2.5f, ShakeIntense * 2.5f),
                          Random.Range(-ShakeIntense * 2.5f, ShakeIntense * 2.5f),
-                         Random.Range(-ShakeIntense * 4.1f, ShakeIntense * 4.1f)
-
-                );
+                         Random.Range(-ShakeIntense * 4.1f, ShakeIntense * 4.1f));
             shakeIntensity -= 0.0075f;
             yield return false;
         }
@@ -1271,18 +1130,11 @@ public class bl_Gun : MonoBehaviour
         }
         CanFire = true;
         CanAim = true;
-            bl_EventHandler.OnKitAmmo += this.OnPickUpAmmo;
-            bl_EventHandler.OnRoundEnd += this.OnRoundEnd;
-        m_AmmoSlider = GameObject.Find("SliderAmmo").GetComponent<Slider>();
-        if (m_AmmoSlider != null)
-        {
-            m_AmmoSlider.maxValue = bulletsPerClip;
-        }
+        bl_EventHandler.OnKitAmmo += this.OnPickUpAmmo;
+        bl_EventHandler.OnRoundEnd += this.OnRoundEnd;
         Cross.movementScale = CrossHairScale;
     }
-    /// <summary>
-    /// 
-    /// </summary>
+
     void OnDisable()
     {
         bl_EventHandler.OnKitAmmo -= this.OnPickUpAmmo;
@@ -1299,13 +1151,9 @@ public class bl_Gun : MonoBehaviour
         isReloading = false;
         CanFire = false;
         if (Animat)
-        {
             Animat.HideWeapon();
-        }
         if (GManager != null)
-        {
             GManager.heatReloadAnim(0);
-        }
         StopAllCoroutines();
     }
 
@@ -1323,9 +1171,7 @@ public class bl_Gun : MonoBehaviour
         {
             numberOfClips += t_clips;
             if (numberOfClips > maxNumberOfClips)
-            {
                 numberOfClips = maxNumberOfClips;
-            }
         }
     }
 
@@ -1361,9 +1207,7 @@ public class bl_Gun : MonoBehaviour
         {
             bool can = false;
             if (bulletsLeft > 0 && CanFire && !isReloading && !controller.run)
-            {
                 can = true;
-            }
             return can;
         }
     }
@@ -1376,9 +1220,7 @@ public class bl_Gun : MonoBehaviour
         {
             bool can = false;
             if (CanAim && !controller.run && !controller.m_OnLadder)
-            {
                 can = true;
-            }
             return can;
         }
     }
@@ -1393,19 +1235,13 @@ public class bl_Gun : MonoBehaviour
         {
             bool can = false;
             if (bulletsLeft < bulletsPerClip && numberOfClips > 0 && !controller.run)
-            {
                 can = true;
-            }
             if(typeOfGun == weaponType.Knife && nextFireTime < Time.time)
-            {
                 can = false;
-            }
             return can;
         }
     }
-    /// <summary>
-    /// 
-    /// </summary>
+
     private bl_GunManager GManager
     {
         get

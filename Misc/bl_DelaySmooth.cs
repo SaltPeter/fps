@@ -1,11 +1,6 @@
-﻿///////////////////////////////////////////////////////////////////////////////////////
-// bl_DelaySmooth.cs
-//
+﻿// bl_DelaySmooth.cs
 // Generates a soft effect and delayed rotation for added realism
 // place it in the top of the hierarchy of Weapon Manager
-//                           
-//                                 Lovatto Studio
-///////////////////////////////////////////////////////////////////////////////////////
 using UnityEngine;
 using System.Collections;
 
@@ -25,17 +20,12 @@ public class bl_DelaySmooth : MonoBehaviour
     private Vector3 def;
     private Quaternion DefaultRot;
 
-    /// <summary>
-    /// 
-    /// </summary>
     void Start()
     {
         def = transform.localPosition;
         DefaultRot = this.transform.localRotation;
     }
-    /// <summary>
-    /// 
-    /// </summary>
+
     void Update()
     {     
             float factorX = -Input.GetAxis("Mouse X") * amount;
@@ -47,17 +37,13 @@ public class bl_DelaySmooth : MonoBehaviour
             this.transform.localRotation = Quaternion.Slerp(this.transform.localRotation, DefaultRot, Time.deltaTime * m_ReturnSpeed);
         
     }
-    /// <summary>
-    /// 
-    /// </summary>
+
      void OnEnable()
      {
          bl_EventHandler.OnFall += this.OnFall;
          bl_EventHandler.OnSmallImpact += this.OnSmallImpact;
      }
-    /// <summary>
-    /// 
-    /// </summary>
+
      void OnDisable()
      {
          bl_EventHandler.OnFall -= this.OnFall;

@@ -1,9 +1,5 @@
-/////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////bl_RoomMenu.cs///////////////////////////////////
 /////////////////place this in a scena for handling menus of room////////////////
-/////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////Briner Games/////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
@@ -87,9 +83,6 @@ public class bl_RoomMenu : bl_PhotonHelper
     private bool m_showScoreBoard = false;
     private bool m_showbuttons = false;
 
-    /// <summary>
-    /// 
-    /// </summary>
     protected override void Awake()
     {
         base.Awake();
@@ -102,21 +95,13 @@ public class bl_RoomMenu : bl_PhotonHelper
         m_window = 1;
         showMenu = true;
         if (AutoTeamSelection)
-        {
             StartCoroutine(CanSpawnIE());
-        }
         if (VignetteImage && Use_Vignette)
-        {
             VignetteImage.color = new Color(VignetteImage.color.r, VignetteImage.color.b, VignetteImage.color.g, VigAlpha);
-        }
         StartCoroutine(FadeOut(1.5f));
         GetPrefabs();
-
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void Update()
     {
         if (Input.GetKeyDown(PauseMenuKey) && !SpectatorMode)
@@ -126,26 +111,16 @@ public class bl_RoomMenu : bl_PhotonHelper
             bl_UtilityHelper.LockCursor(false);
         }
         else if (Input.GetKeyDown(PauseMenuKey) && SpectatorMode)
-        {
             bl_UtilityHelper.LockCursor(false);
-        }
         if (Input.GetKeyDown(ScoreboardKey) && !showMenu)
-        {
                 m_showScoreBoard = true;
-        }
         else if(Input.GetKeyUp(ScoreboardKey) || showMenu)
-        {
                 m_showScoreBoard = false;
-        }
         if (RotateCamera &&  !isPlaying && !SpectatorMode)
-        {
             this.transform.Rotate(Vector3.up * Time.deltaTime * RotSpeed);
-        }
 
         if (AutoTeamSelection && !AlredyAuto)
-        {
             AutoTeam();
-        }
         if (isPlaying && Input.GetKeyDown(ChangeClassKey) && ButtonsClassPlay != null)
         {
             m_showbuttons = !m_showbuttons;
@@ -169,22 +144,15 @@ public class bl_RoomMenu : bl_PhotonHelper
         if (bl_GameManager.isAlive && isPlaying)
         {
             if (m_CanvasRoot != null && !m_CanvasRoot.enabled)
-            {
                 m_CanvasRoot.enabled = true;
-            }
         }
         else
         {
             if (m_CanvasRoot != null && m_CanvasRoot.enabled)
-            {
                 m_CanvasRoot.enabled = false;
-            }
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void FixedUpdate()
     {
         if (GetGameMode == GameMode.FFA)
@@ -224,7 +192,6 @@ public class bl_RoomMenu : bl_PhotonHelper
         m_showbuttons = false;
     }
 
-
     void AutoTeam()
     {
         if (CanSpawn && !isPlaying && !AlredyAuto)
@@ -262,9 +229,6 @@ public class bl_RoomMenu : bl_PhotonHelper
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void OnGUI()
     {
         GUI.skin = SKin;
@@ -272,9 +236,7 @@ public class bl_RoomMenu : bl_PhotonHelper
         if (!RequestLeft)
         {
             if (showMenu && !SpectatorMode)
-            {
                 MainMenu();
-            }
             if (ShowWarningPing && WarningPing != null)
             {
                 GUI.color = new Color(1, 1, 1, 0.8f);
@@ -296,9 +258,7 @@ public class bl_RoomMenu : bl_PhotonHelper
         if (!RequestLeft)
         {
             if (AutoTeamSelection && !isPlaying && !AlredyAuto && GetGameMode == GameMode.TDM || AutoTeamSelection && !isPlaying && !AlredyAuto && GetGameMode == GameMode.CTF)
-            {
                 bl_UtilityHelper.ShadowLabel(new Rect(Screen.width / 2 - 75, Screen.height / 2 + 50, 200, 30), "Wait For Select Team...");
-            }
             OnlyScoreBoard();
 
             if (!isPlaying && !SpectatorMode)
@@ -376,13 +336,9 @@ public class bl_RoomMenu : bl_PhotonHelper
                     if ((string)player.customProperties[PropiertiesKeys.TeamKey] == Team.Delta.ToString())
                     {
                         if (player.name == PhotonNetwork.player.name)//if this player is Mine
-                        {
                             GUI.color = ColorKeys.MineColor;
-                        }
                         else
-                        {
                             GUI.color = Color.white;
-                        }
                         GUILayout.BeginHorizontal("box");
                         // if (GUILayout.Button("Kick", GUILayout.Width(100))) { }
                         GUILayout.Label((string)player.name, GUILayout.Width(175));
@@ -396,8 +352,6 @@ public class bl_RoomMenu : bl_PhotonHelper
                     }
                 }
                 GUILayout.EndScrollView();
-
-
                 GUILayout.EndArea();
             }
             if (isPlaying)
@@ -432,18 +386,14 @@ public class bl_RoomMenu : bl_PhotonHelper
                             bl_GameManager.SuicideCount++;
                             //Debug.Log("Suicide " + bl_GameManager.SuicideCount + " times");
                             //if player is a joker o abuse of suicide, them kick of room
-                            if (bl_GameManager.SuicideCount >= 3)//Max number de suicides  = 3, you can change
+                            if (bl_GameManager.SuicideCount >= 3)//Max number suicides  = 3, you can change
                             {
                                 isPlaying = false;
                                 bl_GameManager.isAlive = false;
                                 if (PhotonNetwork.connected)
-                                {
                                     PhotonNetwork.LeaveRoom();
-                                }
                                 else
-                                {
                                     Application.LoadLevel(0);
-                                }
                                 bl_UtilityHelper.LockCursor(false);
                             }
                         }
@@ -456,13 +406,9 @@ public class bl_RoomMenu : bl_PhotonHelper
                 }
             }
             if (!isPlaying && !isFinish)
-            {
                 SelectClassMenu();
-            }
             if (GUI.Button(new Rect(Screen.width / 2, Screen.height / 2 + 200, 150, 30), "Left of Room"))
-            {
                 PhotonNetwork.LeaveRoom();
-            }
             if (m_window == 1)
             {
                 //Scorenoard for team2
@@ -477,7 +423,6 @@ public class bl_RoomMenu : bl_PhotonHelper
                         bl_EventHandler.KillEvent(PhotonNetwork.player.name, "", "Joined in Recon", Team.Recon.ToString(), 777, 30);
                         isPlaying = true;
                     }
-
                 }
 
                 GUILayout.BeginArea(new Rect(Screen.width / 2 + 5, Screen.height / 2 - 150, 400, 350), "", ScoreBoardStyle);
@@ -495,13 +440,9 @@ public class bl_RoomMenu : bl_PhotonHelper
                     if ((string)player.customProperties["Team"] == Team.Recon.ToString())
                     {
                         if (player.name == PhotonNetwork.player.name)//if this player is Mine
-                        {
                             GUI.color = ColorKeys.MineColor;
-                        }
                         else
-                        {
                             GUI.color = Color.white;
-                        }
                         GUILayout.BeginHorizontal("box");
                         GUILayout.Label((string)player.name, GUILayout.Width(175));
                         GUILayout.Label(player.customProperties[PropiertiesKeys.KillsKey].ToString(), GUILayout.Width(50));
@@ -514,14 +455,11 @@ public class bl_RoomMenu : bl_PhotonHelper
                     }
                 }
                 GUILayout.EndScrollView();
-
-
                 GUILayout.EndArea();
             }
         }
         else if (GetGameMode == GameMode.FFA)
         {
-
             //Scorenoard for All in FFA
             if (!isPlaying && !isFinish)
             {
@@ -536,13 +474,9 @@ public class bl_RoomMenu : bl_PhotonHelper
                 }
             }
             if (!isPlaying && !isFinish)
-            {
                 SelectClassMenu();
-            }
             if (GUI.Button(new Rect(Screen.width / 2, Screen.height / 2 + 200, 150, 30), "Left of Room"))
-            {
                 PhotonNetwork.LeaveRoom();
-            }
             if (isPlaying)
             {
                 if (GUI.Button(new Rect(Screen.width / 2 - 75, Screen.height / 2 - 180, 150, 30), "Resumen"))
@@ -552,19 +486,14 @@ public class bl_RoomMenu : bl_PhotonHelper
                     showMenu = false;
                 }
                 if (GUI.Button(new Rect(Screen.width / 2 - 225, Screen.height / 2 - 180, 150, 30), "Setting"))
-                {
                     m_window = 2;
-                }
                 if (GUI.Button(new Rect(Screen.width / 2 + 75, Screen.height / 2 - 180, 150, 30), "ScoreBoard"))
-                {
                     m_window = 1;
-                }
                 if (GUI.Button(new Rect(Screen.width / 2 - 150, Screen.height / 2 + 200, 150, 30), "Suicide") && bl_GameManager.isAlive)
                 {
                     PhotonView view = FindPlayerView(bl_GameManager.m_view);
                     if (view != null)
                     {
-
                         bl_PlayerDamageManager pdm = view.GetComponent<bl_PlayerDamageManager>();
                         pdm.Suicide();
                         m_window = 1;
@@ -578,22 +507,15 @@ public class bl_RoomMenu : bl_PhotonHelper
                             if (bl_GameManager.SuicideCount >= 3)//Max number de suicides  = 3, you can change
                             {
                                 if (PhotonNetwork.connected)
-                                {
                                     PhotonNetwork.LeaveRoom();
-                                }
                                 else
-                                {
                                     Application.LoadLevel(0);
-                                }
                                 bl_UtilityHelper.LockCursor(false);
                             }
                         }
                     }
                     else
-                    {
                         Debug.LogError("This view " + bl_GameManager.m_view + " is not found");
-                    }
-
                 }
             }
             if (m_window == 1)
@@ -630,23 +552,14 @@ public class bl_RoomMenu : bl_PhotonHelper
                     GUI.color = Color.white;
                 }
                 GUILayout.EndScrollView();
-
-
                 GUILayout.EndArea();
             }
-
         }
 
         if (m_window == 2)
-        {
             SettingMenu();
-        }
-
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void OnlyScoreBoard()
     {
         if (m_showScoreBoard == true)
@@ -668,13 +581,9 @@ public class bl_RoomMenu : bl_PhotonHelper
                     if ((string)player.customProperties[PropiertiesKeys.TeamKey] == Team.Delta.ToString())
                     {
                         if (player.name == PhotonNetwork.player.name)//if this player is Mine
-                        {
                             GUI.color = ColorKeys.MineColor;
-                        }
                         else
-                        {
                             GUI.color = Color.white;
-                        }
                         GUILayout.BeginHorizontal("box");
                         GUILayout.Label((string)player.name, GUILayout.Width(175));
                         GUILayout.Label(player.customProperties[PropiertiesKeys.KillsKey].ToString(), GUILayout.Width(50));
@@ -687,8 +596,6 @@ public class bl_RoomMenu : bl_PhotonHelper
                     }
                 }
                 GUILayout.EndScrollView();
-
-
                 GUILayout.EndArea();
                 //Team 2
                 GUILayout.BeginArea(new Rect(Screen.width / 2 + 5, Screen.height / 2 - 150, 400, 350), "", ScoreBoardStyle);
@@ -706,13 +613,9 @@ public class bl_RoomMenu : bl_PhotonHelper
                     if ((string)player.customProperties["Team"] == Team.Recon.ToString())
                     {
                         if (player.name == PhotonNetwork.player.name)//if this player is Mine
-                        {
                             GUI.color = ColorKeys.MineColor;
-                        }
                         else
-                        {
                             GUI.color = Color.white;
-                        }
                         GUILayout.BeginHorizontal("box");
                         GUILayout.Label((string)player.name, GUILayout.Width(175));
                         GUILayout.Label(player.customProperties[PropiertiesKeys.KillsKey].ToString(), GUILayout.Width(50));
@@ -725,8 +628,6 @@ public class bl_RoomMenu : bl_PhotonHelper
                     }
                 }
                 GUILayout.EndScrollView();
-
-
                 GUILayout.EndArea();
             }
             else
@@ -763,69 +664,40 @@ public class bl_RoomMenu : bl_PhotonHelper
                     GUI.color = Color.white;
                 }
                 GUILayout.EndScrollView();
-
-
                 GUILayout.EndArea();
             }
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void SelectClassMenu()
     {
         GUILayout.BeginArea(new Rect(Screen.width / 2 - 210, Screen.height / 2 + 250, 420, 75));
         GUILayout.Label("<b>Select your <color=orange>Player Class</color></b>");
         GUILayout.BeginHorizontal();
         if (m_playerclass == PlayerClass.Assault)
-        {
             GUI.color = ColorKeys.SelectColor;
-        }
         else
-        {
             GUI.color = Color.white;
-        }
         if (GUILayout.Button("Assault", GUILayout.Width(100), GUILayout.Height(50)))
-        {
             m_playerclass = PlayerClass.Assault;
-        }
         if (m_playerclass == PlayerClass.Recon)
-        {
             GUI.color = ColorKeys.SelectColor;
-        }
         else
-        {
             GUI.color = Color.white;
-        }
         if (GUILayout.Button("Recon", GUILayout.Width(100), GUILayout.Height(50)))
-        {
             m_playerclass = PlayerClass.Recon;
-        }
         if (m_playerclass == PlayerClass.Support)
-        {
             GUI.color = ColorKeys.SelectColor;
-        }
         else
-        {
             GUI.color = Color.white;
-        }
         if (GUILayout.Button("Suport", GUILayout.Width(100), GUILayout.Height(50)))
-        {
             m_playerclass = PlayerClass.Support;
-        }
         if (m_playerclass == PlayerClass.Engineer)
-        {
             GUI.color = ColorKeys.SelectColor;
-        }
         else
-        {
             GUI.color = Color.white;
-        }
         if (GUILayout.Button("Engineer", GUILayout.Width(100), GUILayout.Height(50)))
-        {
             m_playerclass = PlayerClass.Engineer;
-        }
         GUI.color = Color.white;
         GUILayout.EndHorizontal();
         GUILayout.EndArea();
@@ -844,10 +716,7 @@ public class bl_RoomMenu : bl_PhotonHelper
             {
                 m_currentQuality--;
                 if (m_currentQuality < 0)
-                {
                     m_currentQuality = QualitySettings.names.Length - 1;
-
-                }
             }
         }
         GUILayout.Box(QualitySettings.names[(int)m_currentQuality]);
@@ -857,9 +726,7 @@ public class bl_RoomMenu : bl_PhotonHelper
             {
                 m_currentQuality++;
                 if (m_currentQuality > (QualitySettings.names.Length - 1))
-                {
                     m_currentQuality = 0;
-                }
             }
         }
         GUILayout.EndHorizontal();
@@ -871,10 +738,7 @@ public class bl_RoomMenu : bl_PhotonHelper
             {
                 m_stropic--;
                 if (m_stropic < 0)
-                {
                     m_stropic = m_stropicOptions.Length - 1;
-
-                }
             }
         }
         GUILayout.Box(m_stropicOptions[m_stropic]);
@@ -884,9 +748,7 @@ public class bl_RoomMenu : bl_PhotonHelper
             {
                 m_stropic++;
                 if (m_stropic > (m_stropicOptions.Length - 1))
-                {
                     m_stropic = 0;
-                }
             }
         }
         GUILayout.EndHorizontal();
@@ -901,9 +763,7 @@ public class bl_RoomMenu : bl_PhotonHelper
         GUILayout.Label(m_sensitive.ToString("000"), GUILayout.Width(30));
         GUILayout.EndHorizontal();
         if (GUILayout.Button("Apply"))
-        {
             ApplySave();
-        }
         GUILayout.EndArea();
     }
 
@@ -912,17 +772,11 @@ public class bl_RoomMenu : bl_PhotonHelper
         QualitySettings.SetQualityLevel((int)m_currentQuality);
         AudioListener.volume = m_volume;
         if (m_stropic == 0)
-        {
             QualitySettings.anisotropicFiltering = AnisotropicFiltering.Disable;
-        }
         else if (m_stropic == 1)
-        {
             QualitySettings.anisotropicFiltering = AnisotropicFiltering.Enable;
-        }
         else
-        {
             QualitySettings.anisotropicFiltering = AnisotropicFiltering.ForceEnable;
-        }
         //Save
         PlayerPrefs.SetFloat("volumen", m_volume);
         PlayerPrefs.SetFloat("sensitive", m_sensitive);
@@ -934,22 +788,14 @@ public class bl_RoomMenu : bl_PhotonHelper
     void GetPrefabs()
     {
         if (PlayerPrefs.HasKey("volumen"))
-        {
             m_volume = PlayerPrefs.GetFloat("volumen");
             AudioListener.volume = m_volume;
-        }
         if (PlayerPrefs.HasKey("sensitive"))
-        {
             m_sensitive = PlayerPrefs.GetFloat("sensitive");
-        }
         if (PlayerPrefs.HasKey("quality"))
-        {
             m_currentQuality = PlayerPrefs.GetInt("quality");
-        }
         if (PlayerPrefs.HasKey("anisotropic"))
-        {
             m_stropic = PlayerPrefs.GetInt("anisotropic");
-        }
     }
 
     public GUIStyle ScoreBoardStyle
@@ -957,7 +803,6 @@ public class bl_RoomMenu : bl_PhotonHelper
         get
         {
             return SKin.customStyles[4];
-            
         }
     }
     /// <summary>
@@ -969,9 +814,7 @@ public class bl_RoomMenu : bl_PhotonHelper
         {
             List<PhotonPlayer> list = new List<PhotonPlayer>();
             foreach (PhotonPlayer players in PhotonNetwork.playerList)
-            {
                 list.Add(players);
-            }
             return list;
         }
     }
@@ -986,9 +829,7 @@ public class bl_RoomMenu : bl_PhotonHelper
             foreach (PhotonPlayer players in PhotonNetwork.playerList)
             {
                 if ((string)players.customProperties[PropiertiesKeys.TeamKey] == Team.Delta.ToString())
-                {
                     count++;
-                }
             }
             return count;
         }
@@ -1004,9 +845,7 @@ public class bl_RoomMenu : bl_PhotonHelper
             foreach (PhotonPlayer players in PhotonNetwork.playerList)
             {
                 if ((string)players.customProperties[PropiertiesKeys.TeamKey] == Team.Recon.ToString())
-                {
                     count++;
-                }
             }
             return count;
         }
@@ -1020,13 +859,9 @@ public class bl_RoomMenu : bl_PhotonHelper
     private static int GetSortPlayerByKills(PhotonPlayer player1, PhotonPlayer player2)
     {
         if (player1.customProperties[PropiertiesKeys.KillsKey] != null && player2.customProperties[PropiertiesKeys.KillsKey] != null)
-        {
             return (int)player2.customProperties[PropiertiesKeys.KillsKey] - (int)player1.customProperties[PropiertiesKeys.KillsKey];
-        }
         else
-        {
             return 0;
-        }
     }
 
     IEnumerator CanSpawnIE()

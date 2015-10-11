@@ -3,9 +3,6 @@
 //
 // - was ordered to encourage TPS player animations using legacy animations,
 //  and heat look controller from Unity technologies.
-//
-//                           Lovatto Studio
-/////////////////////////////////////////////////////////////////////////////
 using UnityEngine;
 
 public class bl_PlayerAnimations : MonoBehaviour

@@ -1,11 +1,7 @@
-﻿//////////////////////////////////////////////////////////////////////////////
-// bl_Blast.cs
-//
+﻿// bl_Blast.cs
 // This contain the logic of the explosions
 // determines the objectives that are punished,
 // and calculates the precise damage
-//                       LovattoStudio
-//////////////////////////////////////////////////////////////////////////////
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;

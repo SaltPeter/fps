@@ -1,18 +1,12 @@
-﻿//////////////////////////////////////////////////////////////////////////////
-// bl_PlayerDamageManager.cs
-//
+﻿// bl_PlayerDamageManager.cs
 // this contains all the logic of the player health
 // This is enabled locally or remotely
-//                      Lovatto Studio
-/////////////////////////////////////////////////////////////////////////////
 using UnityEngine;
 using System.Collections;
 using Hashtable = ExitGames.Client.Photon.Hashtable; //Replace default Hashtables with Photon hashtables
 using UnityEngine.UI;
 
-public class bl_PlayerDamageManager : bl_PhotonHelper
-{
-
+public class bl_PlayerDamageManager : bl_PhotonHelper {
     public GUISkin Skin;
     //variables
     public bool localPlayer = true; //set to false // Am I a local player... or networked
@@ -78,13 +72,9 @@ public class bl_PlayerDamageManager : bl_PhotonHelper
     private Quaternion CurrentCamRot = Quaternion.identity;
     private Quaternion DefaultCamRot = Quaternion.identity;
     private Text HealthTextUI;
-    private Slider m_HealthSlider = null;
-    private float m_SliderFactor = 3.7f;
     const string FallMethod = "FallDown";
 
-
-    protected override void Awake()
-    {
+    protected override void Awake() {
         base.Awake();
     }
     // Use this for initialization
@@ -100,30 +90,19 @@ public class bl_PlayerDamageManager : bl_PhotonHelper
             transform.name = localPlayerName;
 
             if (Camera.main)
-            {
                 DefaultCamRot = Camera.main.transform.localRotation;
-            }
             HealthTextUI = GameObject.Find("Health_UI").GetComponentInChildren<Text>();// get UI Text in Start
-            m_HealthSlider = GameObject.Find("SliderHealth").GetComponent<Slider>();
         }
         this.health = this.maxHealth;
         localPlayer = base.isMine;
         if (this.m_damageEffect != null)
         {
             if (this.damageEffectTransform == null)
-            {
                 this.damageEffectTransform = this.transform;
-            }
-        }
-        if (m_HealthSlider != null)
-        {
-            m_HealthSlider.maxValue = maxHealth;
         }
         Debug.Log("localPlayerName is : " + localPlayerName + " my ID is : " + photonView.viewID);
     }
-    /// <summary>
-    /// 
-    /// </summary>
+
     void OnEnable()
     {
         if (this.isMine)
@@ -134,9 +113,7 @@ public class bl_PlayerDamageManager : bl_PhotonHelper
             bl_EventHandler.OnDamage += this.GetDamage;
         }
     }
-    /// <summary>
-    /// 
-    /// </summary>
+
     void OnDisable()
     {
         if (this.isMine)
@@ -146,48 +123,24 @@ public class bl_PlayerDamageManager : bl_PhotonHelper
             bl_EventHandler.OnDamage -= this.GetDamage;
         }
     }
-    /// <summary>
-    /// 
-    /// </summary>
-    void Update()
-    {
+
+    void Update() {
         if (base.isMine)
         {
             if (m_alpha > 0.0f)
-            {
                 m_alpha = Mathf.Lerp(m_alpha, 0.0f, Time.deltaTime * m_FadeSpeed);
-            }
             if (health <= 15)
-            {
                 CurColor = Color.Lerp(CurColor, LowHealtColor, (Seno(6.0f, 0.1f, 0.0f) * 5) + 0.5f);
-            }
             else
-            {
                 CurColor = Color.Lerp(CurColor, Color.white, (Seno(6.0f, 0.1f, 0.0f) * 5) + 0.5f);
-            }
             if (Camera.main != null)//Return smooth camera rotation when shake
-            {
                 Camera.main.transform.localRotation = Quaternion.Lerp(Camera.main.transform.localRotation, CurrentCamRot, Time.deltaTime * ShakeSmooth);
-            }
             if (HealthTextUI != null)
-            {
-                HealthTextUI.text = bl_UtilityHelper.GetThreefoldChar(health) + "/<size=12>" + maxHealth + "</size>";
-            }
-            if (m_HealthSlider != null)
-            {
-                if (m_HealthSlider.value != health)
-                {
-                    m_HealthSlider.value = Mathf.Lerp(m_HealthSlider.value, health, Time.deltaTime * m_SliderFactor);
-                }
-            }
+                HealthTextUI.text = bl_UtilityHelper.GetThreefoldChar(health);
         }
-
-
 
         if (hit_alpha > 0.0f)
-        {
             hit_alpha = Mathf.Lerp(hit_alpha, 0.0f, Time.deltaTime);
-        }
     }
     /// <summary>
     /// Call this to make a new damage to the player
@@ -204,9 +157,7 @@ public class bl_PlayerDamageManager : bl_PhotonHelper
 
         Debug.Log(" I been hit by " + e.mFrom + " for " + e.mDamage + " damage");
         if (health > 0)
-        {
             photonView.RPC("SyncDamage", PhotonTargets.AllBuffered, e.mDamage, e.mFrom, e.mWeapon, e.mDirection, e.mHeatShot, e.mWeaponID, PhotonNetwork.player);
-        }
     }
     /// <summary>
     /// Call this when Player Take Damage From fall impact
@@ -244,43 +195,31 @@ public class bl_PlayerDamageManager : bl_PhotonHelper
                     m_alpha += (t_damage * m_UIIntensity);
                     StartCoroutine(Shake());
                     if (m_damageEffect != null)
-                    {
                         DamageEffect();
-                    }
                     if (m_indicator != null)
-                    {
                         m_indicator.AttackFrom(m_direction);
-                    }
                 }
                 else
                 {
                     if (m_sender != null)
                     {
                         if (m_sender.name == base.LocalName)
-                        {
                             hit_alpha = 2;
-                        }
                     }
 
                 }
                 if (HitsSound.Length > 0 && t_weapon != FallMethod)//Audio effect of hit
-                {
-                    AudioSource.PlayClipAtPoint(HitsSound[Random.Range(0, HitsSound.Length)], this.transform.position, 1.0f);
-                }
+                   AudioSource.PlayClipAtPoint(HitsSound[Random.Range(0, HitsSound.Length)], this.transform.position, 1.0f);
             }
         }
         this.m_LastShot = t_from;
         this.health -= t_damage;
-        if (health <= 0)
-        {
+        if (health <= 0) {
             health = 0.0f;
             Die(m_LastShot, isHeatShot, t_weapon, weaponID);
 
             if (localPlayer)
-            {
                 bl_GameManager.isAlive = false;
-            }
-
         }
     }
     /// <summary>
@@ -292,33 +231,24 @@ public class bl_PlayerDamageManager : bl_PhotonHelper
     {
         this.health = t_amount;
         if (health > maxHealth)
-        {
             health = maxHealth;
-        }
     }
     /// <summary>
     /// Called This when player Die Logic
     /// </summary>
     /// <param name="t_from"></param>
-	void Die(string t_from, bool isHeat, string t_weapon, int w_id)
-    {
+	void Die(string t_from, bool isHeat, string t_weapon, int w_id) {
         dead = true;
         m_charactercontroller.enabled = false;
         if (!isMine)
-        {
             mBodyManager.Ragdolled();// convert into ragdoll the remote player
-        }
         for (int i = 0; i < transform.childCount; i++)
-        {
             transform.GetChild(i).gameObject.SetActive(false);
-        }
         //Spawn ragdoll
         if (!isMine)// when player is not ours
         {
             if (m_LastShot == base.LocalName)
-            {
                 AddKill(isHeat, t_weapon, w_id);
-            }
         }
         else//when is our
         {
@@ -328,9 +258,7 @@ public class bl_PlayerDamageManager : bl_PhotonHelper
             ragdoll = Instantiate(m_Ragdoll, pos, transform.rotation) as GameObject;
             ragdoll.GetComponent<bl_Ragdoll>().RespawnAfter(5.0f, m_LastShot);
             if (t_from == base.LocalName)
-            {
                 bl_EventHandler.KillEvent(base.LocalName, "", "Has committed suicide", myTeam, 5, 20);
-            }
             StartCoroutine(DestroyThis());
         }
     }
@@ -407,9 +335,7 @@ public class bl_PlayerDamageManager : bl_PhotonHelper
 
         GUI.color = new Color(1, 1, 1, hit_alpha);
         if (hit_alpha > 0.0f)
-        {
             GUI.DrawTexture(new Rect((Screen.width / 2 - 13), (Screen.height / 2 - 13), 26, 26), HitMark);
-        }
     }
     /// <summary>
     /// when we get a new kill, synchronize and add points to the player
@@ -420,13 +346,9 @@ public class bl_PlayerDamageManager : bl_PhotonHelper
         //bl_EventHandler.KillEvent(PhotonNetwork.player.name, this.gameObject.name, "Killed ["+m_weaponEnemy+"]", (string)PhotonNetwork.player.customProperties["Team"],777, 30);     
         bl_KillFeed feed = GameObject.FindWithTag("GameManager").GetComponent<bl_KillFeed>();
         if (!m_heat)
-        {
             feed.OnKillFeed(base.LocalName, this.gameObject.name, "Killed [" + m_weapon + "]", myTeam, W_id, 30);
-        }
         else
-        {
             feed.OnKillFeed(base.LocalName, this.gameObject.name, "HeatShot! [" + m_weapon + "]", myTeam, 6, 30);
-        }
 
         //Add a new kill and update information
         PhotonNetwork.player.PostKill(1);//Send a new kill
@@ -565,9 +487,6 @@ public class bl_PlayerDamageManager : bl_PhotonHelper
         DamageEnabled = false;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public static float Seno(float rate, float amp, float offset = 0.0f)
     {
         return (Mathf.Cos((Time.time + offset) * rate) * amp);
@@ -578,13 +497,9 @@ public class bl_PlayerDamageManager : bl_PhotonHelper
         get
         {
             if (Skin != null)
-            {
                 return Skin.customStyles[2];
-            }
             else
-            {
                 return null;
-            }
         }
     }
 
@@ -593,13 +508,9 @@ public class bl_PlayerDamageManager : bl_PhotonHelper
         get
         {
             if (this.GetComponent<bl_DamageIndicator>() != null)
-            {
                 return this.transform.GetComponent<bl_DamageIndicator>();
-            }
             else
-            {
                 return null;
-            }
         }
     }
 

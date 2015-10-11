@@ -24,45 +24,26 @@ public class bl_Crosshair : MonoBehaviour
     private float bottom_y;
     private Color mColor = new Color(1, 1, 1, 1);
 
-    /// <summary>
-    /// 
-    /// </summary>
     void Start()
     {
         if (this.crosshair_top != null)
-        {
             this.top_y = this.crosshair_top.rectTransform.anchoredPosition.y;
-        }
         if (this.crosshair_bottom != null)
-        {
             this.bottom_y = this.crosshair_bottom.rectTransform.anchoredPosition.y;
-        }
         if (this.crosshair_left != null)
-        {
             this.left_x = this.crosshair_left.rectTransform.anchoredPosition.x;
-        }
         if (this.crosshair_right != null)
-        {
             this.right_x = this.crosshair_right.rectTransform.anchoredPosition.x;
-        }
     }
-    /// <summary>
-    /// 
-    /// </summary>
+
     void Active()
     {
         if (bl_GameManager.isAlive == false || mCurrentGun.typeOfGun == bl_Gun.weaponType.Launcher)
-        {
             CrossRoot.SetActive(false);
-        }
         else
-        {
             CrossRoot.SetActive(true);
-        }
     }
-    /// <summary>
-    /// 
-    /// </summary>
+
     void Update()
     {
         if (GManager == null)
@@ -106,24 +87,18 @@ public class bl_Crosshair : MonoBehaviour
             this.crosshair_right.rectTransform.anchoredPosition = mPosition;
         }
     }
-    /// <summary>
-    /// 
-    /// </summary>
+
     void FadeUpdate()
     {
         if (mCurrentGun.isAmed)
         {
             if (alpha != 0)
-            {
                 alpha = Mathf.Lerp(alpha, 0f, Time.deltaTime * FadeSpeed);
-            }
         }
         else
         {
             if (alpha != 1f)
-            {
                 alpha = Mathf.Lerp(alpha, 1f, Time.deltaTime * FadeSpeed);
-            }
         }
 
         mColor.a = alpha;
@@ -133,9 +108,6 @@ public class bl_Crosshair : MonoBehaviour
         crosshair_top.color = mColor;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     private bl_GunManager weaponManager;
     private bl_GunManager m_GunManager
     {
@@ -145,24 +117,15 @@ public class bl_Crosshair : MonoBehaviour
             if (weaponManager == null)
             {
                 if (GManager.OurPlayer != null)
-                {
                     gm = GManager.OurPlayer.GetComponentInChildren<bl_GunManager>();
-                }
                 if (gm != null)
-                {
                     weaponManager = gm;
-                }
             }
             else
-            {
                 gm = weaponManager;
-            }
             return gm;
         }
     }
-    /// <summary>
-    /// 
-    /// </summary>
 
     private bl_Gun mCurrentGun
     {
@@ -175,9 +138,6 @@ public class bl_Crosshair : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     private CharacterController mCharacterController
     {
         get

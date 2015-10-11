@@ -1,9 +1,6 @@
-﻿/////////////////////////////////////////////////////////////////////////////////
-//////////////////// bl_EventHandler.cs/////////////////////////////////////////
+﻿//////////////////// bl_EventHandler.cs/////////////////////////////////////////
 ////////////////////Use this to create new internal events///////////////////////
 //this helps to improve the communication of the script through delegated events/
-////////////////////////////////Briner Games/////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////
 using UnityEngine;
 using System.Collections;
 
@@ -103,17 +100,13 @@ public class bl_EventHandler
         if (OnRoundEnd != null)
             OnRoundEnd();
     }
-    /// <summary>
-    /// 
-    /// </summary>
+
     public static void OnSmallImpactEvent()
     {
         if (OnSmallImpact != null)
             OnSmallImpact();
     }
-    /// <summary>
-    /// 
-    /// </summary>
+
     /// <param name="e"></param>
     public static void eDamage(bl_OnDamageInfo e)
     {

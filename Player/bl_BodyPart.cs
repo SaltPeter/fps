@@ -3,9 +3,7 @@
 //
 // This script receives the information of the damage done by another player
 // place it on a gameobject containing a collider in the hierarchy of the remote player
-// use "bl_BodyPartManager.cs" to automatically configure                            
-//                                 Lovatto Studio
-///////////////////////////////////////////////////////////////////////////////////////
+// use "bl_BodyPartManager.cs" to automatically configure                       
 using UnityEngine;
 
 public class bl_BodyPart : MonoBehaviour {
@@ -40,8 +38,6 @@ public class bl_BodyPart : MonoBehaviour {
         e.mFrom = t_from;
 
         if (HealtScript != null)
-        {
             HealtScript.GetDamage(e);
-        }
     }
 }

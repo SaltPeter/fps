@@ -1,7 +1,5 @@
-/////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////bl_GameManager.cs//////////////////////////////////
 /////////////////place this in a scena for Spawn Players in Room/////////////////
-/////////////////////////////////////////////////////////////////////////////////
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
@@ -45,19 +43,12 @@ public class bl_GameManager : bl_PhotonHelper {
     /// Spawn Points for TDM Team2
     /// </summary>
     public Transform[] DeltaSpawnPoint;
-    [Space(5)]
-    public GameObject KillZoneUI = null;
-    public static GameObject KillZone = null;
 
-    /// <summary>
-    /// 
-    /// </summary>
     protected override void Awake()
     {
         base.Awake();
         PhotonNetwork.isMessageQueueRunning = true;
         SuicideCount = 0;
-        KillZone = KillZoneUI;
     }
 
     /// <summary>
@@ -74,7 +65,6 @@ public class bl_GameManager : bl_PhotonHelper {
             Hashtable PlayerTeam = new Hashtable();
             PlayerTeam.Add("Team", t_team.ToString());
             PhotonNetwork.player.SetCustomProperties(PlayerTeam);
-
 
             if (t_team == Team.Recon)
                 OurPlayer = PhotonNetwork.Instantiate(Player_Team_1.name, GetSpawn(ReconSpawnPoint), Quaternion.identity, 0);
@@ -100,9 +90,7 @@ public class bl_GameManager : bl_PhotonHelper {
         if (OurPlayer != null)
             PhotonNetwork.Destroy(OurPlayer);
     }
-    /// <summary>
-    /// 
-    /// </summary>
+
     /// <param name="list"></param>
     /// <returns></returns>
     public Vector3 GetSpawn(Transform[] list)

@@ -1,11 +1,7 @@
-﻿//////////////////////////////////////////////////////////////////
-// bl_BodyPartManager.cs
-//
+﻿// bl_BodyPartManager.cs
 // This script helps us manage our remote player hitboxes
 // mind just place it in the root of the remote player
 // and executes the last two options of the "ContextMenu" component. 
-//                       Lovatto Studio
-//////////////////////////////////////////////////////////////////
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;

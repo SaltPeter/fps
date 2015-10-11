@@ -1,9 +1,5 @@
-﻿/////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////bl_AFKDectect.cs/////////////////////////////////
+﻿////////////////////////////////bl_AFKDectect.cs/////////////////////////////////
 //Use this to prevent AFK players in your game,and avoids a power level (if any)/
-/////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////Briner Games/////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////
 using UnityEngine;
 using System.Collections;
 
@@ -18,16 +14,11 @@ public class bl_AFKDectect : bl_PhotonHelper {
     private Vector3 oldMousePosition = Vector3.zero;
     private bool m_showAFKmsn;
 
-    /// <summary>
-    /// 
-    /// </summary>
     void Update()
     {
         //if no movement or action of the player is detected, then start again
         if ((PhotonNetwork.player == null || Input.anyKey) || ((this.oldMousePosition != Input.mousePosition) ))
-        {
             this.m_lastInputTime = Time.time;
-        }
         this.oldMousePosition = Input.mousePosition;
         //show message now?
         this.m_showAFKmsn = ((this.m_lastInputTime + m_AFKTime) - 10f) < Time.time;
@@ -37,18 +28,12 @@ public class bl_AFKDectect : bl_PhotonHelper {
             Debug.Log("AFK Detect");
             bl_UtilityHelper.LockCursor(false);
             if (PhotonNetwork.connected)
-            {
                 PhotonNetwork.LeaveRoom();
-            }
             else
-            {
                 Application.LoadLevel(0);
-            }
         }
     }
-    /// <summary>
-    /// 
-    /// </summary>
+
     void OnGUI()
     {
        GUI.skin = this.Skin;

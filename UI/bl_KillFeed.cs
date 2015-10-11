@@ -30,9 +30,6 @@ public class bl_KillFeed : bl_PhotonHelper {
     private List<string> KillNotify = new List<string>();
     private List<float> Notify_Time = new List<float>();
 
-    /// <summary>
-    /// 
-    /// </summary>
     protected override void Awake()
     {
         setting = this.GetComponent<bl_SettingPropiertis>();
@@ -41,17 +38,13 @@ public class bl_KillFeed : bl_PhotonHelper {
             OnJoined();
         }
     }
-    /// <summary>
-    /// 
-    /// </summary>
+
     void OnEnable()
     {
         bl_EventHandler.OnKillFeed += this.OnKillFeed;
         bl_EventHandler.OnKill += this.NewKill;
     }
-    /// <summary>
-    /// 
-    /// </summary>
+
     void OnDisable()
     {
         bl_EventHandler.OnKillFeed -= this.OnKillFeed;
@@ -182,9 +175,7 @@ public class bl_KillFeed : bl_PhotonHelper {
         m_KillFeed.Add(new KillFeed(t_Killer, t_Killed, t_HowKill, t_GunID, KillerColor, KilledColor, t_Timer));
        
         if (m_KillFeed.Count > MaxNotify)
-        {
             m_KillFeed.RemoveAt(0);
-        }
     }
     /// <summary>
     /// 
@@ -195,14 +186,10 @@ public class bl_KillFeed : bl_PhotonHelper {
     {
         bool b = false;
         if (n == LocalName)
-        {
             b = true;
-        }
         return b;
     }
-    /// <summary>
-    /// 
-    /// </summary>
+
     void LocalKillGUI()
     {
         GUILayout.BeginArea(new Rect(Screen.width / 2 - 75, Screen.height / 2 - 100, 300, 400));

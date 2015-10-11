@@ -5,10 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Random = UnityEngine.Random;
 
-public class bl_PhotonConnection : Photon.MonoBehaviour
-{
-
-
+public class bl_PhotonConnection : Photon.MonoBehaviour {
     private LobbyState m_state = LobbyState.PlayerName;
     private string playerName;
     private string hostName; //Name of room
@@ -74,11 +71,7 @@ public class bl_PhotonConnection : Photon.MonoBehaviour
     private List<GameObject> CacheRoomList = new List<GameObject>();
     private int CurrentScene = 0;
 
-    /// <summary>
-    /// 
-    /// </summary>
-    void Awake()
-    {
+    void Awake() {
         // this makes sure we can use PhotonNetwork.LoadLevel() on the master client and all clients in the same room sync their level automatically
         PhotonNetwork.automaticallySyncScene = true;
         PhotonNetwork.autoJoinLobby = true;
@@ -100,9 +93,7 @@ public class bl_PhotonConnection : Photon.MonoBehaviour
         {
             StartCoroutine(Fade(LobbyState.MainMenu, 1.2f));
             if (!PhotonNetwork.connected)
-            {
                 ConnectPhoton();
-            }
             ChangeWindow(2, 1);
         }
         SetUpOptionsHost();
@@ -110,9 +101,6 @@ public class bl_PhotonConnection : Photon.MonoBehaviour
         GetPrefabs();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     /// <param name="t_state"></param>
     /// <returns></returns>
     IEnumerator Fade(LobbyState t_state, float t = 2.0f)
@@ -126,9 +114,7 @@ public class bl_PhotonConnection : Photon.MonoBehaviour
             yield return null;
         }
     }
-    /// <summary>
-    /// 
-    /// </summary>
+
     void ConnectPhoton()
     {
         // the following line checks if this client was just created (and not yet online). if so, we connect
@@ -139,16 +125,11 @@ public class bl_PhotonConnection : Photon.MonoBehaviour
             ChangeWindow(3);
         }
     }
-    /// <summary>
-    /// 
-    /// </summary>
-    void UpdateServerList()
-    {
+
+    void UpdateServerList() {
         ServerList();
     }
-    /// <summary>
-    /// 
-    /// </summary>
+
     void FixedUpdate()
     {
         if (PhotonNetwork.connected)
@@ -162,18 +143,13 @@ public class bl_PhotonConnection : Photon.MonoBehaviour
 
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void ServerList()
     {
         //Removed old list
         if (CacheRoomList.Count > 0)
         {
             foreach (GameObject g in CacheRoomList)
-            {
                 Destroy(g);
-            }
             CacheRoomList.Clear();
         }
         //Update List
@@ -200,7 +176,6 @@ public class bl_PhotonConnection : Photon.MonoBehaviour
     /// </summary>
     public void EnterName(InputField field = null)
     {
-
         if (field == null || string.IsNullOrEmpty(field.text))
             return;
 
@@ -212,10 +187,7 @@ public class bl_PhotonConnection : Photon.MonoBehaviour
 
         PhotonNetwork.playerName = playerName;
         ConnectPhoton();
-
     }
-
-
 
     #region UGUI
     /// <summary>
@@ -226,9 +198,7 @@ public class bl_PhotonConnection : Photon.MonoBehaviour
     {
         ChangeWindow(id, -1);
     }
-    /// <summary>
-    /// 
-    /// </summary>
+
     /// <param name="id"></param>
     public void ChangeWindow(int id, int id2)
     {
@@ -236,25 +206,17 @@ public class bl_PhotonConnection : Photon.MonoBehaviour
         for (int i = 0; i < MenusUI.Count; i++)
         {
             if (i == id || i == id2)
-            {
                 MenusUI[i].SetActive(true);
-            }
             else
             {
                 if (i != 1)//1 = mainmenu buttons
-                {
                     MenusUI[i].SetActive(false);
-                }
                 if (id == 6 || id == 8)
-                {
                     MenusUI[1].SetActive(false);
-                }
             }
         }
         if (a_Click != null)
-        {
             AudioSource.PlayClipAtPoint(a_Click, this.transform.position, 1.0f);
-        }
     }
 
     public void Disconect()
@@ -302,9 +264,7 @@ public class bl_PhotonConnection : Photon.MonoBehaviour
             Debug.LogWarning("Need your AppId for changer server, please add it in inspector");
         }
     }
-    /// <summary>
-    /// 
-    /// </summary>
+
     /// <param name="plus"></param>
     public void ChangeMaxPlayer(bool plus)
     {
@@ -340,10 +300,7 @@ public class bl_PhotonConnection : Photon.MonoBehaviour
             {
                 r_Time--;
                 if (r_Time < 0)
-                {
                     r_Time = RoomTime.Length - 1;
-
-                }
             }
         }
         else
@@ -352,19 +309,12 @@ public class bl_PhotonConnection : Photon.MonoBehaviour
             {
                 r_Time++;
                 if (r_Time > (RoomTime.Length - 1))
-                {
                     r_Time = 0;
-
-                }
-
             }
         }
         RoundTimeText.text = (RoomTime[r_Time] / 60) + " Minutes";
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     /// <param name="plus"></param>
     public void ChangeGameMode(bool plus)
     {
@@ -374,9 +324,7 @@ public class bl_PhotonConnection : Photon.MonoBehaviour
             {
                 CurrentGameMode++;
                 if (CurrentGameMode > (GameModes.Length - 1))
-                {
                     CurrentGameMode = 0;
-                }
             }
         }
         else
@@ -385,18 +333,12 @@ public class bl_PhotonConnection : Photon.MonoBehaviour
             {
                 CurrentGameMode--;
                 if (CurrentGameMode < 0)
-                {
                     CurrentGameMode = GameModes.Length - 1;
-
-                }
             }
         }
         GameModeText.text = GameModes[CurrentGameMode];
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     /// <param name="plus"></param>
     public void ChangeMap(bool plus)
     {
@@ -406,10 +348,7 @@ public class bl_PhotonConnection : Photon.MonoBehaviour
             {
                 CurrentScene--;
                 if (CurrentScene < 0)
-                {
                     CurrentScene = m_scenes.Count - 1;
-
-                }
             }
         }
         else
@@ -418,9 +357,7 @@ public class bl_PhotonConnection : Photon.MonoBehaviour
             {
                 CurrentScene++;
                 if (CurrentScene > (m_scenes.Count - 1))
-                {
                     CurrentScene = 0;
-                }
             }
         }
         MapNameText.text = m_scenes[CurrentScene].m_name;
@@ -435,10 +372,7 @@ public class bl_PhotonConnection : Photon.MonoBehaviour
             {
                 m_stropic--;
                 if (m_stropic < 0)
-                {
                     m_stropic = m_stropicOptions.Length - 1;
-
-                }
             }
         }
         else
@@ -447,9 +381,7 @@ public class bl_PhotonConnection : Photon.MonoBehaviour
             {
                 m_stropic++;
                 if (m_stropic > (m_stropicOptions.Length - 1))
-                {
                     m_stropic = 0;
-                }
             }
         }
         AntiStrpicText.text = m_stropicOptions[m_stropic];
@@ -463,10 +395,7 @@ public class bl_PhotonConnection : Photon.MonoBehaviour
             {
                 m_currentQuality--;
                 if (m_currentQuality < 0)
-                {
                     m_currentQuality = QualitySettings.names.Length - 1;
-
-                }
             }
         }
         else
@@ -475,17 +404,12 @@ public class bl_PhotonConnection : Photon.MonoBehaviour
             {
                 m_currentQuality++;
                 if (m_currentQuality > (QualitySettings.names.Length - 1))
-                {
                     m_currentQuality = 0;
-                }
             }
         }
         QualityText.text = QualitySettings.names[m_currentQuality];
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     /// <param name="b"></param>
     public void QuitGame(bool b)
     {
@@ -506,9 +430,7 @@ public class bl_PhotonConnection : Photon.MonoBehaviour
     public void ChangeRoomName(string t) { hostName = t; }
     public void ChangeVolume(float v) { m_volume = v; VolumenText.text = (m_volume * 100).ToString("00") + "%"; }
     public void ChangeSensitivity(float s) { m_sensitive = s; SensitivityText.text = m_sensitive.ToString("00") + "%"; }
-    /// <summary>
-    /// 
-    /// </summary>
+
     void SetUpOptionsHost()
     {
         MaxPlayerText.text = maxPlayers[players] + " Players";
@@ -531,11 +453,6 @@ public class bl_PhotonConnection : Photon.MonoBehaviour
     }
     #endregion
 
-
-
-    /// <summary>
-    /// 
-    /// </summary>
     public void CreateRoom()
     {
         PhotonNetwork.player.name = playerName;
@@ -565,9 +482,6 @@ public class bl_PhotonConnection : Photon.MonoBehaviour
         }, null);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     /// <param name="clip"></param>
     /// <param name="position"></param>
     /// <param name="volume"></param>
@@ -583,17 +497,13 @@ public class bl_PhotonConnection : Photon.MonoBehaviour
         Destroy(go, clip.length);
         return source;
     }
-    /// <summary>
-    /// 
-    /// </summary>
+
     /// <returns></returns>
     private IEnumerator MoveToGameScene()
     {
         //Wait for check
         while (PhotonNetwork.room == null)
-        {
             yield return 0;
-        }
         PhotonNetwork.isMessageQueueRunning = false;
         Application.LoadLevel((string)PhotonNetwork.room.customProperties[PropiertiesKeys.SceneNameKey]);
     }
@@ -650,26 +560,18 @@ public class bl_PhotonConnection : Photon.MonoBehaviour
             m_sensitive = PlayerPrefs.GetFloat("sensitive");
         }
         if (PlayerPrefs.HasKey("quality"))
-        {
             m_currentQuality = PlayerPrefs.GetInt("quality");
-        }
         if (PlayerPrefs.HasKey("anisotropic"))
-        {
             m_stropic = PlayerPrefs.GetInt("anisotropic");
-        }
     }
 
     private int GetButtonSize(LobbyState t_state)
     {
 
         if (m_state == t_state)
-        {
             return 55;
-        }
         else
-        {
             return 40;
-        }
     }
 
     [System.Serializable]
