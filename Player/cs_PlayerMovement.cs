@@ -1,4 +1,12 @@
-﻿using UnityEngine;
+/*
+TODO:
+	- Implement crouching, walking, sprinting, idling
+	- Make a gravity system that uses independently determined gravity, and standalone jumping
+	- Add double jump
+	- Add wallclimb
+	- Add slope fall (if the slope is too steep, fall)
+*/
+using UnityEngine;
 using System.Collections;
 
 public class cs_PlayerMovement : MonoBehaviour {
@@ -13,7 +21,6 @@ public class cs_PlayerMovement : MonoBehaviour {
 
 	bool isGrounded = false;
 	bool isFirstGroundFrame = false;
-
 
 	void FixedUpdate() {
 		//isGrounded = Physics.CheckSphere(groundCheck.transform.position, 0.1f, groundLayer);
@@ -42,11 +49,9 @@ public class cs_PlayerMovement : MonoBehaviour {
 	}
 
 	void Crouch() {
-
 	}
 
 	void Stand() {
-
 	}
 
 	private Vector3 Accelerate(Vector3 accelDir, Vector3 prevVelocity, float accelerate, float max_velocity) {
