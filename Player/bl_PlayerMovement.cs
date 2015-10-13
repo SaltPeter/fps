@@ -109,10 +109,8 @@ public class bl_PlayerMovement : MonoBehaviour {
 		this.vel = this.controller.velocity;
 		this.velMagnitude = this.vel.magnitude;
 
-		float inputX = Input.GetAxis("Horizontal");
-		float inputY = Input.GetAxis("Vertical");
-
-		float inputModifyFactor = (inputX != 0.0f && inputY != 0.0f) ? .7071f : 1.0f;
+		Vector2 input = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+		float inputModifyFactor = (input.x != 0.0f && input.y != 0.0f) ? .7071f : 1.0f;
 
 		if (grounded) {
 			bool sliding = false;
@@ -171,7 +169,7 @@ public class bl_PlayerMovement : MonoBehaviour {
 						this.state = 0;
 				}
 				if (bl_UtilityHelper.GetCursorState)
-					moveDirection = new Vector3(inputX * inputModifyFactor, -antiBumpFactor, inputY * inputModifyFactor);
+					moveDirection = new Vector3(input.x * inputModifyFactor, -antiBumpFactor, input.y * inputModifyFactor);
 				else
 					moveDirection = new Vector3(0, -antiBumpFactor, 0);
 
@@ -207,8 +205,8 @@ public class bl_PlayerMovement : MonoBehaviour {
 			}
 			// If air control is allowed, check movement but don't touch the y component
 			if (airControl && playerControl) {
-				moveDirection.x = inputX * speed * inputModifyFactor;
-				moveDirection.z = inputY * speed * inputModifyFactor;
+				moveDirection.x = input.x * speed * inputModifyFactor;
+				moveDirection.z = input.y * speed * inputModifyFactor;
 				moveDirection = myTransform.TransformDirection(moveDirection);
 			}
 			if (Input.GetKeyDown(JumpKey) && canSecond && CanSuperJump) {
