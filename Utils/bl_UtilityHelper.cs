@@ -1,12 +1,10 @@
-﻿/////////////////////////////bl_UtilityHelper.cs/////////////////////////////////
-///////This is a helper script that contains multiple and useful functions///////
+﻿//bl_UtilityHelper.cs - Helper script that contains multiple useful functions
 using UnityEngine;
 using System.Collections;
 
 public class bl_UtilityHelper {
     /// Call this to capture a custom, screenshot
-    public static Texture2D CaptureCustomScreenshot(int width, int height)
-    {
+    public static Texture2D CaptureCustomScreenshot(int width, int height) {
         UnityEngine.Texture2D textured = new UnityEngine.Texture2D(width, height, UnityEngine.TextureFormat.RGB24, true, false);
         textured.ReadPixels(new UnityEngine.Rect(0f, 0f, (float)width, (float)height), 0, 0);
         int miplevel = UnityEngine.Screen.width / 800;
@@ -17,24 +15,21 @@ public class bl_UtilityHelper {
     }
 
     /// Call this to capture a screenshot Automatic size
-    public static byte[] CaptureScreenshot()
-    {
+    public static byte[] CaptureScreenshot() {
         UnityEngine.Texture2D textured = new UnityEngine.Texture2D(UnityEngine.Screen.width, UnityEngine.Screen.height, UnityEngine.TextureFormat.RGB24, false, false);
         textured.ReadPixels(new UnityEngine.Rect(0f, 0f, (float)UnityEngine.Screen.width, (float)UnityEngine.Screen.height), 0, 0);
         return textured.EncodeToPNG();
     }
 
     /// Call this to capture a custom size screenshot
-    public static byte[] CaptureScreenshot(int width, int height)
-    {
+    public static byte[] CaptureScreenshot(int width, int height) {
         Texture2D textured = new Texture2D(width, height, UnityEngine.TextureFormat.RGB24, false, false);
         textured.ReadPixels(new UnityEngine.Rect(0f, 0f, (float)width, (float)height), 0, 0);
         return textured.EncodeToPNG();
     }
 
     /// change the parent of an object to another
-    public static void ChangeParent(UnityEngine.Transform target, UnityEngine.Transform parent)
-    {
+    public static void ChangeParent(UnityEngine.Transform target, UnityEngine.Transform parent) {
         Vector3 localPosition = target.localPosition;
         Quaternion localRotation = target.localRotation;
         Vector3 localScale = target.localScale;
@@ -45,8 +40,7 @@ public class bl_UtilityHelper {
     }
 
     /// change the parent of an object to another in word
-    public static void ChangeParentWorld(UnityEngine.Transform target, UnityEngine.Transform parent)
-    {
+    public static void ChangeParentWorld(UnityEngine.Transform target, UnityEngine.Transform parent) {
         Vector3 position = target.position;
         Quaternion rotation = target.rotation;
         target.parent = parent;
@@ -55,8 +49,7 @@ public class bl_UtilityHelper {
     }
 
     /// Get ClampAngle
-    public static float ClampAngle(float ang, float min, float max)
-    {
+    public static float ClampAngle(float ang, float min, float max) {
         if (ang < -360f)
             ang += 360f;
         if (ang > 360f)
@@ -65,18 +58,15 @@ public class bl_UtilityHelper {
     }
 
     /// obtained, the magnitude of a certain position and another
-    public static float DistancePointLine(Vector3 point, Vector3 lineStart, Vector3 lineEnd)
-    {
+    public static float DistancePointLine(Vector3 point, Vector3 lineStart, Vector3 lineEnd) {
         return Vector3.Magnitude(ProjectPointLine(point, lineStart, lineEnd) - point);
     }
 
     /// locate an object hierarchy by name
-    public static Transform FindHierarchy(Transform current, string name)
-    {
+    public static Transform FindHierarchy(Transform current, string name) {
         if (current.name == name)
             return current;
-        for (int i = 0; i < current.childCount; i++)
-        {
+        for (int i = 0; i < current.childCount; i++) {
             UnityEngine.Transform transform = FindHierarchy(current.GetChild(i), name);
             if (transform != null)
                 return transform;
@@ -85,14 +75,12 @@ public class bl_UtilityHelper {
     }
 
     /// obtained the period of a value
-    public static float Period(float period, float k = 1f)
-    {
+    public static float Period(float period, float k = 1f) {
         float t = Time.realtimeSinceStartup * k;
         return (t - (((int)(t / period)) * period));
     }
 
-    public static Vector3 ProjectPointLine(Vector3 point, Vector3 lineStart, Vector3 lineEnd)
-    {
+    public static Vector3 ProjectPointLine(Vector3 point, Vector3 lineStart, Vector3 lineEnd) {
         UnityEngine.Vector3 rhs = point - lineStart;
         UnityEngine.Vector3 vector2 = lineEnd - lineStart;
         float magnitude = vector2.magnitude;
@@ -104,41 +92,33 @@ public class bl_UtilityHelper {
     }
 
     /// Obtained distance between two positions.
-    public static float GetDistance(Vector3 posA, Vector3 posB)
-    {
+    public static float GetDistance(Vector3 posA, Vector3 posB) {
         return Vector3.Distance(posA, posB);
     }
 
-    public static GameObject GetGameObjectView(PhotonView m_view)
-    {
+    public static GameObject GetGameObjectView(PhotonView m_view) {
         GameObject go = PhotonView.Find(m_view.viewID).gameObject;
         return go;
     }
 
     /// obtain only the first two values
-    public static string GetDoubleChar(float f)
-    {
+    public static string GetDoubleChar(float f) {
         return f.ToString("00");
     }
 
     /// obtain only the first three values
-    public static string GetThreefoldChar(float f)
-    {
+    public static string GetThreefoldChar(float f) {
         return f.ToString("000");
     }
 
-    public static string GetTimeFormat(float m, float s)
-    {
+    public static string GetTimeFormat(float m, float s) {
         return string.Format("{0:00}:{1:00}", m, s);
     }
 
-    public static float ComputeVolume(UnityEngine.Collider coll)
-    {
-        if (coll != null)
-        {
+    public static float ComputeVolume(UnityEngine.Collider coll) {
+        if (coll != null) {
             UnityEngine.CapsuleCollider collider = coll as UnityEngine.CapsuleCollider;
-            if (collider != null)
-            {
+            if (collider != null) {
                 UnityEngine.Vector3 lossyScale = collider.transform.lossyScale;
                 float num = collider.height * lossyScale.y;
                 float num2 = collider.radius * UnityEngine.Mathf.Max(lossyScale.x, lossyScale.z);
@@ -148,16 +128,14 @@ public class bl_UtilityHelper {
                 return (num4 + num5);
             }
             UnityEngine.SphereCollider collider2 = coll as UnityEngine.SphereCollider;
-            if (collider2 != null)
-            {
+            if (collider2 != null) {
                 UnityEngine.Vector3 vector2 = collider2.transform.lossyScale;
                 float[] values = new float[] { vector2.x, vector2.y, vector2.z };
                 float num6 = collider2.radius * UnityEngine.Mathf.Max(values);
                 return (4.18879f * ((num6 * num6) * num6));
             }
             UnityEngine.BoxCollider collider3 = coll as UnityEngine.BoxCollider;
-            if (collider3 != null)
-            {
+            if (collider3 != null) {
                 UnityEngine.Vector3 vector3 = collider3.transform.lossyScale;
                 UnityEngine.Vector3 size = collider3.size;
                 return (((size.x * vector3.x) * (size.y * vector3.y)) * (size.z * vector3.z));
@@ -167,15 +145,13 @@ public class bl_UtilityHelper {
         return 0f;
     }
 
-    public static Vector3 CorrectForceSize(UnityEngine.Vector3 force)
-    {
+    public static Vector3 CorrectForceSize(UnityEngine.Vector3 force) {
         float num = (1.2f / Time.timeScale) - 0.2f;
         force = (UnityEngine.Vector3)(force * num);
         return force;
     }
 
-    public static void ShadowLabel(string text, params GUILayoutOption[] option)
-    {
+    public static void ShadowLabel(string text, params GUILayoutOption[] option) {
         Color color = GUI.color;
         Color black = Color.black;
         black.a = color.a;
@@ -187,13 +163,11 @@ public class bl_UtilityHelper {
         GUI.color = color;
         GUI.Label(lastRect, text);
     }
-    public static void ShadowLabel(UnityEngine.Rect rect, string text)
-    {
+    public static void ShadowLabel(UnityEngine.Rect rect, string text) {
         ShadowLabel(rect, text, null);
     }
 
-    public static void ShadowLabel(string text, UnityEngine.GUIStyle style, params UnityEngine.GUILayoutOption[] option)
-    {
+    public static void ShadowLabel(string text, UnityEngine.GUIStyle style, params UnityEngine.GUILayoutOption[] option) {
         UnityEngine.Color color = UnityEngine.GUI.color;
         UnityEngine.Color black = UnityEngine.Color.black;
         black.a = color.a;
@@ -206,8 +180,7 @@ public class bl_UtilityHelper {
         UnityEngine.GUI.Label(lastRect, text, style);
     }
 
-    public static void ShadowLabel(UnityEngine.Rect rect, string text, UnityEngine.GUIStyle style)
-    {
+    public static void ShadowLabel(UnityEngine.Rect rect, string text, UnityEngine.GUIStyle style) {
         UnityEngine.Rect position = new UnityEngine.Rect(rect.x + 1f, rect.y + 1f, rect.width, rect.height);
         UnityEngine.Color color = UnityEngine.GUI.color;
         UnityEngine.Color color2 = !(color == UnityEngine.Color.black) ? UnityEngine.Color.black : UnityEngine.Color.white;
@@ -226,15 +199,12 @@ public class bl_UtilityHelper {
 
     /// Helper for Cursor locked in Unity 5
     /// <param name="mLock">cursor state</param>
-    public static void LockCursor(bool mLock)
-    {
-        if (mLock == true)
-        {
+    public static void LockCursor(bool mLock) {
+        if (mLock == true) {
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
         }
-        else
-        {
+        else {
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
         }
@@ -252,8 +222,7 @@ public class bl_UtilityHelper {
     }
 
     // The angle between dirA and dirB around axis
-    public static float AngleAroundAxis(Vector3 dirA, Vector3 dirB, Vector3 axis)
-    {
+    public static float AngleAroundAxis(Vector3 dirA, Vector3 dirB, Vector3 axis) {
         // Project A and B onto the plane orthogonal target axis
         dirA = dirA - Vector3.Project(dirA, axis);
         dirB = dirB - Vector3.Project(dirB, axis);
@@ -265,17 +234,14 @@ public class bl_UtilityHelper {
         return angle * (Vector3.Dot(axis, Vector3.Cross(dirA, dirB)) < 0 ? -1 : 1);
     }
 
-    public static bl_GameManager GetGameManager
-    {
-        get
-        {
+    public static bl_GameManager GetGameManager {
+        get {
             bl_GameManager g = GameObject.FindWithTag("GameManager").GetComponent<bl_GameManager>();
             return g;
         }
     }
 
-    public static void PlayClipAtPoint(AudioClip clip,Vector3 position,float volume,AudioSource sourc)
-    {
+    public static void PlayClipAtPoint(AudioClip clip,Vector3 position,float volume,AudioSource sourc) {
         GameObject obj2 = new GameObject("One shot audio")
         {
             transform = { position = position }
