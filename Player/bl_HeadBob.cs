@@ -57,7 +57,7 @@ public class bl_HeadBob : MonoBehaviour {
      * Land detection - Done
      * Pos Share?
      */
-    // Use this for initialization
+
     void Start()
     {
         originalLocalPos = head.localPosition;
@@ -72,7 +72,6 @@ public class bl_HeadBob : MonoBehaviour {
         DefaultFrequemcy = headBobFrequency;
     }
 
-    // Update is called once per frame
     void FixedUpdate()
     {
         // we use the actual distance moved as the velocity since last frame, rather than reading
