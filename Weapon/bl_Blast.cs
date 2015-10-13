@@ -1,5 +1,4 @@
-﻿// bl_Blast.cs
-// This contain the logic of the explosions determines the objectives that are punished, and calculates the precise damage
+﻿// bl_Blast.cs - Contains the logic of the explosions determines the objectives that are punished, and calculates the precise damage
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
@@ -18,8 +17,7 @@ public class bl_Blast : bl_PhotonHelper {
     public bool isNetwork = false;
 
     /// is not remote take damage
-    void Start()
-    {
+    void Start() {
         if (!isNetwork)
         {
             ApplyDamage();
@@ -72,9 +70,8 @@ public class bl_Blast : bl_PhotonHelper {
         }
     }
 
-    /// calculate the damage it generates, based on the distance
-    /// between the player and the explosion
-    private int CalculatePlayerDamage(PhotonPlayer p)
+	// Calculates damage taken based on distance between player and explosion
+	private int CalculatePlayerDamage(PhotonPlayer p)
     {
         if ((string)p.customProperties[PropiertiesKeys.TeamKey] == myTeam)
             return 0;
