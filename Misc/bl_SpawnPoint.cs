@@ -2,15 +2,12 @@
 using System.Collections;
 
 public class bl_SpawnPoint : MonoBehaviour {
-
     public Team m_Team = Team.All;
     public float SpawnSpace = 3f;
-	// Use this for initialization
+
 	void Start () {
         if (this.transform.GetComponent<Renderer>() != null)
-        {
             this.GetComponent<Renderer>().enabled = false;
-        }
 	}
     //Debug Spawn Spcae
     void OnDrawGizmos()

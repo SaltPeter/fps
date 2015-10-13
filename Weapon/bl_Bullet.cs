@@ -169,8 +169,6 @@ public class bl_Bullet : MonoBehaviour
                 return;
         }
 
-        
-
         GameObject newBulletHole = Instantiate(bulletHoleObject, contact, rotation) as GameObject;
         newBulletHole.GetComponent<Renderer>().material.SetTexture("_MainTex", useTexture);
 
@@ -204,9 +202,7 @@ public class bl_Bullet : MonoBehaviour
             for (int i = 0; i < hits.Length; i++)
             {
                 RaycastHit hit = hits[i];
-                
                 newPos = hit.point;
-                
                 OnHit(hit);
                 
                 if (hitCount >= maxHits)
@@ -221,9 +217,7 @@ public class bl_Bullet : MonoBehaviour
         if (Physics.Raycast(newPos, -dir, out hit2, dist)) // send a ray behind the bullet to check for exit impact
         {   
             if ((!hasHit))// && (hit2.transform != owner.transform))
-            {
                 OnBackHit(hit2); // send rear impact and check what to do with it
-            }
         }
 
         oldPos = transform.position;  // set old position to current position
@@ -319,12 +313,9 @@ public class bl_Bullet : MonoBehaviour
                 bl_UtilityHelper.PlayClipAtPoint(GenericSound, transform.position, 1.0f, AudioReferences);
                 break;
         }
-       
-        
     }
 
-    void OnBackHit(RaycastHit hit)
-    {
+    void OnBackHit(RaycastHit hit) {
         GameObject go;
 
         switch (hit.transform.tag) // decide what the bullet collided with and what to do with it

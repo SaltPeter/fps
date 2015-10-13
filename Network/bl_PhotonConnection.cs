@@ -60,8 +60,7 @@ public class bl_PhotonConnection : Photon.MonoBehaviour {
     public AudioClip a_Click;
     public AudioClip backSound;
     [Serializable]
-    public class AllScenes
-    {
+    public class AllScenes {
         public string m_name;
         public string m_SceneName;
         public Sprite m_Preview;
@@ -134,20 +133,17 @@ public class bl_PhotonConnection : Photon.MonoBehaviour {
     {
         if (PhotonNetwork.connected)
         {
-            if (ShowPhotonStatus)
-            {
+            if (ShowPhotonStatus) {
                 PhotonStatusText.text = "<b><color=orange>STATUS:</color>  " + PhotonNetwork.connectionStateDetailed.ToString().ToUpper() + "</b>";
                 PlayerNameText.text = "<b><color=orange>PLAYER:</color>  " + PhotonNetwork.player.name + "</b>";
             }
         }
-
     }
 
     public void ServerList()
     {
         //Removed old list
-        if (CacheRoomList.Count > 0)
-        {
+        if (CacheRoomList.Count > 0) {
             foreach (GameObject g in CacheRoomList)
                 Destroy(g);
             CacheRoomList.Clear();
@@ -157,8 +153,7 @@ public class bl_PhotonConnection : Photon.MonoBehaviour {
         if (ri.Length > 0)
         {
             //RoomListText.text = string.Empty;
-            for (int i = 0; i < ri.Length; i++)
-            {
+            for (int i = 0; i < ri.Length; i++) {
                 GameObject r = Instantiate(RoomInfoPrefab) as GameObject;
                 CacheRoomList.Add(r);
                 r.GetComponent<bl_RoomInfo>().GetInfo(ri[i]);
@@ -174,10 +169,8 @@ public class bl_PhotonConnection : Photon.MonoBehaviour {
     /// <summary>
     /// Menu For Enter Name for UI 4.6 WIP
     /// </summary>
-    public void EnterName(InputField field = null)
-    {
-        if (field == null || string.IsNullOrEmpty(field.text))
-            return;
+    public void EnterName(InputField field = null) {
+        if (field == null || string.IsNullOrEmpty(field.text)) return;
 
         playerName = field.text;
         playerName = playerName.Replace("\n", "");
@@ -221,12 +214,9 @@ public class bl_PhotonConnection : Photon.MonoBehaviour {
 
     public void Disconect()
     {
-        if (PhotonNetwork.connected)
-        { PhotonNetwork.Disconnect(); }
+        if (PhotonNetwork.connected) PhotonNetwork.Disconnect();
     }
-    /// <summary>
-    /// 
-    /// </summary>
+
     /// <param name="id"></param>
     public void ChangeServerCloud(int id)
     {
@@ -255,7 +245,6 @@ public class bl_PhotonConnection : Photon.MonoBehaviour {
                 case 4:
                     PhotonNetwork.ConnectToRegion(CloudRegionCode.jp, AppVersion);
                     break;
-
             }
             PlayAudioClip(a_Click, transform.position, 1.0f);
         }
@@ -274,7 +263,6 @@ public class bl_PhotonConnection : Photon.MonoBehaviour {
             {
                 players++;
                 if (players > (maxPlayers.Length - 1)) players = 0;
-
             }
         }
         else
@@ -288,9 +276,6 @@ public class bl_PhotonConnection : Photon.MonoBehaviour {
         MaxPlayerText.text = maxPlayers[players] + " Players";
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     /// <param name="plus"></param>
     public void ChangeRoundTime(bool plus)
     {
@@ -364,21 +349,16 @@ public class bl_PhotonConnection : Photon.MonoBehaviour {
         MapPreviewImage.sprite = m_scenes[CurrentScene].m_Preview;
     }
 
-    public void ChangeAntiStropic(bool plus)
-    {
-        if (!plus)
-        {
-            if (m_stropic < m_stropicOptions.Length)
-            {
+    public void ChangeAntiStropic(bool plus) {
+        if (!plus) {
+            if (m_stropic < m_stropicOptions.Length) {
                 m_stropic--;
                 if (m_stropic < 0)
                     m_stropic = m_stropicOptions.Length - 1;
             }
         }
-        else
-        {
-            if (m_stropic < m_stropicOptions.Length)
-            {
+        else {
+            if (m_stropic < m_stropicOptions.Length) {
                 m_stropic++;
                 if (m_stropic > (m_stropicOptions.Length - 1))
                     m_stropic = 0;
@@ -387,21 +367,16 @@ public class bl_PhotonConnection : Photon.MonoBehaviour {
         AntiStrpicText.text = m_stropicOptions[m_stropic];
     }
 
-    public void ChangeQuality(bool plus)
-    {
-        if (!plus)
-        {
-            if (m_currentQuality < QualitySettings.names.Length)
-            {
+    public void ChangeQuality(bool plus) {
+        if (!plus) {
+            if (m_currentQuality < QualitySettings.names.Length) {
                 m_currentQuality--;
                 if (m_currentQuality < 0)
                     m_currentQuality = QualitySettings.names.Length - 1;
             }
         }
-        else
-        {
-            if (m_currentQuality < QualitySettings.names.Length)
-            {
+        else {
+            if (m_currentQuality < QualitySettings.names.Length) {
                 m_currentQuality++;
                 if (m_currentQuality > (QualitySettings.names.Length - 1))
                     m_currentQuality = 0;
@@ -411,15 +386,12 @@ public class bl_PhotonConnection : Photon.MonoBehaviour {
     }
 
     /// <param name="b"></param>
-    public void QuitGame(bool b)
-    {
-        if (b)
-        {
+    public void QuitGame(bool b) {
+        if (b) {
             Application.Quit();
             Debug.Log("Game Exit, this only work in standalone version");
         }
-        else
-        {
+        else {
             StartCoroutine(Fade(LobbyState.MainMenu, 3.2f));
             ChangeWindow(2, 1);
         }
@@ -431,8 +403,7 @@ public class bl_PhotonConnection : Photon.MonoBehaviour {
     public void ChangeVolume(float v) { m_volume = v; VolumenText.text = (m_volume * 100).ToString("00") + "%"; }
     public void ChangeSensitivity(float s) { m_sensitive = s; SensitivityText.text = m_sensitive.ToString("00") + "%"; }
 
-    void SetUpOptionsHost()
-    {
+    void SetUpOptionsHost() {
         MaxPlayerText.text = maxPlayers[players] + " Players";
         RoundTimeText.text = (RoomTime[r_Time] / 60) + " Minutes";
         GameModeText.text = GameModes[CurrentGameMode];
@@ -443,8 +414,7 @@ public class bl_PhotonConnection : Photon.MonoBehaviour {
         VolumenText.text = (m_volume * 100).ToString("00") + "%";
         QualityText.text = QualitySettings.names[m_currentQuality];
     }
-    public void Save()
-    {
+    public void Save() {
         PlayerPrefs.SetFloat("volumen", m_volume);
         PlayerPrefs.SetFloat("sensitive", m_sensitive);
         PlayerPrefs.SetInt("quality", m_currentQuality);
@@ -453,8 +423,7 @@ public class bl_PhotonConnection : Photon.MonoBehaviour {
     }
     #endregion
 
-    public void CreateRoom()
-    {
+    public void CreateRoom() {
         PhotonNetwork.player.name = playerName;
         //Save Room properties for load in room
         ExitGames.Client.Photon.Hashtable roomOption = new ExitGames.Client.Photon.Hashtable();
@@ -486,8 +455,7 @@ public class bl_PhotonConnection : Photon.MonoBehaviour {
     /// <param name="position"></param>
     /// <param name="volume"></param>
     /// <returns></returns>
-	AudioSource PlayAudioClip(AudioClip clip, Vector3 position, float volume)
-    {
+	AudioSource PlayAudioClip(AudioClip clip, Vector3 position, float volume) {
         GameObject go = new GameObject("One shot audio");
         go.transform.position = position;
         AudioSource source = go.AddComponent<AudioSource>();
@@ -499,8 +467,7 @@ public class bl_PhotonConnection : Photon.MonoBehaviour {
     }
 
     /// <returns></returns>
-    private IEnumerator MoveToGameScene()
-    {
+    private IEnumerator MoveToGameScene() {
         //Wait for check
         while (PhotonNetwork.room == null)
             yield return 0;
@@ -509,54 +476,42 @@ public class bl_PhotonConnection : Photon.MonoBehaviour {
     }
     // LOBBY EVENTS
 
-    void OnJoinedLobby()
-    {
+    void OnJoinedLobby() {
         Debug.Log("We joined the lobby.");
         StartCoroutine(Fade(LobbyState.MainMenu));
         ChangeWindow(2, 1);
-
     }
 
-    void OnLeftLobby()
-    {
+    void OnLeftLobby() {
         Debug.Log("We left the lobby.");
     }
 
     // ROOMLIST
-
-    void OnReceivedRoomList()
-    {
+    void OnReceivedRoomList() {
         Debug.Log("We received a new room list, total rooms: " + PhotonNetwork.GetRoomList().Length);
     }
 
-    void OnReceivedRoomListUpdate()
-    {
+    void OnReceivedRoomListUpdate() {
         Debug.Log("We received a room list update, total rooms now: " + PhotonNetwork.GetRoomList().Length);
     }
 
-    void OnJoinedRoom()
-    {
+    void OnJoinedRoom() {
         Debug.Log("We have joined a room.");
         StartCoroutine(MoveToGameScene());
     }
-    void OnFailedToConnectToPhoton(DisconnectCause cause)
-    {
+    void OnFailedToConnectToPhoton(DisconnectCause cause) {
         Debug.LogWarning("OnFailedToConnectToPhoton: " + cause);
     }
-    void OnConnectionFail(DisconnectCause cause)
-    {
+    void OnConnectionFail(DisconnectCause cause) {
         Debug.LogWarning("OnConnectionFail: " + cause);
     }
 
-    void GetPrefabs()
-    {
-        if (PlayerPrefs.HasKey("volumen"))
-        {
+    void GetPrefabs() {
+        if (PlayerPrefs.HasKey("volumen")) {
             m_volume = PlayerPrefs.GetFloat("volumen");
             AudioListener.volume = m_volume;
         }
-        if (PlayerPrefs.HasKey("sensitive"))
-        {
+        if (PlayerPrefs.HasKey("sensitive")) {
             m_sensitive = PlayerPrefs.GetFloat("sensitive");
         }
         if (PlayerPrefs.HasKey("quality"))
@@ -565,9 +520,7 @@ public class bl_PhotonConnection : Photon.MonoBehaviour {
             m_stropic = PlayerPrefs.GetInt("anisotropic");
     }
 
-    private int GetButtonSize(LobbyState t_state)
-    {
-
+    private int GetButtonSize(LobbyState t_state) {
         if (m_state == t_state)
             return 55;
         else
@@ -575,8 +528,7 @@ public class bl_PhotonConnection : Photon.MonoBehaviour {
     }
 
     [System.Serializable]
-    public enum LobbyType
-    {
+    public enum LobbyType {
         UGUI,
         OnGUI,
     }

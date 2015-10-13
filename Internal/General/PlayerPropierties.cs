@@ -1,22 +1,12 @@
-﻿//////////////////////////////////////////////////////////////////////////////
-// PlayerProperties.cs
-//
+﻿// PlayerProperties.cs
 // this facilitates access to properties 
 // more authoritatively for each photon player, ej: PhotonNetwork.player.GetKills();
-//
-//                       LovattoStudio
-//////////////////////////////////////////////////////////////////////////////
 using UnityEngine;
 using System.Collections;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 static class PlayerProperties
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="player"></param>
-    /// <param name="ScoreToAdd"></param>
     public static void PostScore(this PhotonPlayer player, int ScoreToAdd = 0)
     {
         int current = player.GetPlayerScore();
@@ -27,11 +17,7 @@ static class PlayerProperties
 
         player.SetCustomProperties(score);  // this locally sets the score and will sync it in-game asap.
     }
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="player"></param>
-    /// <returns></returns>
+
     public static int GetPlayerScore(this PhotonPlayer player)
     {
         int s = 0;
@@ -44,11 +30,7 @@ static class PlayerProperties
 
         return s;
     }
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="p"></param>
-    /// <returns></returns>
+
     public static int GetKills(this PhotonPlayer p)
     {
         int k = 0;
@@ -59,11 +41,7 @@ static class PlayerProperties
         }
         return k;
     }
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="p"></param>
-    /// <returns></returns>
+
     public static int GetDeaths(this PhotonPlayer p)
     {
         int d = 0;
@@ -74,11 +52,7 @@ static class PlayerProperties
         }
         return d;
     }
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="p"></param>
-    /// <param name="kills"></param>
+
     public static void PostKill(this PhotonPlayer p, int kills)
     {
         int current = p.GetKills();
@@ -89,11 +63,7 @@ static class PlayerProperties
 
         p.SetCustomProperties(score);  // this locally sets the score and will sync it in-game asap.
     }
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="p"></param>
-    /// <param name="deaths"></param>
+
     public static void PostDeaths(this PhotonPlayer p, int deaths)
     {
         int current = p.GetDeaths();

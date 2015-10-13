@@ -2,9 +2,7 @@
 using System.Collections;
 
 [RequireComponent(typeof(AudioSource))]
-public class bl_NetworkGun : MonoBehaviour
-{
-
+public class bl_NetworkGun : MonoBehaviour {
     public Transform FirePoint;
     public GameObject m_bullet;
     public GameObject m_muzzleFlash;
@@ -53,9 +51,6 @@ public class bl_NetworkGun : MonoBehaviour
         SetUpType();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void SetUpType()
     {
         if (m_upper != null)
@@ -151,10 +146,6 @@ public class bl_NetworkGun : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="active"></param>
     public void DesactiveGrenade(bool active,Material mat)
     {
         if(m_weaponType != bl_Gun.weaponType.Launcher)
@@ -169,10 +160,7 @@ public class bl_NetworkGun : MonoBehaviour
             DesactiveOnOffAmmo.material = (active) ? defaultMat : mat;
         }
     }
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
+
     IEnumerator MuzzleFlash()
     {
         m_muzzleFlash.SetActive(true);

@@ -25,9 +25,6 @@ public class bl_SniperScope : MonoBehaviour {
     private CanvasGroup Alpha;
     private Text DistanceText;
 
-    /// <summary>
-    /// 
-    /// </summary>
     void Awake()
     {
         m_gun = this.GetComponent<bl_Gun>();
@@ -40,9 +37,7 @@ public class bl_SniperScope : MonoBehaviour {
             DistanceText = ScopeImage.gameObject.GetComponentInChildren<Text>();
         }
     }
-    /// <summary>
-    /// 
-    /// </summary>
+
 	/*void OnGUI() {
         if (Scope == null)
             return;
@@ -51,29 +46,21 @@ public class bl_SniperScope : MonoBehaviour {
         if (m_gun.isAmed)
         {
             if (m_show_distance)
-            {
                 GetDistance();
-            }
             //add a little fade in to avoid the impact of appearing once
             m_alpha = Mathf.Lerp(m_alpha, 1.0f, Time.deltaTime * m_SmoothAppear);
             foreach (GameObject go in OnScopeDisable)
-            {
                 go.SetActive(false);
-            }
             GUI.color = new Color(1, 1, 1, m_alpha);
             GUI.DrawTexture(new Rect(0,0,Screen.width,Screen.height),Scope);
             if (m_show_distance)
-            {
                 GUI.Label(new Rect(Screen.width / 2 + 25, Screen.height / 2 + 25, 100, 30), m_dist.ToString("0.0")+"<size=12>m</size>",style);
-            }
         }
         else
         {
             m_alpha = Mathf.Lerp(m_alpha, 0.0f, Time.deltaTime * m_SmoothAppear);
             foreach (GameObject go in OnScopeDisable)
-            {
                 go.SetActive(true);
-            }
         }
 	}*/
 
@@ -85,30 +72,21 @@ public class bl_SniperScope : MonoBehaviour {
         if (m_gun.isAmed)
         {
             if (m_show_distance)
-            {
                 GetDistance();
-            }
             //add a little fade in to avoid the impact of appearing once
             m_alpha = Mathf.Lerp(m_alpha, 1.0f, Time.deltaTime * m_SmoothAppear);
             foreach (GameObject go in OnScopeDisable)
-            {
                 go.SetActive(false);
-            }
         }
         else
         {
             m_alpha = Mathf.Lerp(m_alpha, 0.0f, Time.deltaTime * m_SmoothAppear);
             foreach (GameObject go in OnScopeDisable)
-            {
                 go.SetActive(true);
-            }
         }
         if(m_show_distance && DistanceText)
-        {
             DistanceText.text = m_dist.ToString("00") + "<size=10>m</size>";
-        }
         Alpha.alpha = m_alpha;
-
     }
 
     /// <summary>
@@ -128,5 +106,4 @@ public class bl_SniperScope : MonoBehaviour {
             m_dist = 0.0f;
         }
     }
-
 }

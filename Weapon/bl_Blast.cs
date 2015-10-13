@@ -1,7 +1,5 @@
 ﻿// bl_Blast.cs
-// This contain the logic of the explosions
-// determines the objectives that are punished,
-// and calculates the precise damage
+// This contain the logic of the explosions determines the objectives that are punished, and calculates the precise damage
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
@@ -99,9 +97,7 @@ public class bl_Blast : bl_PhotonHelper {
     private int CalculatePlayerDamage(PhotonPlayer p)
     {
         if ((string)p.customProperties[PropiertiesKeys.TeamKey] == myTeam)
-        {
             return 0;
-        }
 
         float distance = Vector3.Distance(base.transform.position, FindPhotonPlayer(p).transform.position);
         return Mathf.Clamp((int) (this.explosionDamage * ((this.explosionRadius - distance) / this.explosionRadius)), 0, (int) this.explosionDamage);
@@ -121,9 +117,7 @@ public class bl_Blast : bl_PhotonHelper {
                 return null;
 
             if ((string)p.customProperties[PropiertiesKeys.TeamKey] != myTeam  && (Vector3.Distance(base.transform.position,player.transform.position) <= this.explosionRadius))
-            {
                 list.Add(p);
-            }
         }
         return list;
     }
@@ -136,31 +130,19 @@ public class bl_Blast : bl_PhotonHelper {
         GameObject p = FindPhotonPlayer(PhotonNetwork.player);
 
         if (p == null)
-        {
             return false;
-        }
         if ((Vector3.Distance(this.transform.position, p.transform.position) <= this.explosionRadius))
-        {
             return true;
-        }
         return false;
-
     }
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
+
     IEnumerator Init()
     {      
         if (ExplosionPrefabs != null)
-        {
             Instantiate(ExplosionPrefabs, transform.position, transform.rotation);
-        }
         yield return new WaitForSeconds(DisappearIn / 2);
         foreach (ParticleEmitter e in mParticles)
-        {
             e.emit = false;
-        }
         yield return new WaitForSeconds(DisappearIn / 2);
         Destroy(gameObject);
     }

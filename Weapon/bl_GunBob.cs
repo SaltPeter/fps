@@ -28,7 +28,6 @@ public class bl_GunBob : MonoBehaviour {
         motor = player.GetComponent<bl_PlayerMovement>();
         midpoint = transform.localPosition;
         Dsmooth = smooth;
-
     }
     void Update()
     {
@@ -51,7 +50,6 @@ public class bl_GunBob : MonoBehaviour {
             bobbingSpeed = tempIdleSpeed;
             BobbingAmount = bobbingAmount * 0.2f;
             smooth = Dsmooth;
-
         }
     }
     void FixedUpdate()
@@ -99,19 +97,14 @@ public class bl_GunBob : MonoBehaviour {
 
             if (motor.grounded)
             {
-                //Player walk
-                currentPosition = new Vector3(midpoint.x + translateChange2, midpoint.y + translateChange, currentPosition.z);
-            }
-
+                currentPosition = new Vector3(midpoint.x + translateChange2, midpoint.y + translateChange, currentPosition.z); //Player walk
+			}
         }
         else
         {
-            //Player not move
-            currentPosition = midpoint;
-        }
-        
+            currentPosition = midpoint; //Player not move
+		}
 
         transform.localPosition = Vector3.Lerp(transform.localPosition, currentPosition, Time.deltaTime * smooth);
-
     }
 }

@@ -59,13 +59,9 @@ public class bl_KillFeed : bl_PhotonHelper {
             KillFeed t_KillFeed = m_KillFeed[i];
             t_KillFeed.m_Timer -= Time.deltaTime;
             if (t_KillFeed.m_Timer > 0)
-            {
                 m_KillFeed[i] = new KillFeed(t_KillFeed.m_Killer,t_KillFeed.m_Killed, t_KillFeed.m_HowKill,t_KillFeed.m_GunID, t_KillFeed.m_KillerColor, t_KillFeed.m_KilledColor,t_KillFeed.m_Timer);
-            }
             else
-            {
                 m_KillFeed.RemoveAt(i);
-            }
         }
         //Remove notifications locals
         for (int l = 0; l < Notify_Time.Count; l++)

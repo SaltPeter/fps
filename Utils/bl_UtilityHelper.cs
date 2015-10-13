@@ -1,5 +1,4 @@
-﻿/////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////bl_UtilityHelper.cs/////////////////////////////////
+﻿/////////////////////////////bl_UtilityHelper.cs/////////////////////////////////
 ///////This is a helper script that contains multiple and useful functions///////
 using UnityEngine;
 using System.Collections;
@@ -224,9 +223,7 @@ public class bl_UtilityHelper
         }
         return 0f;
     }
-    /// <summary>
-    /// 
-    /// </summary>
+
     /// <param name="force"></param>
     /// <returns></returns>
     public static Vector3 CorrectForceSize(UnityEngine.Vector3 force)
@@ -235,9 +232,7 @@ public class bl_UtilityHelper
         force = (UnityEngine.Vector3)(force * num);
         return force;
     }
-    /// <summary>
-    /// 
-    /// </summary>
+
     /// <param name="text"></param>
     /// <param name="option"></param>
     public static void ShadowLabel(string text, params GUILayoutOption[] option)
@@ -318,9 +313,7 @@ public class bl_UtilityHelper
         Screen.lockCursor = mLock;
 #endif
     }
-    /// <summary>
-    /// 
-    /// </summary>
+
     public static bool GetCursorState
     {
         get
@@ -349,9 +342,7 @@ public class bl_UtilityHelper
         // Return angle multiplied with 1 or -1
         return angle * (Vector3.Dot(axis, Vector3.Cross(dirA, dirB)) < 0 ? -1 : 1);
     }
-    /// <summary>
-    /// 
-    /// </summary>
+
     public static bl_GameManager GetGameManager
     {
         get

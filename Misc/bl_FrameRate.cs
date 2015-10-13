@@ -1,8 +1,5 @@
-﻿///////////////////////////////////////////////////////////////////////////////////////
-// bl_FrameRate.cs
-// Help us get the current Frame Rate the game
-// place it in the scena and adds the UI Text
-
+﻿// bl_FrameRate.cs
+// Help us get the current Frame Rate the game place it in the scena and adds the UI Text
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,8 +13,7 @@ public class bl_FrameRate : MonoBehaviour
     private float timeleft;
     private float updateInterval = 0.5f;
 
-    void Start()
-    {
+    void Start() {
         this.timeleft = this.updateInterval;
     }
 
@@ -41,13 +37,8 @@ public class bl_FrameRate : MonoBehaviour
             }
         }
         if (TextUI != null)
-        {
             TextUI.text = "FPS: <color=orange>" + this.framerate + "</color>";
-        }
         else
-        {
-            Destroy(this);
-        }
-             
+            Destroy(this); 
     }
 }

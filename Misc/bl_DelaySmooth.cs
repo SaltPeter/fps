@@ -1,6 +1,5 @@
 ﻿// bl_DelaySmooth.cs
-// Generates a soft effect and delayed rotation for added realism
-// place it in the top of the hierarchy of Weapon Manager
+// Generates a soft effect and delayed rotation for added realism place it in the top of the hierarchy of Weapon Manager
 using UnityEngine;
 using System.Collections;
 
@@ -28,14 +27,13 @@ public class bl_DelaySmooth : MonoBehaviour
 
     void Update()
     {     
-            float factorX = -Input.GetAxis("Mouse X") * amount;
-            float factorY = -Input.GetAxis("Mouse Y") * amount;
-            factorX = Mathf.Clamp(factorX, -maxAmount, maxAmount);
-            factorY = Mathf.Clamp(factorY, -maxAmount, maxAmount);
-            Vector3 Final = new Vector3(def.x + factorX, def.y + factorY, def.z);
-            transform.localPosition = Vector3.Lerp(transform.localPosition, Final, Time.deltaTime * smooth);
-            this.transform.localRotation = Quaternion.Slerp(this.transform.localRotation, DefaultRot, Time.deltaTime * m_ReturnSpeed);
-        
+		float factorX = -Input.GetAxis("Mouse X") * amount;
+		float factorY = -Input.GetAxis("Mouse Y") * amount;
+		factorX = Mathf.Clamp(factorX, -maxAmount, maxAmount);
+		factorY = Mathf.Clamp(factorY, -maxAmount, maxAmount);
+		Vector3 Final = new Vector3(def.x + factorX, def.y + factorY, def.z);
+		transform.localPosition = Vector3.Lerp(transform.localPosition, Final, Time.deltaTime * smooth);
+		this.transform.localRotation = Quaternion.Slerp(this.transform.localRotation, DefaultRot, Time.deltaTime * m_ReturnSpeed);
     }
 
      void OnEnable()

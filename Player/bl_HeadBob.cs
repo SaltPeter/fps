@@ -40,7 +40,6 @@ public class bl_HeadBob : MonoBehaviour {
     float headBobCycle = 0;								// the current position through the headbob cycle
     float headBobFade = 0;								// the current amount to which the head bob position is being applied or not (it is faded out when the character is not moving)
 
-
     // Fields for simple spring calculation:
     float springPos = 0;
     float springVelocity = 0;
@@ -48,7 +47,6 @@ public class bl_HeadBob : MonoBehaviour {
     public float springDampen = 0.8f;
     public float springVelocityThreshold = 0.05f;
     public float springPositionThreshold = 0.05f;
-
 
     Vector3 prevPosition;								// the position from last frame
     Vector3 prevVelocity = Vector3.zero;				// the velocity from last frame
@@ -89,13 +87,9 @@ public class bl_HeadBob : MonoBehaviour {
         prevPosition = transform.position;
         prevVelocity = velocity;
         if (character.run)
-        {
             headBobFrequency = headBobFrequencyRunning;
-        }
         else
-        {
             headBobFrequency = DefaultFrequemcy;
-        }
         // vertical head position "spring simulation" for jumping/landing impacts
         springVelocity -= velocityChange.y;							// input to spring from change in character Y velocity
         springVelocity -= springPos * springElastic;					// elastic spring force towards zero position
@@ -127,13 +121,9 @@ public class bl_HeadBob : MonoBehaviour {
 
         // fade head bob effect to zero if not moving
         if (new Vector3(velocity.x, 0, velocity.z).magnitude < 0.1f)
-        {
             headBobFade = Mathf.Lerp(headBobFade, 0, Time.deltaTime);
-        }
         else
-        {
             headBobFade = Mathf.Lerp(headBobFade, 1, Time.deltaTime);
-        }
 
         // height of bob is exaggerated based on speed
         float speedHeightFactor = 1 + (flatVelocity * bobHeightSpeedMultiplier);
@@ -154,15 +144,11 @@ public class bl_HeadBob : MonoBehaviour {
             {
                 GetComponent<AudioSource>().clip = landSound;
                 GetComponent<AudioSource>().Play();
-
             }
- 
             prevGrounded = true;
-
         }
         else
         {
-
             if (prevGrounded)
             {
                 GetComponent<AudioSource>().clip = jumpSound;

@@ -1,6 +1,5 @@
 ﻿// bl_Gun.cs
-// This script Charge of the logic of arms
-// place it on a GameObject in the root of gun model
+// This script Charge of the logic of arms, place it on a GameObject in the root of gun model
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
@@ -1219,7 +1218,7 @@ public class bl_Gun : MonoBehaviour {
         get
         {
             bool can = false;
-            if (CanAim && !controller.run && !controller.m_OnLadder)
+            if (CanAim && !controller.run)
                 can = true;
             return can;
         }

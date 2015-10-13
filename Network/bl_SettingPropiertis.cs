@@ -5,8 +5,6 @@ using UnityEngine.UI;
 
 public class bl_SettingPropiertis : MonoBehaviour
 {
-
-
     public GUIStyle Style;
     public Texture2D FFABox;
     public GameMode m_GameMode = GameMode.FFA;
@@ -30,9 +28,7 @@ public class bl_SettingPropiertis : MonoBehaviour
     private string FinalRoundText = string.Empty;
     private bl_RoomMenu RMenu;
     private bl_RoundTime RTime;
-    /// <summary>
-    /// 
-    /// </summary>
+
     void Awake()
     {
         if (!PhotonNetwork.connected || PhotonNetwork.room == null)
@@ -43,9 +39,7 @@ public class bl_SettingPropiertis : MonoBehaviour
         SettingPropiertis();
         GetRoomInfo();
     }
-    /// <summary>
-    /// 
-    /// </summary>
+
     public void SettingPropiertis()
     {
         //Initialize new properties where the information will stay Room
@@ -80,9 +74,7 @@ public class bl_SettingPropiertis : MonoBehaviour
         PlayerPing.Add("Ping", 0);
         PhotonNetwork.player.SetCustomProperties(PlayerPing);
     }
-    /// <summary>
-    /// 
-    /// </summary>
+
     void GetRoomInfo()
     {
         if ((string)PhotonNetwork.room.customProperties[PropiertiesKeys.GameModeKey] == GameMode.FFA.ToString())
@@ -135,38 +127,26 @@ public class bl_SettingPropiertis : MonoBehaviour
         {
             int i = PlayerPrefs.GetInt("anisotropic");
             if (i == 0)
-            {
                 QualitySettings.anisotropicFiltering = AnisotropicFiltering.Disable;
-            }
             else if (i == 1)
-            {
                 QualitySettings.anisotropicFiltering = AnisotropicFiltering.Enable;
-            }
             else
-            {
                 QualitySettings.anisotropicFiltering = AnisotropicFiltering.ForceEnable;
-            }
         }
     }
-    /// <summary>
-    /// 
-    /// </summary>
+
     void OnEnable()
     {
         InvokeRepeating("GetPing", 1, UpdatePing);
         bl_EventHandler.OnRoundEnd += this.OnRoundEnd;
     }
-    /// <summary>
-    /// 
-    /// </summary>
+
     void OnDisable()
     {
         CancelInvoke("GetPing");
         bl_EventHandler.OnRoundEnd -= this.OnRoundEnd;
     }
-    /// <summary>
-    /// 
-    /// </summary>
+
     void Update()
     {
         if (m_GameMode == GameMode.TDM || m_GameMode == GameMode.CTF)
@@ -181,13 +161,9 @@ public class bl_SettingPropiertis : MonoBehaviour
                     Team_2_Score = (int)PhotonNetwork.room.customProperties[PropiertiesKeys.Team2Score];
 
                     if (UI.DeltaScoreText != null)
-                    {
                         UI.DeltaScoreText.text = bl_UtilityHelper.GetThreefoldChar(Team_1_Score) + "\n <size=9>Delta</size>";
-                    }
                     if (UI.ReconScoreText != null)
-                    {
                         UI.ReconScoreText.text = bl_UtilityHelper.GetThreefoldChar(Team_2_Score) + "\n <size=9>Recon</size>";
-                    }
                 }
             }
         }
@@ -198,9 +174,7 @@ public class bl_SettingPropiertis : MonoBehaviour
             UI.StarPlayerText.text = "Player Star:\n<size=14><color=" + ColorKeys.MFPSOrange + ">" + t_PlayerStart + "</color></size>";
         }
     }
-    /// <summary>
-    /// 
-    /// </summary>
+
     void OnGUI()
     {
         if (isFinish) { FinalUI(); }
@@ -225,18 +199,12 @@ public class bl_SettingPropiertis : MonoBehaviour
         if (m_Menu != null)
         {
             if (Ping > m_Menu.MaxPing)
-            {
                 m_Menu.ShowWarningPing = true;
-            }
             else
-            {
                 m_Menu.ShowWarningPing = false;
-            }
         }
     }
-    /// <summary>
-    /// 
-    /// </summary>
+
     void OnRoundEnd()
     {
         isFinish = true;
@@ -244,17 +212,11 @@ public class bl_SettingPropiertis : MonoBehaviour
         if (m_GameMode == GameMode.TDM || m_GameMode == GameMode.CTF)
         {
             if (Team_1_Score > Team_2_Score)
-            {
                 FinalRoundText = "Delta";
-            }
             else if (Team_1_Score < Team_2_Score)
-            {
                 FinalRoundText = "Recon";
-            }
             else if (Team_1_Score == Team_2_Score)
-            {
                 FinalRoundText = "No one";
-            }
         }
         else if (m_GameMode == GameMode.FFA)
         {
@@ -280,13 +242,9 @@ public class bl_SettingPropiertis : MonoBehaviour
         get
         {
             if (GetComponent<bl_RoomMenu>() != null)
-            {
                 return GetComponent<bl_RoomMenu>();
-            }
             else
-            {
                 return null;
-            }
         }
     }
     IEnumerator DisableUI()

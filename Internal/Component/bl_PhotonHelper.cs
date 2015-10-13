@@ -1,10 +1,6 @@
-﻿//////////////////////////////////////////////////////////////////
-//bl_Mono.cs
-//
-//This a simple base class
-//to us serve as an extension of Photon.Monobehaviour default
-//                   Lovatto Studio
-//////////////////////////////////////////////////////////////////
+﻿//bl_Mono.cs
+//This a simple base class to us serve as an extension of Photon.Monobehaviour default
+
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
@@ -13,18 +9,13 @@ using ExitGames.Client.Photon;
 public class bl_PhotonHelper : Photon.PunBehaviour {
 
     protected GameMode mGameMode = GameMode.FFA;
-    /// <summary>
-    /// 
-    /// </summary>
+
     protected virtual void Awake()
     {
         if (!PhotonNetwork.connected)
-            return;
-        
+            return;      
     }
-    /// <summary>
-    /// 
-    /// </summary>
+
     public string myTeam
     {
         get
@@ -43,13 +34,9 @@ public class bl_PhotonHelper : Photon.PunBehaviour {
         PhotonView m_view = PhotonView.Find(view);
 
         if (m_view != null)
-        {
             return m_view.gameObject;
-        }
         else
-        {
             return null;
-        }
     }
     /// <summary>
     ///  get a photonView by the viewID
@@ -61,31 +48,19 @@ public class bl_PhotonHelper : Photon.PunBehaviour {
         PhotonView m_view = PhotonView.Find(view);
 
         if (m_view != null)
-        {
             return m_view;
-        }
         else
-        {
             return null;
-        }
     }
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="go"></param>
-    /// <returns></returns>
+
     public PhotonView GetPhotonView(GameObject go)
     {
         PhotonView view = go.GetComponent<PhotonView>();
         if (view == null)
-        {
             view = go.GetComponentInChildren<PhotonView>();
-        }
         return view;
     }
-    /// <summary>
-    /// 
-    /// </summary>
+
     public Transform Root
     {
         get
@@ -93,9 +68,7 @@ public class bl_PhotonHelper : Photon.PunBehaviour {
             return transform.root;
         }
     }
-    /// <summary>
-    /// 
-    /// </summary>
+
     public Transform Parent
     {
         get
@@ -130,18 +103,11 @@ public class bl_PhotonHelper : Photon.PunBehaviour {
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="p"></param>
-    /// <returns></returns>
     public GameObject FindPhotonPlayer(PhotonPlayer p)
     {
         GameObject player = GameObject.Find(p.name);
         if (player == null)
-        {
             return null;
-        }
           return player;
     }
     /// <summary>
@@ -170,8 +136,7 @@ public class bl_PhotonHelper : Photon.PunBehaviour {
 
         string t = (string)p.customProperties[PropiertiesKeys.TeamKey];
         
-        switch (t)
-        {
+        switch (t) {
             case "Recon":
                 return Team.Recon;
             case "Delta":
@@ -190,21 +155,13 @@ public class bl_PhotonHelper : Photon.PunBehaviour {
                 return GameMode.TDM;
 
             if ((string)PhotonNetwork.room.customProperties[PropiertiesKeys.GameModeKey] == GameMode.FFA.ToString())
-            {
                 mGameMode = GameMode.FFA;
-            }
             else if ((string)PhotonNetwork.room.customProperties[PropiertiesKeys.GameModeKey] == GameMode.TDM.ToString())
-            {
                 mGameMode = GameMode.TDM;
-            }
             else if ((string)PhotonNetwork.room.customProperties[PropiertiesKeys.GameModeKey] == GameMode.CTF.ToString())
-            {
                 mGameMode = GameMode.CTF;
-            }
             else
-            {
                 mGameMode = GameMode.FFA;
-            }
             return mGameMode;
         }
     }

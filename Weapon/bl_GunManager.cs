@@ -1,5 +1,4 @@
-﻿/////////////////////////////////////////////////////////////////////////////////
-///////////////////////////bl_GunManager.cs//////////////////////////////////////
+﻿///////////////////////////bl_GunManager.cs//////////////////////////////////////
 /////////////Use this to manage all weapons Player///////////////////////////////
 using UnityEngine;
 using System.Collections;
@@ -39,9 +38,7 @@ public class bl_GunManager : MonoBehaviour {
     public bool CanSwich;
     [Space(5)]
     public Animator m_HeatAnimator;
-    /// <summary>
-    /// 
-    /// </summary>
+
     void Awake()
     {
         //when player instance select player class select in bl_RoomMenu
@@ -81,9 +78,6 @@ public class bl_GunManager : MonoBehaviour {
 
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1) && CanSwich && m_Current != 0)
@@ -130,20 +124,14 @@ public class bl_GunManager : MonoBehaviour {
         }
         CurrentGun = PlayerEquip[m_Current];
     }
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="t_weapon"></param>
+
     void TakeWeapon(GameObject t_weapon)
     {
         t_weapon.SetActive(true);
         CanSwich = true;
 
     }
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
+
     public bl_Gun GetCurrentWeapon()
     {
         if (CurrentGun == null)
@@ -183,10 +171,7 @@ public class bl_GunManager : MonoBehaviour {
             m_HeatAnimator.SetBool("Swicht", false);
         }
     }
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="m_state"></param>
+
    public void heatReloadAnim(int m_state)
    {
        if (m_HeatAnimator == null)

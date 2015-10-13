@@ -28,11 +28,7 @@ public class bl_Grenade : MonoBehaviour
     private Vector3 direction;               // direction bullet is travelling
     private float impactForce;        // force applied to a rigid body object
     private float fuseTime = 10f;
-     
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="s"></param>
+
     public void SetUp(bl_BulletInitSettings s)
     {
         damage = s.m_damage;
@@ -51,19 +47,14 @@ public class bl_Grenade : MonoBehaviour
         GetComponent<Rigidbody>().velocity = velocity + direction;
         InvokeRepeating("Counter", 1, 1);
     }
-    /// <summary>
-    /// 
-    /// </summary>
+
     void Start()
     {
         fuseTime = TimeToExploit;
         startTime = Time.time;
         GetComponent<AudioSource>().clip = BeepAudio;
     }
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="enterObject"></param>
+
     void OnCollisionEnter(Collision enterObject)
     {
         // things to add:
@@ -97,11 +88,8 @@ public class bl_Grenade : MonoBehaviour
                 }
                 break;
         }
-        
     }
-    /// <summary>
-    /// 
-    /// </summary>
+
     void Update()
     {
         if (BeepAudio == null || GetComponent<AudioSource>() == null)
@@ -125,13 +113,9 @@ public class bl_Grenade : MonoBehaviour
     void FixedUpdate()
     {
         if (GetComponent<Rigidbody>() != null)
-        {
             GetComponent<Rigidbody>().AddTorque(Vector3.up * 12);
-        }
     }
-    /// <summary>
-    /// 
-    /// </summary>
+
     void Counter()
     {
         TimeToExploit--;

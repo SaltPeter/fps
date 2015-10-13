@@ -1,4 +1,3 @@
-//////////////////////////////////////////////////////////////////////////////
 // bl_MouseLook.cs
 using UnityEngine;
 using System.Collections;
@@ -30,11 +29,7 @@ public class bl_MouseLook : MonoBehaviour {
     private float sY;
     Quaternion originalRotation;
 
-    /// <summary>
-    /// 
-    /// </summary>
-    void Start()
-    {
+    void Start() {
         // Make the rigid body not change rotation
         if (GetComponent<Rigidbody>()) GetComponent<Rigidbody>().freezeRotation = true;
 
@@ -133,16 +128,10 @@ public class bl_MouseLook : MonoBehaviour {
     void GetCurrentCamera()
     {
         if (Camera.main != null)
-        {
             cmra = Camera.main.gameObject;
-        }
         else if (Camera.current != null)
-        {
             cmra = Camera.current.gameObject;
-        }
         else
-        {
             cmra = this.gameObject;
-        }
     }
 }

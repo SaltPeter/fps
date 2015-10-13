@@ -1,13 +1,9 @@
-//////////////////////////////////////////////////////////////////////////////
 // bl_PlayerAnimations.cs
-//
 // - was ordered to encourage TPS player animations using legacy animations,
 //  and heat look controller from Unity technologies.
 using UnityEngine;
 
-public class bl_PlayerAnimations : MonoBehaviour
-{
-
+public class bl_PlayerAnimations : MonoBehaviour {
     [HideInInspector]
     public bool m_Update = true;
     [Header("Animations Name")]
@@ -50,16 +46,11 @@ public class bl_PlayerAnimations : MonoBehaviour
     [HideInInspector]
     public float lastYRotation;
 
-    /// <summary>
-    /// 
-    /// </summary>
     void Awake()
     {
         lastPosition = rootNode.position;
     }
-    /// <summary>
-    /// 
-    /// </summary>
+
     void Start()
     {
         SetupSegments();
@@ -95,15 +86,11 @@ public class bl_PlayerAnimations : MonoBehaviour
         m_Animations.anim[m_Animations.turnAnim].layer = 1;
         m_Animations.anim[m_Animations.turnAnimCrouch].layer = 1;
     }
-    /// <summary>
-    /// 
-    /// </summary>
+
     void SetupSegments()
     {
         if (rootNode == null)
-        {
             rootNode = transform;
-        }
 
         // Setup segments
         foreach (BendingSegment segment in segments)
@@ -135,9 +122,7 @@ public class bl_PlayerAnimations : MonoBehaviour
             }
         }
     }
-    /// <summary>
-    /// 
-    /// </summary>
+
     void Update()
     {
         if (!m_Update)
@@ -146,9 +131,7 @@ public class bl_PlayerAnimations : MonoBehaviour
         ControllerInfo();
         Animate();
     }
-    /// <summary>
-    /// 
-    /// </summary>
+
     void ControllerInfo()
     {
         velocity = (rootNode.position - lastPosition) / Time.deltaTime;
@@ -159,24 +142,17 @@ public class bl_PlayerAnimations : MonoBehaviour
         turnSpeed = Mathf.DeltaAngle(lastYRotation, transform.rotation.eulerAngles.y);
         movementSpeed = velocity.magnitude;
     }
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="direction"></param>
-    /// <returns></returns>
+
     private float HorizontalAngle(Vector3 direction)
     {
         return Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
 
     }
-    /// <summary>
-    /// 
-    /// </summary>
+
     void Animate()
     {
         if (grounded)
         {
-
             if (movementSpeed < 1.0f)
             {
                 m_Animations.anim.CrossFade(m_Animations.idleAim);
@@ -195,10 +171,8 @@ public class bl_PlayerAnimations : MonoBehaviour
 
             if (state == 0)
             { //Walk and Run
-
                 if (localVelocity.z > 1f)
                 { //Forward
-
                     if (movementSpeed < 5.0f)
                     {
                         m_Animations.anim.CrossFade(m_Animations.walkForward, 0.2f, PlayMode.StopAll);
@@ -276,9 +250,6 @@ public class bl_PlayerAnimations : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void LateUpdate()
     {
         if (!m_Update)
@@ -436,13 +407,9 @@ public class bl_PlayerAnimations : MonoBehaviour
                 break;
             }
 
-            Vector3 combinedJointDirection = Vector3.Slerp(
-                jointDirections[i], newJointDirection, nonAffectedJoints[i].effect
-            );
+            Vector3 combinedJointDirection = Vector3.Slerp(jointDirections[i], newJointDirection, nonAffectedJoints[i].effect);
 
-            nonAffectedJoints[i].joint.rotation = Quaternion.FromToRotation(
-                newJointDirection, combinedJointDirection
-            ) * nonAffectedJoints[i].joint.rotation;
+            nonAffectedJoints[i].joint.rotation = Quaternion.FromToRotation(newJointDirection, combinedJointDirection) * nonAffectedJoints[i].joint.rotation;
         }
 
         //for rotation

@@ -1,9 +1,5 @@
-﻿/////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////bl_RoundTime.cs///////////////////////////////////
+﻿///////////////////////////////bl_RoundTime.cs///////////////////////////////////
 ///////////////Use this to manage time in rooms//////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////Briner Games/////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////
 using UnityEngine;
 using System.Collections;
 using Hashtable = ExitGames.Client.Photon.Hashtable; //Replace default Hashtables with Photon hashtables
@@ -37,9 +33,6 @@ public class bl_RoundTime : MonoBehaviour {
     private bl_SettingPropiertis m_propiertis;
     private bl_RoomMenu RoomMenu;
 
-    /// <summary>
-    /// 
-    /// </summary>
     void Awake()
     {
         if (!PhotonNetwork.connected)
@@ -72,9 +65,6 @@ public class bl_RoundTime : MonoBehaviour {
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void FixedUpdate()
     {
         float t_time = RoundDuration - ((float)PhotonNetwork.time - m_Reference);
@@ -100,9 +90,6 @@ public class bl_RoundTime : MonoBehaviour {
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void OnGUI()
     {
         GUI.skin = Style;
@@ -126,13 +113,9 @@ public class bl_RoundTime : MonoBehaviour {
         if (isFinish)
         {
             if (m_RoundStyle == RoundStyle.OneMacht)
-            {
               GUI.Label(new Rect(Screen.width / 2 - 30, Screen.height / 2 + 25, 225, 60), "<size=15>Return to Lobby in</size> \n <size=30><color=orange>    " + bl_UtilityHelper.GetDoubleChar(m_countdown) + "</color></size>");
-            }
             else if (m_RoundStyle == RoundStyle.Rounds)
-            {
                 GUI.Label(new Rect(Screen.width / 2 - 30, Screen.height / 2 + 25, 225, 60), "<size=15>Next Round in </size>\n <size=30><color=orange>    " + bl_UtilityHelper.GetDoubleChar(m_countdown) + "</color></size>");
-            }
         }
     }
 
@@ -141,13 +124,9 @@ public class bl_RoundTime : MonoBehaviour {
         get
         {
             if (Style != null)
-            {
                 return Style.customStyles[1];
-            }
             else
-            {
                 return null;
-            }
         }
     }
     /// <summary>
@@ -168,9 +147,7 @@ public class bl_RoundTime : MonoBehaviour {
             m_Reference = (float)PhotonNetwork.room.customProperties[StartTimeKey];
         }
     }
-    /// <summary>
-    /// 
-    /// </summary>
+
     void countdown()
     {
         m_countdown--;
@@ -181,22 +158,16 @@ public class bl_RoundTime : MonoBehaviour {
             m_countdown = 10;
         }
     }
-    /// <summary>
-    /// 
-    /// </summary>
+
     void FinishGame()
     {
         bl_UtilityHelper.LockCursor(false);
         if (m_RoundStyle == RoundStyle.OneMacht)
         {
             if (PhotonNetwork.connected)
-            {
                 PhotonNetwork.LeaveRoom();
-            }
             else
-            {
                 Application.LoadLevel(0);
-            }
         }
         if (m_RoundStyle == RoundStyle.Rounds)
         {

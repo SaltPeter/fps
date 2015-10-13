@@ -33,17 +33,12 @@ public class bl_BodyPartManager : bl_PhotonHelper {
     public bl_PlayerAnimations PlayerAnimation;
     public Animation mAnimation;
 
-    /// <summary>
-    /// 
-    /// </summary>
     protected override void Awake()
     {
         base.Awake();
         GetRigidBodys();
         if (mRigidBody.Count > 0)
-        {
             SetKinematic();
-        }
     }
 
     #if UNITY_EDITOR
@@ -58,9 +53,7 @@ public class bl_BodyPartManager : bl_PhotonHelper {
             foreach (Collider c in mCol)
             {
                 if (c.gameObject.tag != HitBoxTag)
-                {
                     c.gameObject.tag = HitBoxTag;
-                }
                 Part p = new Part();
                 p.m_Collider = c;
                 p.name = c.name;
@@ -85,7 +78,6 @@ public class bl_BodyPartManager : bl_PhotonHelper {
                 //DestroyImmediate(p.m_Collider.gameObject.GetComponent<bl_BodyPart>()); //use for remove script
                 if (p.m_Collider != null || p.m_Collider.gameObject.GetComponent<bl_BodyPart>() == null)
                 {
-
                     p.m_Collider.gameObject.AddComponent<bl_BodyPart>();
                     bl_BodyPart bp = p.m_Collider.gameObject.GetComponent<bl_BodyPart>();
                     bp.TakeHeatShot = p.m_HeatShot;
@@ -110,9 +102,7 @@ public class bl_BodyPartManager : bl_PhotonHelper {
         foreach (Rigidbody rb in R)
         {
             if (!mRigidBody.Contains(rb))
-            {
                 mRigidBody.Add(rb);
-            }
         }
     }
     /// <summary>
@@ -125,13 +115,9 @@ public class bl_BodyPartManager : bl_PhotonHelper {
             return;
 
         foreach (Rigidbody r in mRigidBody)
-        {
             r.isKinematic = b;
-        }
     }
-    /// <summary>
-    /// 
-    /// </summary>
+
     public void Ragdolled()
     {
         this.transform.parent = null;
@@ -146,9 +132,7 @@ public class bl_BodyPartManager : bl_PhotonHelper {
         PlayerAnimation.enabled = false;
         Destroy(this.gameObject, 10);
     }
-    /// <summary>
-    /// 
-    /// </summary>
+
     public void IgnorePlayerCollider()
     {
         Collider Player = FindPlayerRoot(bl_GameManager.m_view).GetComponent<Collider>();
@@ -157,9 +141,7 @@ public class bl_BodyPartManager : bl_PhotonHelper {
             for (int i = 0; i < HitBoxs.Count; i++)
             {
                 if (HitBoxs[i].m_Collider != null)
-                {
                     Physics.IgnoreCollision(HitBoxs[i].m_Collider, Player);
-                }
             }
         }
     }

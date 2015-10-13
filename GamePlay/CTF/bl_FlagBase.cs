@@ -3,7 +3,6 @@ using System.Collections;
 
 public abstract class bl_FlagBase : MonoBehaviour {
 
-
     public abstract bool CanBePickedUpBy(bl_CTFPlayerLogic logic);
 
     public abstract void OnPickup(bl_CTFPlayerLogic logic);
@@ -15,9 +14,7 @@ public abstract class bl_FlagBase : MonoBehaviour {
         get
         {
             if (m_PhotonView == null)
-            {
                 m_PhotonView = PhotonView.Get(this);
-            }
 
             return m_PhotonView;
         }
@@ -29,9 +26,7 @@ public abstract class bl_FlagBase : MonoBehaviour {
         {
             bl_CTFPlayerLogic logic = collider.gameObject.GetComponent<bl_CTFPlayerLogic>();
             if (CanBePickedUpBy(logic) == true)
-            {
                 PickupObject(logic);
-            }
         }
     }
 
@@ -58,20 +53,13 @@ public abstract class bl_FlagBase : MonoBehaviour {
                         t_send = true;
                         Team oponentTeam;
                         if ((string)PhotonNetwork.player.customProperties[PropiertiesKeys.TeamKey] == Team.Delta.ToString())
-                        {
                             oponentTeam = Team.Recon;
-                        }
                         else
-                        {
                             oponentTeam = Team.Delta;
-                        }
                         bl_EventHandler.KillEvent(PhotonNetwork.player.name, "", "Obtained at the " + oponentTeam.ToString() + " flag", (string)PhotonNetwork.player.customProperties[PropiertiesKeys.TeamKey], 777, 15);
-
                     }
                 }
             }
-        }
-                  
-        }
-    
+        }        
+	}
 }

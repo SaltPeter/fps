@@ -10,7 +10,6 @@ public class bl_DrawName : MonoBehaviour
     public float m_HideDistance;
    
     public Texture2D m_HideTexture;
-
     public GUIStyle m_Skin;
 
     [HideInInspector]
@@ -21,8 +20,7 @@ public class bl_DrawName : MonoBehaviour
     private float m_dist;
     private Transform myTransform;
 
-     void OnEnable()
-    {
+	void OnEnable() {
         this.myTransform = this.transform;
     }
 
@@ -41,15 +39,13 @@ public class bl_DrawName : MonoBehaviour
             }
     }
 
-    void Update()
-    {
+    void Update() {
         if (Camera.main == null)
             return;
         
-            if (this.m_PlayerName == string.Empty)
-                this.m_PlayerName = this.gameObject.name;
-            this.m_dist = bl_UtilityHelper.GetDistance(this.myTransform.position, Camera.main.transform.position);
-        
+		if (this.m_PlayerName == string.Empty)
+			this.m_PlayerName = this.gameObject.name;
+		this.m_dist = bl_UtilityHelper.GetDistance(this.myTransform.position, Camera.main.transform.position);
     }
 }
 

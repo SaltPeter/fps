@@ -1,4 +1,3 @@
-////////////////////////////////////////////////////////////////////////////////
 //////////////////// bl_PlayerSync.cs///////////////////////////////////////////
 ////////////////////use this for the sincronizer pocision , rotation, states,/// 
 ///////////////////etc ...   via photon/////////////////////////////////////////
@@ -9,19 +8,13 @@ using System.Collections.Generic;
 [RequireComponent(typeof(PhotonView))]
 public class bl_PlayerSync : bl_PhotonHelper
 {
-    /// <summary>
-    /// the player's team is not ours
-    /// </summary>
     [HideInInspector]
-    public string RemoteTeam;
-    /// <summary>
-    /// the current state of the current weapon
-    /// </summary>
-    public string WeaponState;
-    /// <summary>
-    /// the object to which the player looked
-    /// </summary>
-    public Transform HeatTarget;
+    public string RemoteTeam; // the player's team is not ours
+	public string WeaponState; // the current state of the current weapon
+							   /// <summary>
+							   /// the object to which the player looked
+							   /// </summary>
+	public Transform HeatTarget;
     /// <summary>
     /// smooth interpolation amount
     /// </summary>
@@ -68,7 +61,6 @@ public class bl_PlayerSync : bl_PhotonHelper
     bool ObservedComponentsFoldoutOpen = true;
 #pragma warning disable 0414
 
-
     protected override void Awake()
     {
         base.Awake();
@@ -92,8 +84,6 @@ public class bl_PlayerSync : bl_PhotonHelper
         Settings = this.GetComponent<bl_PlayerSettings>();
         PDM = this.GetComponent<bl_PlayerDamageManager>();
         DrawName = this.GetComponent<bl_DrawName>();
-
-
     }
     /// <summary>
     /// serialization method of photon
@@ -151,9 +141,7 @@ public class bl_PlayerSync : bl_PhotonHelper
     {
         ///if the player is not ours, then
          if( photonView == null || isMine == true || isConnected == false )
-        {
             return;
-        }
 
          UpdatePosition();
          UpdateRotation();
@@ -169,18 +157,13 @@ public class bl_PlayerSync : bl_PhotonHelper
             {
                 gameObject.name = RemotePlayerName;
             }
-            if (GetGameMode == GameMode.TDM ||
-                GetGameMode == GameMode.CTF)
+            if (GetGameMode == GameMode.TDM || GetGameMode == GameMode.CTF)
             {
                 //Determine if remote player is teamMate or enemy
                 if (RemoteTeam == (string)PhotonNetwork.player.customProperties[PropiertiesKeys.TeamKey])
-                {
                     TeamMate();
-                }
                 else
-                {
                     Enemy();
-                }
             }
             else if (GetGameMode == GameMode.FFA)
             {
@@ -248,37 +231,20 @@ public class bl_PlayerSync : bl_PhotonHelper
         if (CurrenGun)
         {
             if (m_type == bl_Gun.weaponType.Machinegun.ToString())
-            {
                 CurrenGun.GetComponent<bl_NetworkGun>().Fire(m_spread,pos,rot);
-            }
             else if (m_type == bl_Gun.weaponType.Shotgun.ToString())
-            {
                 CurrenGun.GetComponent<bl_NetworkGun>().Fire(m_spread, pos, rot);//if you need add your custom fire shotgun in networkgun
-            }
             else if (m_type == bl_Gun.weaponType.Sniper.ToString())
-            {
                 CurrenGun.GetComponent<bl_NetworkGun>().Fire(m_spread, pos, rot);//if you need add your custom fire sniper in networkgun
-            }
             else if (m_type == bl_Gun.weaponType.Burst.ToString())
-            {
                 CurrenGun.GetComponent<bl_NetworkGun>().Fire(m_spread, pos, rot);//if you need add your custom fire burst in networkgun
-            }
-            else if (m_type == bl_Gun.weaponType.Launcher.ToString())
-            {               
+            else if (m_type == bl_Gun.weaponType.Launcher.ToString())             
                CurrenGun.GetComponent<bl_NetworkGun>().GrenadeFire(m_spread);//if you need add your custom fire launcher in networkgun
-            }
             else if (m_type == bl_Gun.weaponType.Knife.ToString())
-            {
                 CurrenGun.GetComponent<bl_NetworkGun>().KnifeFire();//if you need add your custom fire launcher in networkgun
-            }
-
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="active"></param>
     public void SetActiveGrenade(bool active)
     {
         photonView.RPC("SyncOffAmmoGrenade", PhotonTargets.Others, active);
@@ -298,24 +264,16 @@ public class bl_PlayerSync : bl_PhotonHelper
     void GetTeamRemote()
     {
         if (RemoteTeam == Team.Recon.ToString())
-        {
             Settings.m_Team = Team.Recon;
-        }
         else if (RemoteTeam == Team.Delta.ToString())
-        {
             Settings.m_Team = Team.Delta;
-        }
         else
-        {
             Settings.m_Team = Team.All;
-        }
     }
     void UpdatePosition()
     {
         if (m_PositionModel.SynchronizeEnabled == false || m_ReceivedNetworkUpdate == false)
-        {
             return;
-        }
 
         transform.localPosition = m_PositionControl.UpdatePosition(transform.localPosition);
     }
@@ -323,9 +281,7 @@ public class bl_PlayerSync : bl_PhotonHelper
     void UpdateRotation()
     {
         if (m_RotationModel.SynchronizeEnabled == false || m_ReceivedNetworkUpdate == false)
-        {
             return;
-        }
 
         transform.localRotation = m_RotationControl.GetRotation(transform.localRotation);
     }
@@ -333,9 +289,7 @@ public class bl_PlayerSync : bl_PhotonHelper
     void UpdateScale()
     {
         if (m_ScaleModel.SynchronizeEnabled == false || m_ReceivedNetworkUpdate == false)
-        {
             return;
-        }
 
         transform.localScale = m_ScaleControl.GetScale(transform.localScale);
     }

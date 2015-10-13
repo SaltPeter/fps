@@ -32,35 +32,27 @@ void Awake()
 {
     Anim.wrapMode = WrapMode.Once;
 }
-    /// <summary>
-    /// 
-    /// </summary>
+
 public void  Fire (){
     Anim.Rewind(FireName);
     Anim[FireName].speed = FireSpeed;
     Anim.Play(FireName);
 }
-    /// <summary>
-    /// 
-    /// </summary>
+
 public void AimFire()
 {
     Anim.Rewind(FireName);
     Anim[FireName].speed = AimFireSpeed;
     Anim.Play(FireName);
 }
-    /// <summary>
-    /// 
-    /// </summary>
+
 public void  DrawWeapon (){
     Anim.Rewind(DrawName);
     Anim[DrawName].speed = DrawSpeed;
     Anim[DrawName].time = 0;
     Anim.Play(DrawName);
 }
-/// <summary>
-///  
-/// </summary>
+
 public void HideWeapon()
 {
     Anim[TakeOut].speed = HideSpeed;
@@ -105,13 +97,9 @@ public void ReloadRepeat(float m_reloadTime, int m_repeat)
     }
     AnimationState newReload3 = Anim.CrossFadeQueued(AfterReloadAnim);
     if (m_repeat > 1)
-    {
         newReload3.speed = (TotalTime / m_reloadTime) / 1.4f;
-    }
     else
-    {
         newReload3.speed = (TotalTime / m_reloadTime) / 2;
-    }
 }
     /// <summary>
 /// Use this for greater coordination
@@ -160,9 +148,7 @@ IEnumerator ReturnToIdle()
     yield return new WaitForSeconds(0.6f);
     GManager.heatReloadAnim(0);
 }
-    /// <summary>
-    /// 
-    /// </summary>
+
 private bl_GunManager GManager
 {
     get
