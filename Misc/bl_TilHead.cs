@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+// The camera tilt effect that occurs when the player rapidly changes direction
+using UnityEngine;
 using System.Collections;
 
 public class bl_TilHead : MonoBehaviour {
@@ -12,11 +13,11 @@ public class bl_TilHead : MonoBehaviour {
     public float DownAmount = 8;
 
 	void Awake() {
-        this.m_transform = this.transform;
-    }
+		this.m_transform = this.transform;
+	}
 	void OnEnable() {
-         bl_EventHandler.OnSmallImpact += this.OnSmallImpact;
-     }
+		bl_EventHandler.OnSmallImpact += this.OnSmallImpact;
+	}
 	void OnDisable() {
          bl_EventHandler.OnSmallImpact -= this.OnSmallImpact;
      }
@@ -48,4 +49,3 @@ public class bl_TilHead : MonoBehaviour {
         }
     }
 }
-
