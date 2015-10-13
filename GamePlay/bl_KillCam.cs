@@ -3,16 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class bl_KillCam : MonoBehaviour {
-    
 	public Transform target = null; /// Target to follow
-
     public string TagTargets = ""; /// Enemys Tag
+	public float distance = 10.0f; /// Distance from camera to target
 
-    /// Distance from camera to target
-	public float distance = 10.0f;
-
-    /// list with al enemys with same tag
-    public List<Transform> OtherList = new List<Transform>();
+	/// list with al enemys with same tag
+	public List<Transform> OtherList = new List<Transform>();
 
 	public string Follow = ""; /// target name to follow
 	public Transform Provide; /// in case targets is null see this
@@ -95,8 +91,7 @@ public class bl_KillCam : MonoBehaviour {
     }
 
 	void LateUpdate () {
-        if (!isWait)
-        {
+        if (!isWait) {
             CamMovements();
             UpdateTarget();
         }

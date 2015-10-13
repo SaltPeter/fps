@@ -388,9 +388,7 @@ public class bl_PlayerDamageManager : bl_PhotonHelper {
             StartCoroutine(Shake());
         }
     }
-    /// <summary>
     /// use this for shake camera effect
-    /// </summary>
     /// <param name="shakeTime"> time for shake camera</param>
     /// <param name="size"> amount of shake</param>
     /// <returns></returns>

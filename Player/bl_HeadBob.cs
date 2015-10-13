@@ -2,7 +2,6 @@
 using System.Collections;
 
 public class bl_HeadBob : MonoBehaviour {
-
     [SerializeField]
     Transform head;							// the object to which the head-bob movement should be applied
 
@@ -61,7 +60,6 @@ public class bl_HeadBob : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
-
         originalLocalPos = head.localPosition;
         character = transform.root.GetComponent<bl_PlayerMovement>();
         if (GetComponent<AudioSource>() == null)
@@ -74,12 +72,9 @@ public class bl_HeadBob : MonoBehaviour {
         DefaultFrequemcy = headBobFrequency;
     }
 
-
-
     // Update is called once per frame
     void FixedUpdate()
     {
-
         // we use the actual distance moved as the velocity since last frame, rather than reading
         //the rigidbody's velocity, because this prevents the 'running against a wall' effect.
         Vector3 velocity = (transform.position - prevPosition) / Time.deltaTime;
@@ -135,7 +130,6 @@ public class bl_HeadBob : MonoBehaviour {
         float zTilt = bobSwayFactor * headBobSwayAngle * headBobFade;
         head.localPosition = originalLocalPos + new Vector3(xPos, yPos, 0);
         head.localRotation = Quaternion.Euler(xTilt, 0, zTilt);
-
 
         // Play audio clips based on leaving ground/landing and head bob cycle
         if (character.grounded)

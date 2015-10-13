@@ -8,23 +8,13 @@ using UnityEngine;
 
 public class bl_BodyPart : MonoBehaviour {
 
-    /// <summary>
     /// so far as the damage is multiplied in this part
-    /// </summary>
     public float multiplier = 1f;
     public bl_PlayerDamageManager HealtScript;
-    /// <summary>
     /// Its this the heat? if yes them is heatshot :)
-    /// </summary>
     public bool TakeHeatShot = false;
 
-    /// <summary>
     /// Use this for recive damage local and sync for all other
-    /// </summary>
-    /// <param name="t_damage"></param>
-    /// <param name="t_from"></param>
-    /// <param name="t_weapon"></param>
-    /// <param name="t_direction"></param>
     public void GetDamage(float t_damage, string t_from, string t_weapon,Vector3 t_direction,int weapon_ID = 0)
     {
         float m_TotalDamage = t_damage + multiplier;

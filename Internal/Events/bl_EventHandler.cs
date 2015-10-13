@@ -1,5 +1,4 @@
-﻿//////////////////// bl_EventHandler.cs/////////////////////////////////////////
-////////////////////Use this to create new internal events///////////////////////
+﻿// bl_EventHandler.cs//Use this to create new internal events////////////////////
 //this helps to improve the communication of the script through delegated events/
 using UnityEngine;
 using System.Collections;

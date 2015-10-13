@@ -13,10 +13,6 @@ public class bl_RoomInfo : MonoBehaviour {
 
     private RoomInfo cacheInfo = null;
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="info"></param>
     public void GetInfo(RoomInfo info)
     {
         cacheInfo = info;
@@ -29,9 +25,7 @@ public class bl_RoomInfo : MonoBehaviour {
         JoinButton.SetActive(_active);
         FullText.SetActive(!_active);
     }
-    /// <summary>
-    /// 
-    /// </summary>
+
     public void JoinRoom()
     {
         if (cacheInfo.playerCount < cacheInfo.maxPlayers)

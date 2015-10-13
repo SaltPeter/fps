@@ -36,9 +36,7 @@ public class bl_UpperAnimations : MonoBehaviour {
         GetComponent<Animation>()[FireAnimation].AddMixingTransform(ShoulderR);
         GetComponent<Animation>()[FireAnimation].AddMixingTransform(ShouldeL);
         if (TakeHeadInAnim)
-        {
             GetComponent<Animation>()[FireAnimation].AddMixingTransform(HeadBone);
-        }
         GetComponent<Animation>()[FireAnimation].wrapMode = WrapMode.Loop;
         GetComponent<Animation>()[FireAnimation].layer = 3;
         GetComponent<Animation>()[FireAnimation].time = 0;

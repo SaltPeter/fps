@@ -2,10 +2,7 @@
 using System.Collections;
 
 public class bl_FlagInfo : bl_FlagBase {
-
-
     public static bl_FlagInfo RedFlag;
-
     public static bl_FlagInfo BlueFlag;
 
     //Flag GUI
@@ -20,7 +17,6 @@ public class bl_FlagInfo : bl_FlagBase {
             return BlueFlag;
         return RedFlag;
     }
-
 
     public static Team GetOtherTeam(Team team)
     {
@@ -205,9 +201,7 @@ public class bl_FlagInfo : bl_FlagBase {
                 ReturnFlag();
         }
         else
-        {
             m_CarryingPlayer = logic;
-        }
     }
 
     void OnGUI()

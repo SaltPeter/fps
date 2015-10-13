@@ -106,14 +106,12 @@ public class bl_WeaponsUI : MonoBehaviour {
         GUILayout.EndArea();
     }
 
-    /// <param name="m_clips"></param>
     void OnPickUpAmmo(int m_clips)
     {
         Notifications.Add(PickAmmoMsn + " <size=20><color=orange>"+m_clips+"</color></size>");
         Noti_Time.Add(TimeToShowNotify);
     }
 
-    /// <param name="t_amount"></param>
     void OnPicUpMedKit(float t_amount)
     {
         Notifications.Add(PickMedKitMsn + " <size=20><color=orange>" + t_amount + "</color></size>");

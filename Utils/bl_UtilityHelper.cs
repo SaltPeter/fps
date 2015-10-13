@@ -98,9 +98,7 @@ public class bl_UtilityHelper {
         float magnitude = vector2.magnitude;
         UnityEngine.Vector3 lhs = vector2;
         if (magnitude > 1E-06f)
-        {
             lhs = (UnityEngine.Vector3)(lhs / magnitude);
-        }
         float num2 = UnityEngine.Mathf.Clamp(UnityEngine.Vector3.Dot(lhs, rhs), 0f, magnitude);
         return (lineStart + ((UnityEngine.Vector3)(lhs * num2)));
     }
@@ -225,9 +223,8 @@ public class bl_UtilityHelper {
         else
             UnityEngine.GUI.Label(rect, text);
     }
-    /// <summary>
+
     /// Helper for Cursor locked in Unity 5
-    /// </summary>
     /// <param name="mLock">cursor state</param>
     public static void LockCursor(bool mLock)
     {

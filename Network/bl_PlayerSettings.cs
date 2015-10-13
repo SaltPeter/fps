@@ -8,9 +8,7 @@ public class bl_PlayerSettings : bl_PhotonHelper {
 
     /// The tag of Player for default is "Player"
     public const string LocalTag = "Player";
-    /// <summary>
     /// please if you have this tag in the tag list, add
-    /// </summary>
     public string RemoteTag = "Remote";
     public Team m_Team = Team.All;
     [Header("when the player is our disable these scripts")]
@@ -27,9 +25,7 @@ public class bl_PlayerSettings : bl_PhotonHelper {
         public MonoBehaviour m_script;
         public string m_method;
     }
-    /// <summary>
     /// If you do not want to turn off the entire script, just some functions then follow this example
-    /// </summary>
     [Header("when player is not our, send a message to script")]
     public List<Messages_> m_SendMessage = new List<Messages_>();
     [System.Serializable]
@@ -74,9 +70,7 @@ public class bl_PlayerSettings : bl_PhotonHelper {
         this.gameObject.tag = RemoteTag;
 
     }
-    /// <summary>
     /// We call this function only if we are Local player
-    /// </summary>
     public void LocalPlayer()
     {
         gameObject.name = PhotonNetwork.player.name;
@@ -131,11 +125,8 @@ public class bl_PlayerSettings : bl_PhotonHelper {
         }
         this.gameObject.tag = LocalTag;
     }
-    /// <summary>
     /// produce an effect of spawn
     /// with a loop 
-    /// </summary>
-    /// <returns></returns>
     IEnumerator StartEffect()
     {
         int loops = 8;// number of repeats

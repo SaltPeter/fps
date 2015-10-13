@@ -1,5 +1,4 @@
-////////////////////////////////bl_RoomMenu.cs///////////////////////////////////
-/////////////////place this in a scena for handling menus of room////////////////
+//bl_RoomMenu.cs//place this in a scena for handling menus of room////////////////
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
@@ -773,10 +772,8 @@ public class bl_RoomMenu : bl_PhotonHelper {
             m_stropic = PlayerPrefs.GetInt("anisotropic");
     }
 
-    public GUIStyle ScoreBoardStyle
-    {
-        get
-        {
+    public GUIStyle ScoreBoardStyle {
+        get {
             return SKin.customStyles[4];
         }
     }
@@ -794,13 +791,10 @@ public class bl_RoomMenu : bl_PhotonHelper {
     }
 
     /// Get the total players in team Delta
-    public int GetPlayerInDeltaCount
-    {
-        get
-        {
+    public int GetPlayerInDeltaCount {
+        get {
             int count = 0;
-            foreach (PhotonPlayer players in PhotonNetwork.playerList)
-            {
+            foreach (PhotonPlayer players in PhotonNetwork.playerList) {
                 if ((string)players.customProperties[PropiertiesKeys.TeamKey] == Team.Delta.ToString())
                     count++;
             }
@@ -862,8 +856,7 @@ public class bl_RoomMenu : bl_PhotonHelper {
     }
 
    private bool RequestLeft = false;
-   public override void OnLeftRoom()
-   {
+   public override void OnLeftRoom() {
        Debug.Log("OnLeftRoom (local)");
        
        RequestLeft = true;

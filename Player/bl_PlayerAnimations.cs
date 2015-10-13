@@ -123,8 +123,7 @@ public class bl_PlayerAnimations : MonoBehaviour {
         }
     }
 
-    void Update()
-    {
+    void Update() {
         if (!m_Update)
             return;
 
@@ -159,13 +158,9 @@ public class bl_PlayerAnimations : MonoBehaviour {
                 if (turnSpeed > 0.1f || turnSpeed < -0.1f)
                 {
                     if (state == 0)
-                    {
                         m_Animations.anim.Blend(m_Animations.turnAnim, 0.2f);
-                    }
                     else if (state == 1)
-                    {
                         m_Animations.anim.Blend(m_Animations.turnAnimCrouch, 0.2f);
-                    }
                 }
             }
 

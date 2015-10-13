@@ -1,10 +1,8 @@
-﻿///////////////////////bl_WeaponMovements.cs/////////////////////////////////////
-/////////////Use this to manage the movement of the gun when running/////////////
+﻿//bl_WeaponMovements.cs///////Use this to manage the movement of the gun when running////
 using UnityEngine;
 using System.Collections;
 
-public class bl_WeaponMovements : MonoBehaviour
-{
+public class bl_WeaponMovements : MonoBehaviour {
     private bl_PlayerMovement controller;
     [Space(5)]
     [Header("Weapon On Run Postion")]
@@ -20,16 +18,10 @@ public class bl_WeaponMovements : MonoBehaviour
     public Vector3 rotateToReload;
     [Space(5)]
     public float swayIn = 2f;
-    /// <summary>
-    /// Time to return to position origin
-    /// </summary>
-    public float swayOut = 5f;
-    /// <summary>
-    /// Speed of Sway movement
-    /// </summary>
-    public float swaySpeed = 1f;
-    //private
-    private Transform myTransform; 
+    public float swayOut = 5f; /// Time to return to position origin
+	public float swaySpeed = 1f; /// Speed of Sway movement
+	//private
+	private Transform myTransform; 
     private float vel;
     private Quaternion DefaultRot;
     private Vector3 DefaultPos;

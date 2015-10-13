@@ -65,24 +65,20 @@ public class bl_PhotonHelper : Photon.PunBehaviour {
     /// PUN has an ownership concept that defines who can control and destroy each PhotonView.
     /// True in case the owner matches the local PhotonPlayer.
     /// True if this is a scene photonview on the Master client.
-    public bool isMine
-    {
-        get
-        {
+    public bool isMine {
+        get {
             return (this.photonView.ownerId == PhotonNetwork.player.ID) || (!this.photonView.isOwnerActive && PhotonNetwork.isMasterClient);
         }
     }
 
     /// Get Photon.connect
-    public bool isConnected
-    {
+    public bool isConnected {
         get {
             return PhotonNetwork.connected;
         }
     }
 
-    public GameObject FindPhotonPlayer(PhotonPlayer p)
-    {
+    public GameObject FindPhotonPlayer(PhotonPlayer p) {
         GameObject player = GameObject.Find(p.name);
         if (player == null)
             return null;
@@ -90,8 +86,7 @@ public class bl_PhotonHelper : Photon.PunBehaviour {
     }
 
     /// Get the team of players
-    public string GetTeam(PhotonPlayer p)
-    {
+    public string GetTeam(PhotonPlayer p) {
         if (p == null || !isConnected)
             return null;
 
@@ -133,10 +128,8 @@ public class bl_PhotonHelper : Photon.PunBehaviour {
         }
     }
 
-    public string LocalName
-    {
-        get
-        {
+    public string LocalName {
+        get {
             if (PhotonNetwork.player != null && isConnected) {
                 string n = PhotonNetwork.player.name;
                 return n;
