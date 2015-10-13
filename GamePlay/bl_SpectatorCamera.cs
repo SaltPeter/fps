@@ -2,13 +2,11 @@
 using System.Collections;
 
 public class bl_SpectatorCamera : MonoBehaviour {
-
-    public int speed = 20; //initial speed
-
+	public int speed = 20; //initial speed
 	private Transform _Transform = null;
-    private Camera _Cam = null;
-    // Update is called once per frame
-    void Update() {
+	private Camera _Cam = null;
+	
+	void Update() {
         //press shift to move faster
         if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
             speed = 40;
@@ -33,7 +31,7 @@ public class bl_SpectatorCamera : MonoBehaviour {
         //move camera downwards
         if (Input.GetKey(KeyCode.Q))
             Transform.position = Transform.position + UseCamera.transform.up * -1 * speed * Time.deltaTime;
-    }
+	}
 
     public Camera UseCamera {
         get
