@@ -1,12 +1,10 @@
-﻿///////////////////////////bl_GunManager.cs//////////////////////////////////////
-/////////////Use this to manage all weapons Player///////////////////////////////
+﻿//bl_GunManager.cs - Use this to manage all weapons Player
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
 public class bl_GunManager : MonoBehaviour {
-    
-    public List<bl_Gun> AllGuns = new List<bl_Gun>(); /// all the Guns of game			  
+	public List<bl_Gun> AllGuns = new List<bl_Gun>(); /// all the Guns of game			  
 	public List<bl_Gun> PlayerEquip = new List<bl_Gun>(); /// weapons that the player take equipped
 
 	public int m_Current = 0; /// ID the weapon to take to start
@@ -20,8 +18,7 @@ public class bl_GunManager : MonoBehaviour {
 	[Space(5)]
     public Animator m_HeatAnimator;
 
-    void Awake()
-    {
+    void Awake() {
         //when player instance select player class select in bl_RoomMenu
         switch (bl_RoomMenu.m_playerclass)
         {
