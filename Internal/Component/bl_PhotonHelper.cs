@@ -1,13 +1,10 @@
-﻿//bl_Mono.cs
-//This a simple base class to us serve as an extension of Photon.Monobehaviour default
-
+﻿//bl_Mono.cs - A simple base class to serve as an extension for the Photon.Monobehaviour default
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using ExitGames.Client.Photon;
 
 public class bl_PhotonHelper : Photon.PunBehaviour {
-
     protected GameMode mGameMode = GameMode.FFA;
 
     protected virtual void Awake() {
@@ -32,7 +29,7 @@ public class bl_PhotonHelper : Photon.PunBehaviour {
             return null;
     }
 
-    ///  get a photonView by the viewID
+    // Get a photonView by the viewID
     public PhotonView FindPlayerView(int view) {
         PhotonView m_view = PhotonView.Find(view);
 
@@ -90,8 +87,8 @@ public class bl_PhotonHelper : Photon.PunBehaviour {
         if (p == null || !isConnected)
             return null;
 
-            string t = (string)p.customProperties[PropiertiesKeys.TeamKey];
-            return t;
+        string t = (string)p.customProperties[PropiertiesKeys.TeamKey];
+        return t;
     }
 
     /// Get the team of players
@@ -115,7 +112,6 @@ public class bl_PhotonHelper : Photon.PunBehaviour {
         get {
             if (!isConnected || PhotonNetwork.room == null)
                 return GameMode.TDM;
-
             if ((string)PhotonNetwork.room.customProperties[PropiertiesKeys.GameModeKey] == GameMode.FFA.ToString())
                 mGameMode = GameMode.FFA;
             else if ((string)PhotonNetwork.room.customProperties[PropiertiesKeys.GameModeKey] == GameMode.TDM.ToString())
