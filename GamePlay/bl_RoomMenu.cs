@@ -1,4 +1,4 @@
-//bl_RoomMenu.cs//place this in a scena for handling menus of room////////////////
+//bl_RoomMenu.cs - place this in a scena for handling menus of room
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
@@ -21,7 +21,7 @@ public class bl_RoomMenu : bl_PhotonHelper {
     public bool isFinish = false;
     [HideInInspector]
     public bool SpectatorMode, WaitForSpectator = false;
-    /// Reference of player class select
+    // Reference of player class select
     public static PlayerClass m_playerclass = PlayerClass.Assault;
 
     [HideInInspector] public bool AutoTeamSelection = false;
@@ -37,10 +37,8 @@ public class bl_RoomMenu : bl_PhotonHelper {
     /// When ping is too high show this message
     public string MsnMaxPing = "Your <color=yellow>ping is too high</color> \n <size=12>check your local coneccion.</size>";
     [Header("Map Camera")]
-    /// Rotate room camera?
-    public bool RotateCamera = true;
-    /// Rotation Camera Speed
-    public float RotSpeed = 5;
+    public bool RotateCamera = true; // Rotate room camera?
+    public float RotSpeed = 5; // Rotation Camera Speed
     [Space(5)]
     [Header("GUI")]
     public GUISkin SKin;
