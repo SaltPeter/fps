@@ -1,10 +1,7 @@
-﻿// bl_OnVisible.cs
-// This script helps to optimize the game as it makes the players remote script
-// only run when they are viewed by our player.
+﻿// bl_OnVisible.cs - Helps optimize the game by making the player's remote script only run when they are out of the frustum
 using UnityEngine;
 
 public class bl_OnVisible : MonoBehaviour {
-
     public bl_PlayerAnimations NPA;
     public bl_UpperAnimations Upper;
 
