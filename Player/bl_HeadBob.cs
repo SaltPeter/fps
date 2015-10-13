@@ -58,12 +58,10 @@ public class bl_HeadBob : MonoBehaviour {
      * Pos Share?
      */
 
-    void Start()
-    {
+    void Start() {
         originalLocalPos = head.localPosition;
         character = transform.root.GetComponent<bl_PlayerMovement>();
-        if (GetComponent<AudioSource>() == null)
-        {
+        if (GetComponent<AudioSource>() == null) {
             // we automatically add an audiosource, if one has not been manually added.
             // (if you want to control the rolloff or other audio settings, add an audiosource manually)
             gameObject.AddComponent<AudioSource>();
@@ -72,8 +70,7 @@ public class bl_HeadBob : MonoBehaviour {
         DefaultFrequemcy = headBobFrequency;
     }
 
-    void FixedUpdate()
-    {
+    void FixedUpdate() {
         // we use the actual distance moved as the velocity since last frame, rather than reading
         //the rigidbody's velocity, because this prevents the 'running against a wall' effect.
         Vector3 velocity = (transform.position - prevPosition) / Time.deltaTime;
@@ -97,15 +94,10 @@ public class bl_HeadBob : MonoBehaviour {
             springVelocity = 0;
             springPos = 0;
         }
-
-        // head bob cycle is based on "flat" velocity (i.e. excluding Y)
-        float flatVelocity = new Vector3(velocity.x, 0, velocity.z).magnitude;
-
-        // lengthen stride based on speed (so run bobbing isn't lots of little steps)
-        float strideLengthen = 1 + (flatVelocity * bobStrideSpeedLengthen);
-
-        // increment cycle
-        headBobCycle += (flatVelocity / strideLengthen) * (Time.deltaTime / headBobFrequency);
+        
+        float flatVelocity = new Vector3(velocity.x, 0, velocity.z).magnitude;// head bob cycle is based on "flat" velocity (i.e. excluding Y)
+        float strideLengthen = 1 + (flatVelocity * bobStrideSpeedLengthen);// lengthen stride based on speed (so run bobbing isn't lots of little steps)
+        headBobCycle += (flatVelocity / strideLengthen) * (Time.deltaTime / headBobFrequency);// increment cycle
 
         // actual bobbing and swaying values calculated using Sine wave
         float bobFactor = Mathf.Sin(headBobCycle * Mathf.PI * 2);
@@ -118,9 +110,8 @@ public class bl_HeadBob : MonoBehaviour {
             headBobFade = Mathf.Lerp(headBobFade, 0, Time.deltaTime);
         else
             headBobFade = Mathf.Lerp(headBobFade, 1, Time.deltaTime);
-
-        // height of bob is exaggerated based on speed
-        float speedHeightFactor = 1 + (flatVelocity * bobHeightSpeedMultiplier);
+            
+        float speedHeightFactor = 1 + (flatVelocity * bobHeightSpeedMultiplier); // height of bob is exaggerated based on speed
 
         // finally, set the position and rotation values
         float xPos = -headBobSideMovement * bobSwayFactor;
@@ -131,19 +122,15 @@ public class bl_HeadBob : MonoBehaviour {
         head.localRotation = Quaternion.Euler(xTilt, 0, zTilt);
 
         // Play audio clips based on leaving ground/landing and head bob cycle
-        if (character.grounded)
-        {
-            if (!prevGrounded)
-            {
+        if (character.grounded) {
+            if (!prevGrounded) {
                 GetComponent<AudioSource>().clip = landSound;
                 GetComponent<AudioSource>().Play();
             }
             prevGrounded = true;
         }
-        else
-        {
-            if (prevGrounded)
-            {
+        else {
+            if (prevGrounded) {
                 GetComponent<AudioSource>().clip = jumpSound;
                 GetComponent<AudioSource>().Play();
             }
