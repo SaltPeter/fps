@@ -9,17 +9,11 @@ public class bl_NetworkGun : MonoBehaviour {
     public Renderer DesactiveOnOffAmmo;
     [Space(5)]
     public bool TakeLocalFirePoint = true;
-    /// <summary>
     /// This asigne auto not need asigne in inspector
-    /// </summary>
     public int WeaponID;
-    /// <summary>
     /// Local Gun reference (the same Gun but local)
-    /// </summary>
     public bl_Gun IsGun;
-    /// <summary>
     /// The type of gun wath is this (signe auto)
-    /// </summary>
     public bl_Gun.weaponType m_weaponType = bl_Gun.weaponType.Machinegun;
     //private
     private bl_UpperAnimations m_upper;
@@ -43,9 +37,8 @@ public class bl_NetworkGun : MonoBehaviour {
             Debug.LogError("This NetworkGun No have reference of GUN");
         }
     }
-    /// <summary>
+
     /// Update type each is enable 
-    /// </summary>
     void OnEnable()
     {
         SetUpType();
@@ -71,9 +64,7 @@ public class bl_NetworkGun : MonoBehaviour {
         }
     }
 
-    /// <summary>
     /// Fire Sync in network player
-    /// </summary>
     public void Fire(float m_spread,Vector3 pos,Quaternion rot)
     {
         if (IsGun != null)
@@ -103,10 +94,8 @@ public class bl_NetworkGun : MonoBehaviour {
             StartCoroutine(MuzzleFlash());
         }
     }
-    /// <summary>
+
     /// if grenade 
-    /// </summary>
-    /// <param name="s"></param>
     public void GrenadeFire(float s)
     {
         if (IsGun != null)
@@ -133,9 +122,7 @@ public class bl_NetworkGun : MonoBehaviour {
         }
     }
 
-    /// <summary>
     /// When is knife only reply sounds
-    /// </summary>
     public void KnifeFire()
     {
         if (IsGun != null)
@@ -156,9 +143,7 @@ public class bl_NetworkGun : MonoBehaviour {
         //when hide netgun / grenade we use method of change material to a invicible
         //due that if desative the render cause animation  player broken.
         if (DesactiveOnOffAmmo != null)
-        {
             DesactiveOnOffAmmo.material = (active) ? defaultMat : mat;
-        }
     }
 
     IEnumerator MuzzleFlash()

@@ -22,7 +22,7 @@ public class bl_PhotonConnection : Photon.MonoBehaviour {
     public Transform RoomListPanel;
     public List<GameObject> MenusUI = new List<GameObject>();
     public CanvasGroup CanvasGroupRoot = null;
-    [Header("Refrences")]
+    [Header("References")]
     public Text PhotonStatusText = null;
     public Text PlayerNameText = null;
 
@@ -100,8 +100,6 @@ public class bl_PhotonConnection : Photon.MonoBehaviour {
         GetPrefabs();
     }
 
-    /// <param name="t_state"></param>
-    /// <returns></returns>
     IEnumerator Fade(LobbyState t_state, float t = 2.0f)
     {
         alpha = 0.0f;
@@ -166,9 +164,7 @@ public class bl_PhotonConnection : Photon.MonoBehaviour {
         }
     }
 
-    /// <summary>
     /// Menu For Enter Name for UI 4.6 WIP
-    /// </summary>
     public void EnterName(InputField field = null) {
         if (field == null || string.IsNullOrEmpty(field.text)) return;
 
@@ -183,16 +179,12 @@ public class bl_PhotonConnection : Photon.MonoBehaviour {
     }
 
     #region UGUI
-    /// <summary>
     /// For button can call this 
-    /// </summary>
-    /// <param name="id"></param>
     public void ChangeWindow(int id)
     {
         ChangeWindow(id, -1);
     }
 
-    /// <param name="id"></param>
     public void ChangeWindow(int id, int id2)
     {
         StartCoroutine(Fade(LobbyState.MainMenu, 3f));
@@ -217,7 +209,6 @@ public class bl_PhotonConnection : Photon.MonoBehaviour {
         if (PhotonNetwork.connected) PhotonNetwork.Disconnect();
     }
 
-    /// <param name="id"></param>
     public void ChangeServerCloud(int id)
     {
         if (PhotonNetwork.connected)
@@ -254,7 +245,6 @@ public class bl_PhotonConnection : Photon.MonoBehaviour {
         }
     }
 
-    /// <param name="plus"></param>
     public void ChangeMaxPlayer(bool plus)
     {
         if (plus)
@@ -276,7 +266,6 @@ public class bl_PhotonConnection : Photon.MonoBehaviour {
         MaxPlayerText.text = maxPlayers[players] + " Players";
     }
 
-    /// <param name="plus"></param>
     public void ChangeRoundTime(bool plus)
     {
         if (!plus)
@@ -300,7 +289,6 @@ public class bl_PhotonConnection : Photon.MonoBehaviour {
         RoundTimeText.text = (RoomTime[r_Time] / 60) + " Minutes";
     }
 
-    /// <param name="plus"></param>
     public void ChangeGameMode(bool plus)
     {
         if (plus)
@@ -324,7 +312,6 @@ public class bl_PhotonConnection : Photon.MonoBehaviour {
         GameModeText.text = GameModes[CurrentGameMode];
     }
 
-    /// <param name="plus"></param>
     public void ChangeMap(bool plus)
     {
         if (!plus)
@@ -385,7 +372,6 @@ public class bl_PhotonConnection : Photon.MonoBehaviour {
         QualityText.text = QualitySettings.names[m_currentQuality];
     }
 
-    /// <param name="b"></param>
     public void QuitGame(bool b) {
         if (b) {
             Application.Quit();
@@ -451,10 +437,6 @@ public class bl_PhotonConnection : Photon.MonoBehaviour {
         }, null);
     }
 
-    /// <param name="clip"></param>
-    /// <param name="position"></param>
-    /// <param name="volume"></param>
-    /// <returns></returns>
 	AudioSource PlayAudioClip(AudioClip clip, Vector3 position, float volume) {
         GameObject go = new GameObject("One shot audio");
         go.transform.position = position;
@@ -466,7 +448,6 @@ public class bl_PhotonConnection : Photon.MonoBehaviour {
         return source;
     }
 
-    /// <returns></returns>
     private IEnumerator MoveToGameScene() {
         //Wait for check
         while (PhotonNetwork.room == null)

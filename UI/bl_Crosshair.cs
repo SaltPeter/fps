@@ -2,9 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class bl_Crosshair : MonoBehaviour
-{
-
+public class bl_Crosshair : MonoBehaviour {
     public Image crosshair_bottom;
     public Image crosshair_left;
     public Image crosshair_right;
@@ -24,8 +22,7 @@ public class bl_Crosshair : MonoBehaviour
     private float bottom_y;
     private Color mColor = new Color(1, 1, 1, 1);
 
-    void Start()
-    {
+    void Start() {
         if (this.crosshair_top != null)
             this.top_y = this.crosshair_top.rectTransform.anchoredPosition.y;
         if (this.crosshair_bottom != null)
@@ -36,16 +33,14 @@ public class bl_Crosshair : MonoBehaviour
             this.right_x = this.crosshair_right.rectTransform.anchoredPosition.x;
     }
 
-    void Active()
-    {
+    void Active() {
         if (bl_GameManager.isAlive == false || mCurrentGun.typeOfGun == bl_Gun.weaponType.Launcher)
             CrossRoot.SetActive(false);
         else
             CrossRoot.SetActive(true);
     }
 
-    void Update()
-    {
+    void Update() {
         if (GManager == null)
             return;
         if (m_GunManager == null)
@@ -54,7 +49,6 @@ public class bl_Crosshair : MonoBehaviour
             return;
         if (mCharacterController == null)
             return;
-
 
         Active();
         FadeUpdate();
@@ -88,15 +82,12 @@ public class bl_Crosshair : MonoBehaviour
         }
     }
 
-    void FadeUpdate()
-    {
-        if (mCurrentGun.isAmed)
-        {
+    void FadeUpdate() {
+        if (mCurrentGun.isAmed) {
             if (alpha != 0)
                 alpha = Mathf.Lerp(alpha, 0f, Time.deltaTime * FadeSpeed);
         }
-        else
-        {
+        else {
             if (alpha != 1f)
                 alpha = Mathf.Lerp(alpha, 1f, Time.deltaTime * FadeSpeed);
         }
@@ -109,13 +100,10 @@ public class bl_Crosshair : MonoBehaviour
     }
 
     private bl_GunManager weaponManager;
-    private bl_GunManager m_GunManager
-    {
-        get
-        {
+    private bl_GunManager m_GunManager {
+        get {
             bl_GunManager gm = null;
-            if (weaponManager == null)
-            {
+            if (weaponManager == null) {
                 if (GManager.OurPlayer != null)
                     gm = GManager.OurPlayer.GetComponentInChildren<bl_GunManager>();
                 if (gm != null)
@@ -127,10 +115,8 @@ public class bl_Crosshair : MonoBehaviour
         }
     }
 
-    private bl_Gun mCurrentGun
-    {
-        get
-        {
+    private bl_Gun mCurrentGun {
+        get {
             bl_Gun gun;
 
             gun = m_GunManager.GetCurrentWeapon();
@@ -138,12 +124,9 @@ public class bl_Crosshair : MonoBehaviour
         }
     }
 
-    private CharacterController mCharacterController
-    {
-        get
-        {
+    private CharacterController mCharacterController {
+        get {
             return GManager.OurPlayer.transform.root.GetComponent<CharacterController>();
         }
     }
-
 }

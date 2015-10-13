@@ -52,14 +52,10 @@ public class bl_PlayerSyncEditor : Editor {
         bool allowSceneObjects = !EditorUtility.IsPersistent(m_Target);
 
         if (m_Target.NetworkGuns == null)
-        {
             m_Target.NetworkGuns = new System.Collections.Generic.List<bl_NetworkGun>();
-        }
 
         if (m_Target.NetworkGuns.Count == 0)
-        {
             m_Target.NetworkGuns.Add(null);
-        }
 
         EditorGUILayout.BeginVertical("box");
         m_Target.HeatTarget = EditorGUILayout.ObjectField("Heat Target", m_Target.HeatTarget, typeof(Transform), isProjectPrefab) as Transform;
@@ -96,9 +92,7 @@ public class bl_PlayerSyncEditor : Editor {
         for (int i = 0; i < m_Target.NetworkGuns.Count; ++i)
         {
             if (m_Target.NetworkGuns[i] != null)
-            {
                 count++;
-            }
         }
 
         return count;
@@ -110,9 +104,7 @@ public class bl_PlayerSyncEditor : Editor {
         SerializedProperty listProperty = serializedObject.FindProperty("NetworkGuns");
 
         if (listProperty == null)
-        {
             return;
-        }
 
         float containerElementHeight = 22;
         float containerHeight = listProperty.arraySize * containerElementHeight;
@@ -121,9 +113,7 @@ public class bl_PlayerSyncEditor : Editor {
         serializedObject.FindProperty("ObservedComponentsFoldoutOpen").boolValue = isOpen;
 
         if (isOpen == false)
-        {
             containerHeight = 0;
-        }
 
         Rect containerRect = PhotonGUI.ContainerBody(containerHeight);
         if (isOpen == true)
@@ -169,9 +159,7 @@ public class bl_PlayerSyncEditor : Editor {
     private void DrawIsPlayingWarning()
     {
         if (Application.isPlaying == false)
-        {
             return;
-        }
 
         GUILayout.BeginVertical(GUI.skin.box);
         {

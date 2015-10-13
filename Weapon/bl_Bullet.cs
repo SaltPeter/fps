@@ -3,8 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 [RequireComponent(typeof(AudioSource))]
-public class bl_Bullet : MonoBehaviour
-{
+public class bl_Bullet : MonoBehaviour {
     #region Variables
     [HideInInspector]
     public Vector3 DirectionFrom = Vector3.zero;
@@ -50,11 +49,10 @@ public class bl_Bullet : MonoBehaviour
 
     HitType type;
 
-    // bullet hole game object
-    public GameObject bulletHoleObject;
+    public GameObject bulletHoleObject; // bullet hole game object
 
-    //textures for different materials
-    public Texture2D[] concrete; 
+	//textures for different materials
+	public Texture2D[] concrete; 
     public Texture2D[] wood;
     public Texture2D[] metal;
     public Texture2D[] oldMetal;
@@ -178,8 +176,7 @@ public class bl_Bullet : MonoBehaviour
     #endregion // end of bullet hole creation / info
 
 
-    void Update()
-    {
+    void Update() {
         if (hasHit)
             return; // if bullet has already hit its max hits... exit
 

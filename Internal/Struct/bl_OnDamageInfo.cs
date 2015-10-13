@@ -1,5 +1,4 @@
-﻿// bl_OnDamageInfo
-// use this as a reference for information needed to send a new injury
+﻿// use this as a reference for information needed to send a new injury
 using UnityEngine;
 using System.Collections;
 

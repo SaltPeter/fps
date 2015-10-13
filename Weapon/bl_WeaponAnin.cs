@@ -27,9 +27,7 @@ public AudioClip m_Fire;
 //private
 private int m_repeatReload;
 
-
-void Awake()
-{
+void Awake() {
     Anim.wrapMode = WrapMode.Once;
 }
 
@@ -60,10 +58,8 @@ public void HideWeapon()
     Anim[TakeOut].wrapMode = WrapMode.Once;
     Anim.Play(TakeOut);
 }
-    /// <summary>
+
 /// event called by animation when is a reload state
-    /// </summary>
-    /// <param name="ReloadTime"></param>
 public void Reload(float ReloadTime)
 {
     Anim.Stop(ReloadName);
@@ -71,9 +67,8 @@ public void Reload(float ReloadTime)
     Anim[ReloadName].speed = (Anim[ReloadName].clip.length / ReloadTime);
     Anim.Play(ReloadName);
 }
-    /// <summary>
+
     /// event called by animation when is fire
-    /// </summary>
 public void FireAudio()
 {
     if (m_source != null && m_Fire != null)
@@ -139,32 +134,23 @@ public void ReloadSound(int index)
         break;
     }
 }
-    /// <summary>
+
     /// Heat animation
-    /// </summary>
-    /// <returns></returns>
-IEnumerator ReturnToIdle()
-{
+IEnumerator ReturnToIdle() {
     yield return new WaitForSeconds(0.6f);
     GManager.heatReloadAnim(0);
 }
 
-private bl_GunManager GManager
-{
-    get
-    {
+private bl_GunManager GManager {
+    get {
         return this.transform.root.GetComponentInChildren<bl_GunManager>();
     }
 }
 private Animation _Anim;
-private Animation Anim
-{
-    get
-    {
+private Animation Anim {
+    get {
         if (_Anim == null)
-        {
             _Anim = this.GetComponent<Animation>();
-        }
         return _Anim;
     }
 }

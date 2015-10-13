@@ -14,36 +14,23 @@ public class bl_PlayerDamageManager : bl_PhotonHelper {
     [HideInInspector]
     public bool DamageEnabled = true;
     [Space(5)]
-    //Current Player Health
-    public float health = 100.0f;
-
-    /// Max Player Health
-
-	public float maxHealth = 100.0f;
-
-    /// Time to for the player reappears after dead
-
-    public float spawnTime = 5.0f;
-    [Space(5)]
+    public float health = 100.0f; //Current Player Health
+	public float maxHealth = 100.0f; /// Max Player Health
+	public float spawnTime = 5.0f; /// Time to for the player reappears after dead
+	[Space(5)]
     public GameObject m_Ragdoll;
     public bl_BodyPartManager mBodyManager;
     [Space(5)]
     [Header("GUI")]
     public Texture2D Blood;
     public Texture2D PaintFlash;
-    /// <summary>
     /// Color of vignnete effect when take damage
-    /// </summary>
     public Color PaintFlashColor;
-    /// <summary>
     /// Color of UI when player health is low
-    /// </summary>
     public Color LowHealtColor = new Color(0.9f, 0, 0);
     private Color CurColor = new Color(0, 0, 0);
     private float m_alpha = 0.0f;
-    /// <summary>
     /// Blood Screen Fade speed
-    /// </summary>
     public float m_FadeSpeed = 3;
     [Range(0.0f, 2.0f)]
     public float m_UIIntensity = 0.2f;
@@ -166,16 +153,8 @@ public class bl_PlayerDamageManager : bl_PhotonHelper {
             photonView.RPC("SyncDamage", PhotonTargets.AllBuffered, t_damage, PhotonNetwork.player.name, FallMethod, -downpos, false, 5, PhotonNetwork.player);
         }
     }
-    /// <summary>
+
     /// Sync the Health of player
-    /// </summary>
-    /// <param name="t_damage"></param>
-    /// <param name="t_from"></param>
-    /// <param name="t_weapon"></param>
-    /// <param name="m_direction"></param>
-    /// <param name="isHeatShot"></param>
-    /// <param name="weaponID"></param>
-    /// <param name="m_sender"></param>
     [PunRPC]
     void SyncDamage(float t_damage, string t_from, string t_weapon, Vector3 m_direction, bool isHeatShot, int weaponID, PhotonPlayer m_sender)
     {
@@ -438,10 +417,9 @@ public class bl_PlayerDamageManager : bl_PhotonHelper {
             yield return rate;
         }
     }
-    /// <summary>
+
     /// This event is called when player pick up a medkit
     /// use PhotonTarget.OthersBuffered to save bandwidth
-    /// </summary>
     /// <param name="amount"> amount for sum at curent health</param>
     void OnPickUp(float amount)
     {
@@ -456,10 +434,9 @@ public class bl_PlayerDamageManager : bl_PhotonHelper {
             photonView.RPC("PickUpHealth", PhotonTargets.OthersBuffered, newHealth);
         }
     }
-    /// <summary>
+ 
     /// When round is end 
     /// desactive some functions
-    /// </summary>
     void OnRoundEnd()
     {
         DamageEnabled = false;
@@ -492,10 +469,8 @@ public class bl_PlayerDamageManager : bl_PhotonHelper {
         }
     }
 
-    CharacterController m_charactercontroller
-    {
-        get
-        {
+    CharacterController m_charactercontroller {
+        get {
             return this.transform.root.GetComponent<CharacterController>();
         }
     }

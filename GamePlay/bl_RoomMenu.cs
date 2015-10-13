@@ -5,8 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 
-public class bl_RoomMenu : bl_PhotonHelper
-{
+public class bl_RoomMenu : bl_PhotonHelper {
     [HideInInspector]
     public bool isPlaying = false;
     [HideInInspector]
@@ -23,9 +22,7 @@ public class bl_RoomMenu : bl_PhotonHelper
     public bool isFinish = false;
     [HideInInspector]
     public bool SpectatorMode, WaitForSpectator = false;
-    /// <summary>
     /// Reference of player class select
-    /// </summary>
     public static PlayerClass m_playerclass = PlayerClass.Assault;
 
     [HideInInspector] public bool AutoTeamSelection = false;
@@ -36,22 +33,14 @@ public class bl_RoomMenu : bl_PhotonHelper
     public KeyCode PauseMenuKey = KeyCode.Escape;
     public KeyCode ChangeClassKey = KeyCode.M;
     [Header("Ping Settings")]
-    /// <summary>
     /// When ping is > at this, them show a message
-    /// </summary>
     public int MaxPing = 500;
-    /// <summary>
     /// When ping is too high show this message
-    /// </summary>
     public string MsnMaxPing = "Your <color=yellow>ping is too high</color> \n <size=12>check your local coneccion.</size>";
     [Header("Map Camera")]
-    /// <summary>
     /// Rotate room camera?
-    /// </summary>
     public bool RotateCamera = true;
-    /// <summary>
     /// Rotation Camera Speed
-    /// </summary>
     public float RotSpeed = 5;
     [Space(5)]
     [Header("GUI")]
@@ -166,10 +155,8 @@ public class bl_RoomMenu : bl_PhotonHelper
             }
         }
     }
-    /// <summary>
+
     /// Use for change player class for next Respawn
-    /// </summary>
-    /// <param name="m_class"></param>
     public void ChangeClass(int m_class)
     {
         switch (m_class)
@@ -224,8 +211,6 @@ public class bl_RoomMenu : bl_PhotonHelper
                     isPlaying = true;
                 }
             }
-            
-            
         }
     }
 
@@ -244,7 +229,6 @@ public class bl_RoomMenu : bl_PhotonHelper
                 GUI.Label(new Rect(Screen.width / 2 + 38, Screen.height - 43, 200, 60), MsnMaxPing);
                 GUI.color = Color.white;
             }
-
         }
         if (FadeBlackTexture != null)
         {
@@ -558,12 +542,9 @@ public class bl_RoomMenu : bl_PhotonHelper
             SettingMenu();
     }
 
-    void OnlyScoreBoard()
-    {
-        if (m_showScoreBoard == true)
-        {
-            if (GetGameMode != GameMode.FFA)
-            {
+    void OnlyScoreBoard() {
+        if (m_showScoreBoard == true) {
+            if (GetGameMode != GameMode.FFA) {
                 GUILayout.BeginArea(new Rect(Screen.width / 2 - 400, Screen.height / 2 - 150, 400, 350), "", ScoreBoardStyle);
                 GUILayout.Space(5);
                 GUILayout.BeginHorizontal("box");
@@ -667,8 +648,7 @@ public class bl_RoomMenu : bl_PhotonHelper
         }
     }
 
-    void SelectClassMenu()
-    {
+    void SelectClassMenu() {
         GUILayout.BeginArea(new Rect(Screen.width / 2 - 210, Screen.height / 2 + 250, 420, 75));
         GUILayout.Label("<b>Select your <color=orange>Player Class</color></b>");
         GUILayout.BeginHorizontal();
@@ -701,8 +681,7 @@ public class bl_RoomMenu : bl_PhotonHelper
         GUILayout.EndArea();
     }
 
-    void SettingMenu()
-    {
+    void SettingMenu() {
         GUILayout.BeginArea(new Rect(Screen.width / 2 - 250, Screen.height / 2 - 150, 500, 350), "", "window");
         GUILayout.Space(10);
         GUILayout.Box("Settings");
@@ -765,8 +744,7 @@ public class bl_RoomMenu : bl_PhotonHelper
         GUILayout.EndArea();
     }
 
-    void ApplySave()
-    {
+    void ApplySave() {
         QualitySettings.SetQualityLevel((int)m_currentQuality);
         AudioListener.volume = m_volume;
         if (m_stropic == 0)
@@ -783,8 +761,7 @@ public class bl_RoomMenu : bl_PhotonHelper
         Debug.Log("Save Done!");
     }
 
-    void GetPrefabs()
-    {
+    void GetPrefabs() {
         if (PlayerPrefs.HasKey("volumen"))
             m_volume = PlayerPrefs.GetFloat("volumen");
             AudioListener.volume = m_volume;
@@ -803,9 +780,8 @@ public class bl_RoomMenu : bl_PhotonHelper
             return SKin.customStyles[4];
         }
     }
-    /// <summary>
+
     /// Get All Player in Room List
-    /// </summary>
     public List<PhotonPlayer> GetPlayerList
     {
         get
@@ -816,9 +792,8 @@ public class bl_RoomMenu : bl_PhotonHelper
             return list;
         }
     }
-    /// <summary>
+
     /// Get the total players in team Delta
-    /// </summary>
     public int GetPlayerInDeltaCount
     {
         get
@@ -832,9 +807,8 @@ public class bl_RoomMenu : bl_PhotonHelper
             return count;
         }
     }
-    /// <summary>
+
     /// Get the total players in team Recon
-    /// </summary>
     public int GetPlayerInReconCount
     {
         get
@@ -848,12 +822,8 @@ public class bl_RoomMenu : bl_PhotonHelper
             return count;
         }
     }
-    /// <summary>
+
     /// Sort Player by Kills,for more info wacht this: http://answers.unity3d.com/questions/233917/custom-sorting-function-need-help.html
-    /// </summary>
-    /// <param name="player1"></param>
-    /// <param name="player2"></param>
-    /// <returns></returns>
     private static int GetSortPlayerByKills(PhotonPlayer player1, PhotonPlayer player2)
     {
         if (player1.customProperties[PropiertiesKeys.KillsKey] != null && player2.customProperties[PropiertiesKeys.KillsKey] != null)
@@ -878,10 +848,7 @@ public class bl_RoomMenu : bl_PhotonHelper
             yield return 0;
         }
         if (load)
-        {
-            // back to main menu        
-            Application.LoadLevel(LeftRoomReturnScene);
-        }
+            Application.LoadLevel(LeftRoomReturnScene); // back to main menu  
     }
 
    public static IEnumerator FadeOut(float t_time)

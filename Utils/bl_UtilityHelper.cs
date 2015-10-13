@@ -3,14 +3,8 @@
 using UnityEngine;
 using System.Collections;
 
-public class bl_UtilityHelper
-{
-    /// <summary>
+public class bl_UtilityHelper {
     /// Call this to capture a custom, screenshot
-    /// </summary>
-    /// <param name="width"></param>
-    /// <param name="height"></param>
-    /// <returns></returns>
     public static Texture2D CaptureCustomScreenshot(int width, int height)
     {
         UnityEngine.Texture2D textured = new UnityEngine.Texture2D(width, height, UnityEngine.TextureFormat.RGB24, true, false);
@@ -21,33 +15,24 @@ public class bl_UtilityHelper
         textured2.Apply();
         return textured2;
     }
-    /// <summary>
+
     /// Call this to capture a screenshot Automatic size
-    /// </summary>
-    /// <returns></returns>
     public static byte[] CaptureScreenshot()
     {
         UnityEngine.Texture2D textured = new UnityEngine.Texture2D(UnityEngine.Screen.width, UnityEngine.Screen.height, UnityEngine.TextureFormat.RGB24, false, false);
         textured.ReadPixels(new UnityEngine.Rect(0f, 0f, (float)UnityEngine.Screen.width, (float)UnityEngine.Screen.height), 0, 0);
         return textured.EncodeToPNG();
     }
-    /// <summary>
+
     /// Call this to capture a custom size screenshot
-    /// </summary>
-    /// <param name="width"></param>
-    /// <param name="height"></param>
-    /// <returns></returns>
     public static byte[] CaptureScreenshot(int width, int height)
     {
         Texture2D textured = new Texture2D(width, height, UnityEngine.TextureFormat.RGB24, false, false);
         textured.ReadPixels(new UnityEngine.Rect(0f, 0f, (float)width, (float)height), 0, 0);
         return textured.EncodeToPNG();
     }
-    /// <summary>
+
     /// change the parent of an object to another
-    /// </summary>
-    /// <param name="target"></param>
-    /// <param name="parent"></param>
     public static void ChangeParent(UnityEngine.Transform target, UnityEngine.Transform parent)
     {
         Vector3 localPosition = target.localPosition;
@@ -58,11 +43,8 @@ public class bl_UtilityHelper
         target.localRotation = localRotation;
         target.localScale = localScale;
     }
-    /// <summary>
+
     /// change the parent of an object to another in word
-    /// </summary>
-    /// <param name="target"></param>
-    /// <param name="parent"></param>
     public static void ChangeParentWorld(UnityEngine.Transform target, UnityEngine.Transform parent)
     {
         Vector3 position = target.position;
@@ -71,65 +53,38 @@ public class bl_UtilityHelper
         target.position = position;
         target.rotation = rotation;
     }
-    /// <summary>
+
     /// Get ClampAngle
-    /// </summary>
-    /// <param name="ang"></param>
-    /// <param name="min"></param>
-    /// <param name="max"></param>
-    /// <returns></returns>
     public static float ClampAngle(float ang, float min, float max)
     {
         if (ang < -360f)
-        {
             ang += 360f;
-        }
         if (ang > 360f)
-        {
             ang -= 360f;
-        }
         return UnityEngine.Mathf.Clamp(ang, min, max);
     }
-    /// <summary>
+
     /// obtained, the magnitude of a certain position and another
-    /// </summary>
-    /// <param name="point"></param>
-    /// <param name="lineStart"></param>
-    /// <param name="lineEnd"></param>
-    /// <returns></returns>
     public static float DistancePointLine(Vector3 point, Vector3 lineStart, Vector3 lineEnd)
     {
         return Vector3.Magnitude(ProjectPointLine(point, lineStart, lineEnd) - point);
     }
 
-    /// <summary>
     /// locate an object hierarchy by name
-    /// </summary>
-    /// <param name="current"></param>
-    /// <param name="name"></param>
-    /// <returns></returns>
     public static Transform FindHierarchy(Transform current, string name)
     {
         if (current.name == name)
-        {
             return current;
-        }
         for (int i = 0; i < current.childCount; i++)
         {
             UnityEngine.Transform transform = FindHierarchy(current.GetChild(i), name);
             if (transform != null)
-            {
                 return transform;
-            }
         }
         return null;
     }
-    /// <summary>
+
     /// obtained the period of a value
-    /// </summary>
-    /// <param name="period"></param>
-    /// <param name="k"></param>
-    /// <returns></returns>
     public static float Period(float period, float k = 1f)
     {
         float t = Time.realtimeSinceStartup * k;
@@ -149,12 +104,8 @@ public class bl_UtilityHelper
         float num2 = UnityEngine.Mathf.Clamp(UnityEngine.Vector3.Dot(lhs, rhs), 0f, magnitude);
         return (lineStart + ((UnityEngine.Vector3)(lhs * num2)));
     }
-    /// <summary>
+
     /// Obtained distance between two positions.
-    /// </summary>
-    /// <param name="posA"></param>
-    /// <param name="posB"></param>
-    /// <returns></returns>
     public static float GetDistance(Vector3 posA, Vector3 posB)
     {
         return Vector3.Distance(posA, posB);
@@ -165,20 +116,14 @@ public class bl_UtilityHelper
         GameObject go = PhotonView.Find(m_view.viewID).gameObject;
         return go;
     }
-    /// <summary>
+
     /// obtain only the first two values
-    /// </summary>
-    /// <param name="f"></param>
-    /// <returns></returns>
     public static string GetDoubleChar(float f)
     {
         return f.ToString("00");
     }
-    /// <summary>
+
     /// obtain only the first three values
-    /// </summary>
-    /// <param name="f"></param>
-    /// <returns></returns>
     public static string GetThreefoldChar(float f)
     {
         return f.ToString("000");
@@ -224,8 +169,6 @@ public class bl_UtilityHelper
         return 0f;
     }
 
-    /// <param name="force"></param>
-    /// <returns></returns>
     public static Vector3 CorrectForceSize(UnityEngine.Vector3 force)
     {
         float num = (1.2f / Time.timeScale) - 0.2f;
@@ -233,8 +176,6 @@ public class bl_UtilityHelper
         return force;
     }
 
-    /// <param name="text"></param>
-    /// <param name="option"></param>
     public static void ShadowLabel(string text, params GUILayoutOption[] option)
     {
         Color color = GUI.color;
@@ -275,22 +216,14 @@ public class bl_UtilityHelper
         color2.a = color.a;
         UnityEngine.GUI.color = color2;
         if (style != null)
-        {
             UnityEngine.GUI.Label(position, text, style);
-        }
         else
-        {
             UnityEngine.GUI.Label(position, text);
-        }
         UnityEngine.GUI.color = color;
         if (style != null)
-        {
             UnityEngine.GUI.Label(rect, text, style);
-        }
         else
-        {
             UnityEngine.GUI.Label(rect, text);
-        }
     }
     /// <summary>
     /// Helper for Cursor locked in Unity 5
@@ -298,7 +231,6 @@ public class bl_UtilityHelper
     /// <param name="mLock">cursor state</param>
     public static void LockCursor(bool mLock)
     {
-#if UNITY_5
         if (mLock == true)
         {
             Cursor.visible = false;
@@ -309,23 +241,16 @@ public class bl_UtilityHelper
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
         }
-#else
-        Screen.lockCursor = mLock;
-#endif
     }
 
     public static bool GetCursorState
     {
         get
         {
-#if UNITY_5
             if (Cursor.visible && Cursor.lockState != CursorLockMode.Locked)
                 return false;
             else
                 return true;
-#else
-            return Screen.lockCursor;
-#endif
         }
     }
 

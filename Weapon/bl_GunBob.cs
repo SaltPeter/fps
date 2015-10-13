@@ -76,7 +76,7 @@ public class bl_GunBob : MonoBehaviour {
         if (timer > Mathf.PI * 2) {
             timer = timer - (Mathf.PI * 2);
         }
-        //} 
+
         if (waveslice != 0) {
             var TranslateChange = waveslice * BobbingAmount;
             var TranslateChange2 = waveslice2 * BobbingAmount;

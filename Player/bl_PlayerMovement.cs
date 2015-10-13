@@ -264,7 +264,6 @@ public class bl_PlayerMovement : MonoBehaviour {
 		}
 	}
 
-	/// <param name="hit"></param>
 	void OnControllerColliderHit(ControllerColliderHit hit) {
 		Rigidbody mRig = hit.collider.attachedRigidbody;
 

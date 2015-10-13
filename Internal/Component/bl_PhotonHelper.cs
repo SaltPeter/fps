@@ -21,11 +21,8 @@ public class bl_PhotonHelper : Photon.PunBehaviour {
             return t;
         }
     }
-    /// <summary>
+
     /// Find a player gameobject by the viewID 
-    /// </summary>
-    /// <param name="view"></param>
-    /// <returns></returns>
     public GameObject FindPlayerRoot(int view) {
         PhotonView m_view = PhotonView.Find(view);
 
@@ -34,11 +31,8 @@ public class bl_PhotonHelper : Photon.PunBehaviour {
         else
             return null;
     }
-    /// <summary>
+
     ///  get a photonView by the viewID
-    /// </summary>
-    /// <param name="view"></param>
-    /// <returns></returns>
     public PhotonView FindPlayerView(int view) {
         PhotonView m_view = PhotonView.Find(view);
 
@@ -67,14 +61,10 @@ public class bl_PhotonHelper : Photon.PunBehaviour {
         }
     }
 
-    /// <summary>
-    /// True if the PhotonView is "mine" and can be controlled by this client.
-    /// </summary>
-    /// <remarks>
+    /// It is true if the PhotonView is "mine" and can be controlled by this client.
     /// PUN has an ownership concept that defines who can control and destroy each PhotonView.
     /// True in case the owner matches the local PhotonPlayer.
     /// True if this is a scene photonview on the Master client.
-    /// </remarks>
     public bool isMine
     {
         get
@@ -82,13 +72,11 @@ public class bl_PhotonHelper : Photon.PunBehaviour {
             return (this.photonView.ownerId == PhotonNetwork.player.ID) || (!this.photonView.isOwnerActive && PhotonNetwork.isMasterClient);
         }
     }
-    /// <summary>
+
     /// Get Photon.connect
-    /// </summary>
     public bool isConnected
     {
-        get
-        {
+        get {
             return PhotonNetwork.connected;
         }
     }
@@ -100,11 +88,8 @@ public class bl_PhotonHelper : Photon.PunBehaviour {
             return null;
           return player;
     }
-    /// <summary>
+
     /// Get the team of players
-    /// </summary>
-    /// <param name="p"></param>
-    /// <returns></returns>
     public string GetTeam(PhotonPlayer p)
     {
         if (p == null || !isConnected)
@@ -114,13 +99,8 @@ public class bl_PhotonHelper : Photon.PunBehaviour {
             return t;
     }
 
-    /// <summary>
     /// Get the team of players
-    /// </summary>
-    /// <param name="p"></param>
-    /// <returns></returns>
-    public Team GetTeamEnum(PhotonPlayer p)
-    {
+    public Team GetTeamEnum(PhotonPlayer p) {
         if (p == null || !isConnected)
             return Team.All;
 
@@ -134,13 +114,10 @@ public class bl_PhotonHelper : Photon.PunBehaviour {
         }
         return Team.All;
     }
-    /// <summary>
+
     /// Get current gamemode
-    /// </summary>
-    public GameMode GetGameMode
-    {
-        get
-        {
+    public GameMode GetGameMode {
+        get {
             if (!isConnected || PhotonNetwork.room == null)
                 return GameMode.TDM;
 
@@ -160,8 +137,7 @@ public class bl_PhotonHelper : Photon.PunBehaviour {
     {
         get
         {
-            if (PhotonNetwork.player != null && isConnected)
-            {
+            if (PhotonNetwork.player != null && isConnected) {
                 string n = PhotonNetwork.player.name;
                 return n;
             }
@@ -170,14 +146,10 @@ public class bl_PhotonHelper : Photon.PunBehaviour {
         }
     }
 
-    /// <summary>
     /// Get All Player in Room
     /// for get this hash 00xki8697
-    /// </summary>
-    public List<PhotonPlayer> AllPlayerList
-    {
-        get
-        {
+    public List<PhotonPlayer> AllPlayerList {
+        get {
             List<PhotonPlayer> p = new List<PhotonPlayer>();
 
             foreach (PhotonPlayer pp in PhotonNetwork.playerList)
@@ -185,17 +157,12 @@ public class bl_PhotonHelper : Photon.PunBehaviour {
             return p;
         }
     }
-    /// <summary>
+
     /// Get All Player in Room of a specific team
-    /// </summary>
-    /// <param name="team"></param>
-    /// <returns></returns>
-    public List<PhotonPlayer> GetPlayersInTeam(string team)
-    {
+    public List<PhotonPlayer> GetPlayersInTeam(string team) {
         List<PhotonPlayer> p = new List<PhotonPlayer>();
 
-        foreach (PhotonPlayer pp in PhotonNetwork.playerList)
-        {
+        foreach (PhotonPlayer pp in PhotonNetwork.playerList) {
             if ((string)pp.customProperties[PropiertiesKeys.TeamKey] == team)
                 p.Add(pp);
         }

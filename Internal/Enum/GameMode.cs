@@ -1,3 +1,1 @@
-﻿using UnityEngine;
-
-public enum GameMode {FFA, TDM, CTF}
+﻿public enum GameMode {FFA, TDM, CTF}

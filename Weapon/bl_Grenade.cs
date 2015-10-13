@@ -107,17 +107,15 @@ public class bl_Grenade : MonoBehaviour
             this.beepTimer += Time.deltaTime;
         }
     }
-    /// <summary>
+
     /// Rotate grenade
-    /// </summary>
     void FixedUpdate()
     {
         if (GetComponent<Rigidbody>() != null)
             GetComponent<Rigidbody>().AddTorque(Vector3.up * 12);
     }
 
-    void Counter()
-    {
+    void Counter() {
         TimeToExploit--;
 
         if (TimeToExploit <= 0)

@@ -11,18 +11,10 @@ public class bl_PlayerSync : bl_PhotonHelper
     [HideInInspector]
     public string RemoteTeam; // the player's team is not ours
 	public string WeaponState; // the current state of the current weapon
-							   /// <summary>
-							   /// the object to which the player looked
-							   /// </summary>
-	public Transform HeatTarget;
-    /// <summary>
-    /// smooth interpolation amount
-    /// </summary>
-    public float SmoothingDelay = 8f;
-    /// <summary>
-    /// list all remote weapons
-    /// </summary>
-    public List<bl_NetworkGun> NetworkGuns = new List<bl_NetworkGun>();
+	public Transform HeatTarget;/// the object to which the player looked	
+	public float SmoothingDelay = 8f;/// smooth interpolation amount
+	/// list all remote weapons
+	public List<bl_NetworkGun> NetworkGuns = new List<bl_NetworkGun>();
 
     [SerializeField]
     PhotonTransformViewPositionModel m_PositionModel = new PhotonTransformViewPositionModel();
@@ -61,20 +53,16 @@ public class bl_PlayerSync : bl_PhotonHelper
     bool ObservedComponentsFoldoutOpen = true;
 #pragma warning disable 0414
 
-    protected override void Awake()
-    {
+    protected override void Awake() {
         base.Awake();
 
         if (!PhotonNetwork.connected)
             Destroy(this);
 
         //FirstUpdate = false;
-        if (!this.isMine)
-        {
+        if (!this.isMine) {
             if (HeatTarget.gameObject.activeSelf == false)
-            {
                 HeatTarget.gameObject.SetActive(true);
-            }
         }
 
         m_PositionControl = new PhotonTransformViewPositionControl(m_PositionModel);
@@ -85,11 +73,8 @@ public class bl_PlayerSync : bl_PhotonHelper
         PDM = this.GetComponent<bl_PlayerDamageManager>();
         DrawName = this.GetComponent<bl_DrawName>();
     }
-    /// <summary>
+
     /// serialization method of photon
-    /// </summary>
-    /// <param name="stream"></param>
-    /// <param name="info"></param>
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
 
@@ -185,18 +170,14 @@ public class bl_PlayerSync : bl_PhotonHelper
             }    
     }
 
-    /// <summary>
     /// use this function to set all details for enemy
-    /// </summary>
     void Enemy()
     {
         PDM.DamageEnabled = true;
         DrawName.enabled = false;
     }
 
-    /// <summary>
     /// use this function to set all details for teammate
-    /// </summary>
     void TeamMate()
     {
         PDM.DamageEnabled = false;
@@ -209,22 +190,16 @@ public class bl_PlayerSync : bl_PhotonHelper
             this.GetComponentInChildren<bl_BodyPartManager>().IgnorePlayerCollider();
         }
     }
-    /// <summary>
+
     /// public method to send the RPC shot synchronization
-    /// </summary>
-    /// <param name="m_type"></param>
-    /// <param name="t_spread"></param>
     public void IsFire(string m_type,float t_spread, Vector3 pos, Quaternion rot)
     {
         photonView.RPC("FireSync", PhotonTargets.Others, new object[] {m_type,t_spread,pos,rot});
     }
-    /// <summary>
+
     /// Synchronise the shot with the current remote weapon
     /// send the information necessary so that fire
     /// impact in the same direction as the local
-    /// </summary>
-    /// <param name="m_type"></param>
-    /// <param name="m_spread"></param>
     [PunRPC]
     void FireSync(string m_type,float m_spread,Vector3 pos,Quaternion rot)
     {

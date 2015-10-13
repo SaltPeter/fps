@@ -2,11 +2,8 @@
 // Can be attached to a GameObject to show Player Name 
 using UnityEngine;
 
-public class bl_DrawName : MonoBehaviour
-{
-    /// <summary>
+public class bl_DrawName : MonoBehaviour {
     /// at what distance the name is hiding
-    /// </summary>
     public float m_HideDistance;
    
     public Texture2D m_HideTexture;
@@ -24,14 +21,12 @@ public class bl_DrawName : MonoBehaviour
         this.myTransform = this.transform;
     }
 
-    void OnGUI()
-    {
+    void OnGUI() {
         if (Camera.main == null)
             return;
 
             Vector3 vector = Camera.main.WorldToScreenPoint(this.m_Target.position);
-            if (vector.z > 0)
-            {
+            if (vector.z > 0) {
                 if (this.m_dist < m_HideDistance)
                     GUI.Label(new Rect(vector.x - 5, (Screen.height - vector.y) - 7, 10, 11), m_PlayerName,m_Skin);
                 else

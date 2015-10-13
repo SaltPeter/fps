@@ -5,38 +5,19 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class bl_GunManager : MonoBehaviour {
-    /// <summary>
-    /// all the Guns of game
-    /// </summary>
-    public List<bl_Gun> AllGuns = new List<bl_Gun>();
-    /// <summary>
-    /// weapons that the player take equipped
-    /// </summary>
-    public List<bl_Gun> PlayerEquip = new List<bl_Gun>();
+    
+    public List<bl_Gun> AllGuns = new List<bl_Gun>(); /// all the Guns of game			  
+	public List<bl_Gun> PlayerEquip = new List<bl_Gun>(); /// weapons that the player take equipped
 
-    /// <summary>
-    /// ID the weapon to take to start
-    /// </summary>
-    public int m_Current = 0;
-    /// <summary>
-    /// weapon used by the player currently
-    /// </summary>
-    public bl_Gun CurrentGun;
-    /// <summary>
-    /// Point where guns instantiate when trow
-    /// </summary>
-    public Transform TrowPoint = null;
-    /// <summary>
-    /// time it takes to switch weapons
-    /// </summary>
-    public float SwichTime = 1;
+	public int m_Current = 0; /// ID the weapon to take to start
 
-    public float PickUpTime = 0.4f;
-    /// <summary>
-    /// Can Swich Now?
-    /// </summary>
-    public bool CanSwich;
-    [Space(5)]
+	public bl_Gun CurrentGun; /// weapon used by the player currently				  
+	public Transform TrowPoint = null; /// Point where guns instantiate when trow			   
+	public float SwichTime = 1; /// time it takes to switch weapons
+
+	public float PickUpTime = 0.4f;
+    public bool CanSwich; // Can Switch Now?
+	[Space(5)]
     public Animator m_HeatAnimator;
 
     void Awake()
@@ -71,24 +52,19 @@ public class bl_GunManager : MonoBehaviour {
         }
         //Desactive all weapons in children and take the firts
         foreach (bl_Gun guns in AllGuns)
-        {
             guns.gameObject.SetActive(false);
-        }
         TakeWeapon(PlayerEquip[m_Current].gameObject);
-
     }
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1) && CanSwich && m_Current != 0)
         {
-           
             StartCoroutine(ChangeGun(PlayerEquip[m_Current].gameObject,PlayerEquip[0].gameObject));
              m_Current = 0;
         }
         if (Input.GetKeyDown(KeyCode.Alpha2) && CanSwich && m_Current != 1)
         {
-            
             StartCoroutine(ChangeGun((PlayerEquip[m_Current].gameObject),PlayerEquip[1].gameObject));
             m_Current = 1;
         }
@@ -129,47 +105,30 @@ public class bl_GunManager : MonoBehaviour {
     {
         t_weapon.SetActive(true);
         CanSwich = true;
-
     }
 
     public bl_Gun GetCurrentWeapon()
     {
         if (CurrentGun == null)
-        {
             return PlayerEquip[m_Current];
-        }
         else
-        {
             return CurrentGun;
-        }
     }
-    /// <summary>
-    /// Corrutine to Change of Gun
-    /// </summary>
-    /// <param name="t_current"></param>
-    /// <param name="t_next"></param>
-    /// <returns></returns>
+    /// Coroutine to Change of Gun
    public IEnumerator ChangeGun(GameObject t_current,GameObject t_next)
     {
         CanSwich = false;
         if (m_HeatAnimator != null)
-        {
             m_HeatAnimator.SetBool("Swicht", true);
-        }
         t_current.GetComponent<bl_Gun>().DisableWeapon();
         yield return new WaitForSeconds(SwichTime);
-        foreach (bl_Gun guns in AllGuns)
-        {
+        foreach (bl_Gun guns in AllGuns) {
             if (guns.gameObject.activeSelf == true)
-            {
                 guns.gameObject.SetActive(false);
-            }
         }
         TakeWeapon(t_next);
         if (m_HeatAnimator != null)
-        {
             m_HeatAnimator.SetBool("Swicht", false);
-        }
     }
 
    public void heatReloadAnim(int m_state)
@@ -190,97 +149,48 @@ public class bl_GunManager : MonoBehaviour {
                break;
        }
    }
-
     
    [System.Serializable]
    public class AssaultClass
    {
        //ID = the number of Gun in the list AllGuns
-       /// <summary>
-       /// the ID of the first gun Equipped
-       /// </summary>
-       public int primary = 0;
-       /// <summary>
-       /// the ID of the secondary Gun Equipped
-       /// </summary>
-       public int secondary = 1;
-       /// <summary>
-       /// 
-       /// </summary>
-       public int Knife = 3;
-       /// <summary>
-       /// the ID the a special weapon
-       /// </summary>
-       public int Special = 2;
-   }
-   public AssaultClass m_AssaultClass;
+       public int primary = 0; /// the ID of the first gun Equipped
+		public int secondary = 1; /// the ID of the secondary Gun Equipped
+		public int Knife = 3;
+       public int Special = 2; /// the ID the a special weapon
+	}
+	public AssaultClass m_AssaultClass;
 
    [System.Serializable]
    public class EngineerClass
    {
        //ID = the number of Gun in the list AllGuns
-       /// <summary>
-       /// the ID of the first gun Equipped
-       /// </summary>
-       public int primary = 0;
-       /// <summary>
-       /// the ID of the secondary Gun Equipped
-       /// </summary>
-       public int secondary = 1;
-       /// <summary>
-       /// 
-       /// </summary>
-       public int Knife = 3;
-       /// <summary>
-       /// the ID the a special weapon
-       /// </summary>
-       public int Special = 2;
-   }
-   public EngineerClass m_EngineerClass;
-    //
+       public int primary = 0; /// the ID of the first gun Equipped
+		public int secondary = 1; /// the ID of the secondary Gun Equipped
+		public int Knife = 3;
+       public int Special = 2; /// the ID the a special weapon
+	}
+	public EngineerClass m_EngineerClass;
+
    [System.Serializable]
    public class ReconClass
    {
        //ID = the number of Gun in the list AllGuns
-       /// <summary>
-       /// the ID of the first gun Equipped
-       /// </summary>
-       public int primary = 0;
-       /// <summary>
-       /// the ID of the secondary Gun Equipped
-       /// </summary>
-       public int secondary = 1;
-       /// <summary>
-       /// 
-       /// </summary>
-       public int Knife = 3;
-       /// <summary>
-       /// the ID the a special weapon
-       /// </summary>
-       public int Special = 2;
-   }
-   public ReconClass m_ReconClass;
-    //
+       public int primary = 0; /// the ID of the first gun Equipped
+		public int secondary = 1; /// the ID of the secondary Gun Equipped
+		public int Knife = 3;
+       public int Special = 2; /// the ID the a special weapon
+	}
+	public ReconClass m_ReconClass;
+
    [System.Serializable]
    public class SupportClass
    {
        //ID = the number of Gun in the list AllGuns
-       /// <summary>
-       /// the ID of the first gun Equipped
-       /// </summary>
-       public int primary = 0;
-       /// <summary>
-       /// the ID of the secondary Gun Equipped
-       /// </summary>
-       public int secondary = 1;
-       /// <summary>
-       /// 
-       /// </summary>
-       public int Knife = 3;
-       /// <summary>
-       /// the ID the a special weapon
-       /// </summary>
-       public int Special = 2;
-   }
-   public SupportClass m_SupportClass;
+		public int primary = 0; /// the ID of the first gun Equipped
+		public int secondary = 1; /// the ID of the secondary Gun Equipped
+		public int Knife = 3;
+		public int Special = 2; /// the ID the a special weapon
+	}
+	public SupportClass m_SupportClass;
 }

@@ -17,10 +17,7 @@ public class bl_FlagInfo : bl_FlagBase {
     public static bl_FlagInfo GetFlag(Team team)
     {
         if (team == Team.Delta)
-        {
             return BlueFlag;
-        }
-
         return RedFlag;
     }
 
@@ -28,10 +25,7 @@ public class bl_FlagInfo : bl_FlagBase {
     public static Team GetOtherTeam(Team team)
     {
         if (team == Team.Delta)
-        {
             return Team.Delta;
-        }
-
         return Team.Recon;
     }
 
@@ -48,13 +42,9 @@ public class bl_FlagInfo : bl_FlagBase {
         m_HomePosition = transform.position;
 
         if (Team == Team.Recon)
-        {
             BlueFlag = this;
-        }
         else
-        {
             RedFlag = this;
-        }
     }
 
     void LateUpdate()
@@ -68,9 +58,7 @@ public class bl_FlagInfo : bl_FlagBase {
     void UpdateReturnTimer()
     {
         if (m_ReturnTimer == -1f)
-        {
             return;
-        }
 
         m_ReturnTimer -= Time.deltaTime;
 
@@ -84,46 +72,32 @@ public class bl_FlagInfo : bl_FlagBase {
     void UpdatePosition()
     {
         if (m_CarryingPlayer == null)
-        {
             return;
-        }
 
         transform.position = m_CarryingPlayer.FlagPosition.position;
     }
 
-    /// <summary>
     /// If the local player died, send the drop flag event to all players
-    /// </summary>
     void HandleFlagDrop()
     {
         if (m_CarryingPlayer == null)
-        {
             return;
-        }
+
         bl_PlayerDamageManager playerhealth = m_CarryingPlayer.GetComponent<bl_PlayerDamageManager>();
         if (playerhealth.health <= 0)
-        {
             DropFlag();
-        }
     }
 
     void HandleFlagCapture()
     {
         if (m_CarryingPlayer == null)
-        {
             return;
-        }
 
-        if (GetFlag(GetOtherTeam(Team)).IsHome() == true &&
-            Vector3.Distance(transform.position, GetFlag(GetOtherTeam(Team)).transform.position) < 5f)
-        {
-            CaptureFlag();
-        }
+        if (GetFlag(GetOtherTeam(Team)).IsHome() == true && Vector3.Distance(transform.position, GetFlag(GetOtherTeam(Team)).transform.position) < 5f)
+			CaptureFlag();
     }
-    /// <summary>
+
     /// Determines whether this instance is at the home base
-    /// </summary>
-    /// <returns></returns>
     public bool IsHome()
     {
         return transform.position == m_HomePosition;
@@ -132,43 +106,31 @@ public class bl_FlagInfo : bl_FlagBase {
     void DropFlag()
     {
         if (PhotonNetwork.offlineMode == true)
-        {
             OnDrop(transform.position);
-        }
         else
         {
             if (PhotonNetwork.isMasterClient == true)
-            {
                 PhotonView.RPC("OnDrop", PhotonTargets.AllBuffered, new object[] { transform.position });
-            }
         }
     }
 
     void ReturnFlag()
     {
         if (PhotonNetwork.offlineMode == true)
-        {
             OnReturn();
-        }
         else
         {
             if (PhotonNetwork.isMasterClient == true)
-            {
                 PhotonView.RPC("OnReturn", PhotonTargets.AllBuffered);
-            }
         }
     }
 
     void CaptureFlag()
     {
         if (PhotonNetwork.offlineMode == true)
-        {
             OnCapture(PhotonNetwork.player);
-        }
-        else
-        {        
-                PhotonView.RPC("OnCapture", PhotonTargets.AllBuffered,PhotonNetwork.player);
-        }
+        else      
+			PhotonView.RPC("OnCapture", PhotonTargets.AllBuffered,PhotonNetwork.player);
     }
 
     [PunRPC]
@@ -205,9 +167,7 @@ public class bl_FlagInfo : bl_FlagBase {
         string property = PropiertiesKeys.Team1Score;
 
         if ((string)PhotonNetwork.player.customProperties[PropiertiesKeys.TeamKey] == Team.Recon.ToString())
-        {
             property = PropiertiesKeys.Team2Score;
-        }
         ExitGames.Client.Photon.Hashtable newProperties = new ExitGames.Client.Photon.Hashtable();
 
         if (PhotonNetwork.room.customProperties.ContainsKey(property) == true)
@@ -228,15 +188,11 @@ public class bl_FlagInfo : bl_FlagBase {
     {
         //If the flag is at its home position, only the enemy team can grab it
         if (IsHome() == true)
-        {
             return logic.m_PlayerTeam != Team;
-        }
 
         //If another player is already carrying the flag, no one else can grab it
         if (m_CarryingPlayer != null)
-        {
             return false;
-        }
 
         return true;
     }
@@ -246,9 +202,7 @@ public class bl_FlagInfo : bl_FlagBase {
         if (logic.m_PlayerTeam == Team)
         {
             if (IsHome() == false)
-            {
                 ReturnFlag();
-            }
         }
         else
         {
@@ -263,9 +217,7 @@ public class bl_FlagInfo : bl_FlagBase {
         {
             Vector3 vector = Camera.main.WorldToScreenPoint(this.IconTarget.position);
             if (vector.z > 0)
-            {
                     GUI.DrawTexture(new Rect(vector.x - 5, (Screen.height - vector.y) - 7, 13+IconSize.x, 13+IconSize.y), this.FlagIcon);
-            }
         }
         GUI.color = Color.white;
     }

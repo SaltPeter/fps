@@ -148,10 +148,7 @@ public class bl_Gun : MonoBehaviour {
             lightFlash.enabled = false;
     }
 
-    /// <summary>
     /// check whats the player is doing every frame
-    /// </summary>
-    /// <returns></returns>
     bool Update()
     {
         if (!bl_UtilityHelper.GetCursorState)
@@ -173,18 +170,16 @@ public class bl_Gun : MonoBehaviour {
             spread -= decreaseSpreadPerSec; // gun regains accuracy when trigger is released
         return true;
     }
-    /// <summary>
+
     /// use FixedUpdate not call it is not necessary to call in each frame
     /// but if need be called in a loop
-    /// </summary>
     void FixedUpdate()
     {
         if (typeOfGun == weaponType.Launcher)
             OnLauncherNotAmmo();
     }
-    /// <summary>
+
     /// All Input events 
-    /// </summary>
     void InputUpdate()
     {
         // Did the user press fire.... and what kind of weapon are they using ?  ===============
@@ -262,9 +257,8 @@ public class bl_Gun : MonoBehaviour {
            
         }
     }
-    /// <summary>
+
     /// change the type of gun gust
-    /// </summary>
     void ChangeTypeFire()
     {
         if (Input.GetKeyDown(KeyCode.B))
@@ -291,9 +285,8 @@ public class bl_Gun : MonoBehaviour {
             GetComponent<AudioSource>().Play();
         }
     }
-    /// <summary>
+
     /// Sync Weapon state for Upper animations
-    /// </summary>
     void SyncState()
     {
         if (isFiring && !isReloading)
@@ -323,9 +316,7 @@ public class bl_Gun : MonoBehaviour {
         }
     }
 
-    /// <summary>
     /// update weapon flashes after checking user inout in update function
-    /// </summary>
     void LateUpdate() {
 
         if (spread >= maxSpread)
@@ -336,17 +327,14 @@ public class bl_Gun : MonoBehaviour {
                 spread = baseSpread; //if current spread is less then base, set to base
         }
     }
-    /// <summary>
+
     /// Return the camera position why a smooth movement
-    /// </summary>
-    void CameraShakeLerp()
-    {
+    void CameraShakeLerp() {
         Camera.main.transform.localRotation = Quaternion.Lerp(Camera.main.transform.localRotation, CamPosition, Time.deltaTime * ShakeSmooth);
     }
-    /// <summary>
+
     /// determine the status of the launcher ammo
     /// to decide whether to show or hide the mesh granade
-    /// </summary>
     void OnLauncherNotAmmo()
     {
         foreach (GameObject go in OnAmmoLauncher)
@@ -373,9 +361,8 @@ public class bl_Gun : MonoBehaviour {
             }
         }
     }
-    /// <summary>
+
     /// fire the machine gun
-    /// </summary>
     void MachineGun_Fire()
     {
         if (bulletsLeft <= 0 && numberOfClips > 0)
@@ -403,15 +390,13 @@ public class bl_Gun : MonoBehaviour {
                     Debug.Log("error in bullet type");
                     break;
             }
-            if (Animat != null)
-            {
+            if (Animat != null) {
                 if (isAmed)
                     Animat.AimFire();
                 else
                     Animat.Fire();
             }
-            if (Sync)
-            {
+            if (Sync) {
                 Vector3 position = (typeOfGun == weaponType.Knife) ? Camera.main.transform.position : muzzlePoint.position;
                 Sync.Firing(weaponType.Machinegun.ToString(), spread, position, transform.parent.rotation);
             }
@@ -430,11 +415,9 @@ public class bl_Gun : MonoBehaviour {
             if (bulletsLeft <= 0 && numberOfClips > 0 && AutoReload)
                 StartCoroutine(reload());
         }
-
     }
-    /// <summary>
+
     /// fire the sniper gun
-    /// </summary>
     void Sniper_Fire()
     {
         if (bulletsLeft <= 0 && numberOfClips > 0)
@@ -482,21 +465,17 @@ public class bl_Gun : MonoBehaviour {
             if (bulletsLeft <= 0 && numberOfClips > 0 && AutoReload)
                 StartCoroutine(reload());
         }
-
     }
 
-    void Knife_Fire()
-    {
+    void Knife_Fire() {
         // If there is more than one shot  between the last and this frame
         // Reset the nextFireTime
         if (Time.time - fireRate > nextFireTime)
             nextFireTime = Time.time - Time.deltaTime;
 
         // Keep firing until we used up the fire time
-        while (nextFireTime < Time.time)
-        {
-            switch (typeOfBullet)
-            {
+        while (nextFireTime < Time.time) {
+            switch (typeOfBullet) {
                 case BulletType.Physical:
                     StartCoroutine(FireOneShot());  // fire a physical bullet
                     break;
@@ -507,15 +486,13 @@ public class bl_Gun : MonoBehaviour {
                     Debug.Log("error in bullet type");
                     break;
             }
-            if (Animat != null)
-            {
+            if (Animat != null) {
                 if (isAmed)
                     Animat.AimFire();
                 else
                     Animat.Fire();
             }
-            if (Sync)
-            {
+            if (Sync) {
                 Vector3 position = (typeOfGun == weaponType.Knife) ? Camera.main.transform.position : muzzlePoint.position;
                 Sync.Firing(weaponType.Knife.ToString(), 0, position, transform.parent.rotation);
             }
@@ -529,11 +506,9 @@ public class bl_Gun : MonoBehaviour {
             isFiring = false;
         }
     }
-    /// <summary>
+
     /// activate the effect of flash for a few seconds
     /// randomize rotation of this every time it is displayed
-    /// </summary>
-    /// <returns></returns>
     IEnumerator MuzzleFlash()
     {
         if (muzzleFlash && lightFlash)  // need to have a muzzle or light flash in order to enable or disable them
@@ -545,19 +520,14 @@ public class bl_Gun : MonoBehaviour {
             yield return new WaitForSeconds(0.04f);
             muzzleFlash.gameObject.SetActive(false); // disable the light and muzzle flashes
             lightFlash.enabled = false;
-
         }
     }
-    /// <summary>
+
     /// burst shooting
-    /// </summary>
-    /// <returns></returns>
-    IEnumerator Burst_Fire()
-    {
+    IEnumerator Burst_Fire() {
         int shotCounter = 0;
 
-        if (bulletsLeft <= 0 && numberOfClips > 0)
-        {
+        if (bulletsLeft <= 0 && numberOfClips > 0) {
             StartCoroutine(reload());
             yield break;//return;
         }
@@ -618,9 +588,7 @@ public class bl_Gun : MonoBehaviour {
         isBursting = false;
     }
 
-    /// <summary>
     /// fire the shotgun
-    /// </summary>
     void ShotGun_Fire()
     {
         int pelletCounter = 0;  // counter used for pellets per round
@@ -672,10 +640,8 @@ public class bl_Gun : MonoBehaviour {
                 StartCoroutine(reload());
         }
     }
-    /// <summary>
+
     /// most shotguns have the sound of shooting and then reloading
-    /// </summary>
-    /// <returns></returns>
     IEnumerator DelayFireSound()
     {
         GetComponent<AudioSource>().clip = FireSound;
@@ -707,9 +673,8 @@ public class bl_Gun : MonoBehaviour {
         grenadeFired = true;
         StartCoroutine(Launcher_Fire());
     }
-    /// <summary>
+
     /// fire your launcher
-    /// </summary>
     private bool grenadeFired = false;
     IEnumerator Launcher_Fire()
     {
@@ -751,13 +716,9 @@ public class bl_Gun : MonoBehaviour {
             else
                 yield break;
         }
-       
     }
 
-    /// <summary>
     /// Create and fire a bullet
-    /// </summary>
-    /// <returns></returns>
     IEnumerator FireOneShot()
     {
         Vector3 position = Camera.main.transform.position; // position to spawn bullet is at the muzzle point of the gun       
@@ -803,14 +764,10 @@ public class bl_Gun : MonoBehaviour {
             StartCoroutine(reload());  // if out of bullets.... reload
             yield break;
         }
-
     }
 
-    /// <summary>
     /// Create and Fire a raycast
     /// and show an effect tracing of the bullet
-    /// </summary>
-    /// <returns></returns>
     IEnumerator FireOneRay()
     {
         int hitCount = 0;
@@ -865,11 +822,8 @@ public class bl_Gun : MonoBehaviour {
         }
     }
 
-    /// <summary>
     /// Create and Fire 1 launcher projectile
     /// *** this is WIP ***
-    /// </summary>
-    /// <returns></returns>
     IEnumerator FireOneProjectile()
     {
         Vector3 position = muzzlePoint.position; // position to spawn rocket / grenade is at the muzzle point of the gun
@@ -901,10 +855,9 @@ public class bl_Gun : MonoBehaviour {
         }
         grenadeFired = false;
     }
-    /// <summary>
+
     /// create and "fire" an empty shell
     /// apply the speed and direction randomized
-    /// </summary>
     void EjectShell()
     {
         Vector3 position = ejectPoint.position; // ejectile spawn point at gun's ejection point
@@ -925,10 +878,7 @@ public class bl_Gun : MonoBehaviour {
         newTracer.GetComponent<bl_Bullet>().SetTracer();  // tell the bullet it is only a tracer
     }
 
-    /// <summary>
     /// effects for raycast bullets
-    /// </summary>
-    /// <param name="hit"></param>
     void ShowHits(RaycastHit hit,bool isKinf)
     {
         switch (hit.transform.tag)
@@ -992,21 +942,16 @@ public class bl_Gun : MonoBehaviour {
          Mathf.Lerp(Camera.main.fieldOfView, CurrentFog, Time.deltaTime * AimSmooth);
     }
 
-    /// <summary>
     /// send kick back to mouse look
     /// when is fire
-    /// </summary>
     void Kick()
     {
         m_mouse.offsetY += kickBackAmount;
     }
 
-    /// <summary>
     /// start reload weapon
     /// deduct the remaining bullets in the cartridge of a new clip
     /// as this happens, we disable the options: fire, aim and run
-    /// </summary>
-    /// <returns></returns>
     IEnumerator reload()
     {
         isAmed = false;
@@ -1039,12 +984,9 @@ public class bl_Gun : MonoBehaviour {
         CanFire = true;
     }
 
-    /// <summary>
     /// use this method to various sounds reload.
     /// if you have only 1 sound, them put only one in inspector
     /// and leave emty other box
-    /// </summary>
-    /// <returns></returns>
     IEnumerator ReloadSoundIE()
     {
         float t_time = reloadTime / 3;
@@ -1087,11 +1029,8 @@ public class bl_Gun : MonoBehaviour {
             GManager.heatReloadAnim(0);
     }
 
-    /// <summary>
     /// move the camera in a small range
     /// with the presets Gun
-    /// </summary>
-    /// <returns></returns>
     IEnumerator CamShake()
     {
         float shakeIntensity = 0.1f;
@@ -1107,7 +1046,6 @@ public class bl_Gun : MonoBehaviour {
         }
         //yield return new WaitForSeconds(0.03f);
         CamPosition = DefaultCamRot;
-
     }
 
     IEnumerator KnifeSendFire()
@@ -1116,9 +1054,7 @@ public class bl_Gun : MonoBehaviour {
         isFiring = false;
         alreadyKnife = false;
     }
-    /// <summary>
-    /// 
-    /// </summary>
+
     void OnEnable()
     {
         GetComponent<AudioSource>().clip = TakeSound;
@@ -1138,12 +1074,10 @@ public class bl_Gun : MonoBehaviour {
     {
         bl_EventHandler.OnKitAmmo -= this.OnPickUpAmmo;
         bl_EventHandler.OnRoundEnd -= this.OnRoundEnd;
-
     }
-    /// <summary>
+
     /// When we disable the gun ship called the animation
     /// and disable the basic functions
-    /// </summary>
     public void DisableWeapon()
     {
         CanAim = false;
@@ -1156,9 +1090,7 @@ public class bl_Gun : MonoBehaviour {
         StopAllCoroutines();
     }
 
-    /// <summary>
     /// When round is end we can't fire
-    /// </summary>
     void OnRoundEnd()
     {
         m_enabled = false;
@@ -1195,11 +1127,10 @@ public class bl_Gun : MonoBehaviour {
             return this.transform.root.GetComponent<bl_PlayerSync>();
         }
     }
-    /// <summary>
+
     /// determine if we are ready to shoot
     /// TIP: if you want to have to shoot when running
     /// just remove "!controller.run" of the condition
-    /// </summary>
     public bool m_CanFire
     {
         get
@@ -1210,28 +1141,22 @@ public class bl_Gun : MonoBehaviour {
             return can;
         }
     }
-    /// <summary>
+
     /// determine if we can Aim
-    /// </summary>
-    public bool m_CamAim
-    {
-        get
-        {
+    public bool m_CamAim {
+        get {
             bool can = false;
             if (CanAim && !controller.run)
                 can = true;
             return can;
         }
     }
-    /// <summary>
+
     /// determine is we can reload
     /// TIP: if you want to have to shoot when running
     /// just remove "!controller.run" of the condition
-    /// </summary>
-    bool m_CanReload
-    {
-        get
-        {
+    bool m_CanReload {
+        get {
             bool can = false;
             if (bulletsLeft < bulletsPerClip && numberOfClips > 0 && !controller.run)
                 can = true;
@@ -1241,10 +1166,8 @@ public class bl_Gun : MonoBehaviour {
         }
     }
 
-    private bl_GunManager GManager
-    {
-        get
-        {
+    private bl_GunManager GManager {
+        get {
             return this.transform.root.GetComponentInChildren<bl_GunManager>();
         }
     }

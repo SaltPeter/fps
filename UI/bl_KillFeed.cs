@@ -6,22 +6,14 @@ using UnityEngine.UI;
 public class bl_KillFeed : bl_PhotonHelper {
     
     public GUISkin Skin; 
-    /// <summary>
     /// Use Middle text or Weapon Icon
-    /// </summary>
     public bool useTexture = true;
-    /// <summary>
-    /// maximum number of notifications that can be displayed
-    /// </summary>
-    public float MaxNotify = 5;
-    public List<KillFeed> m_KillFeed = new List<KillFeed>();
-    /// <summary>
+    public float MaxNotify = 5; /// maximum number of notifications that can be displayed
+	public List<KillFeed> m_KillFeed = new List<KillFeed>();
     /// Weapon icons for middle text
-    /// </summary>
     public List<Texture2D> GunIcons = new List<Texture2D>();
     [System.Serializable]
-    public class _UI
-    {
+    public class _UI {
         public Text ScoreLocal;
     }
     public _UI UI;
@@ -30,23 +22,18 @@ public class bl_KillFeed : bl_PhotonHelper {
     private List<string> KillNotify = new List<string>();
     private List<float> Notify_Time = new List<float>();
 
-    protected override void Awake()
-    {
+    protected override void Awake() {
         setting = this.GetComponent<bl_SettingPropiertis>();
         if (PhotonNetwork.room != null)
-        {
             OnJoined();
-        }
     }
 
-    void OnEnable()
-    {
+    void OnEnable() {
         bl_EventHandler.OnKillFeed += this.OnKillFeed;
         bl_EventHandler.OnKill += this.NewKill;
     }
 
-    void OnDisable()
-    {
+    void OnDisable() {
         bl_EventHandler.OnKillFeed -= this.OnKillFeed;
         bl_EventHandler.OnKill -= this.NewKill;
     }
@@ -74,19 +61,15 @@ public class bl_KillFeed : bl_PhotonHelper {
             }
         }
         if (UI.ScoreLocal != null)
-        {
             UI.ScoreLocal.text = "<size=8>Score:</size> "+PhotonNetwork.player.customProperties[PropiertiesKeys.ScoreKey].ToString();
-        }
     }
 
-    void OnGUI()
-    {
+    void OnGUI() {
         GUI.skin = Skin;
         GUI.depth = 300;
         GUILayout.BeginArea(new Rect(Screen.width - Screen.width / 3.5f, 85, Screen.width / 3.5f, 400));
         //Show kill notificatin list
-        foreach (KillFeed kf in m_KillFeed)
-        {
+        foreach (KillFeed kf in m_KillFeed) {
             GUI.color = new Color(1, 1, 1, kf.m_Timer);
             GUILayout.BeginHorizontal(DegradadoStyle);
             GUILayout.FlexibleSpace();
@@ -95,8 +78,7 @@ public class bl_KillFeed : bl_PhotonHelper {
             GUILayout.Label(kf.m_Killer);
             GUILayout.Space(5);
             //How Kill
-            if (!useTexture)
-            {
+            if (!useTexture) {
                 GUI.color = new Color(1, 1, 1, kf.m_Timer);
                 GUILayout.Label(kf.m_HowKill);
                 GUILayout.Space(5);
@@ -126,24 +108,15 @@ public class bl_KillFeed : bl_PhotonHelper {
         GUILayout.EndArea();
         LocalKillGUI();
     }
-    /// <summary>
+
     /// Called this when a new kill event 
-    /// </summary>
-    /// <param name="t_Killer"></param>
-    /// <param name="t_Killed"></param>
-    /// <param name="t_HowKill"></param>
-    /// <param name="t_team"></param>
-    /// <param name="t_GunID"></param>
-    /// <param name="t_Timer"></param>
    public void OnKillFeed(string t_Killer, string t_Killed, string t_HowKill, string t_team, int t_GunID, float t_Timer)
     {
         photonView.RPC("AddNewKillFeed", PhotonTargets.All, t_Killer, t_Killed, t_HowKill,t_team.ToString(), t_GunID, (int)t_Timer);
     }
-    /// <summary>
+
     /// Player Joined? sync
-    /// </summary>
-    void OnJoined()
-    {
+    void OnJoined() {
         photonView.RPC("AddNewKillFeed", PhotonTargets.All, PhotonNetwork.player.name, "in the match", "Joined", "", 777, 30);
     }
 
@@ -154,16 +127,15 @@ public class bl_KillFeed : bl_PhotonHelper {
         Color KilledColor = new Color(1, 1, 1, 1);
         if (setting.m_GameMode == GameMode.TDM || setting.m_GameMode == GameMode.CTF )
         {
-            if (m_team == Team.Delta.ToString())
-            {
+            if (m_team == Team.Delta.ToString()) {
                 KillerColor = isMy(t_Killer) ? ColorKeys.MineColor : ColorKeys.DeltaColor;
                 KilledColor = isMy(t_Killed) ? ColorKeys.MineColor : ColorKeys.ReconColor;
             }
-            else if(m_team == Team.Recon.ToString())
-            {
+            else if(m_team == Team.Recon.ToString()) {
                 KillerColor = isMy(t_Killer) ? ColorKeys.MineColor : ColorKeys.ReconColor;
                 KilledColor = isMy(t_Killed) ? ColorKeys.MineColor : ColorKeys.DeltaColor;
-            }else{
+            }
+			else {
                 KilledColor = Color.white;
                 KillerColor = Color.white;
             }
@@ -173,45 +145,32 @@ public class bl_KillFeed : bl_PhotonHelper {
         if (m_KillFeed.Count > MaxNotify)
             m_KillFeed.RemoveAt(0);
     }
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="n"></param>
-    /// <returns></returns>
-    private bool isMy(string n)
-    {
+
+    private bool isMy(string n) {
         bool b = false;
         if (n == LocalName)
             b = true;
         return b;
     }
 
-    void LocalKillGUI()
-    {
+    void LocalKillGUI() {
         GUILayout.BeginArea(new Rect(Screen.width / 2 - 75, Screen.height / 2 - 100, 300, 400));
-        for (int i = 0; i < KillNotify.Count; i++)
-        {
+        for (int i = 0; i < KillNotify.Count; i++) {
             GUI.color = new Color(1, 1, 1, Notify_Time[i]);
             GUILayout.Label(KillNotify[i]);
             GUI.color = Color.white;
         }
         GUILayout.EndArea();
     }
-    /// <summary>
+
     /// Show a local ui when out killed other player
-    /// </summary>
-    /// <param name="m_type"></param>
-    /// <param name="t_amount"></param>
-    protected virtual void NewKill(string m_type, float t_amount)
-    {
+    protected virtual void NewKill(string m_type, float t_amount) {
         KillNotify.Add(m_type+" <size=25><color=orange>"+t_amount+"</color></size>");
         Notify_Time.Add(7);
     }
 
-    public GUIStyle DegradadoStyle
-    {
-        get
-        {
+    public GUIStyle DegradadoStyle {
+        get {
             return Skin.customStyles[5];
         }
     }

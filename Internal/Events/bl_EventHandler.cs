@@ -74,7 +74,6 @@ public class bl_EventHandler {
     }
 
     /// Called this when killed a new player
-    /// <param name="t_amount"></param>
     public static void OnKillEvent(string t_type,float t_amount) {
         if (OnKill != null)
             OnKill(t_type,t_amount);

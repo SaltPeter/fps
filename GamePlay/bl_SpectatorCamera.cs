@@ -8,8 +8,7 @@ public class bl_SpectatorCamera : MonoBehaviour {
 	private Transform _Transform = null;
     private Camera _Cam = null;
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
         //press shift to move faster
         if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
             speed = 40;
@@ -36,8 +35,7 @@ public class bl_SpectatorCamera : MonoBehaviour {
             Transform.position = Transform.position + UseCamera.transform.up * -1 * speed * Time.deltaTime;
     }
 
-    public Camera UseCamera
-    {
+    public Camera UseCamera {
         get
         {
             if (_Cam == null)

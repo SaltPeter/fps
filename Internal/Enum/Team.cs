@@ -1,3 +1,1 @@
-﻿using UnityEngine;
-
-public enum Team {None, Delta, Recon, All}
+﻿public enum Team {None, Delta, Recon, All}

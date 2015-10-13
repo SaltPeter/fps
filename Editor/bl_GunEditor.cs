@@ -92,7 +92,6 @@ public class bl_GunEditor : Editor {
                 script.ReloadSound3 = EditorGUILayout.ObjectField("Reload End", script.ReloadSound3, typeof(UnityEngine.AudioClip), allowSceneObjects) as UnityEngine.AudioClip;
             }
             EditorGUILayout.EndVertical();
-            
         }
         if (script.typeOfGun == bl_Gun.weaponType.Burst)
         {
@@ -152,7 +151,6 @@ public class bl_GunEditor : Editor {
                  script.ReloadSound3 = EditorGUILayout.ObjectField("Reload End", script.ReloadSound3, typeof(UnityEngine.AudioClip), allowSceneObjects) as UnityEngine.AudioClip;
              }
                 EditorGUILayout.EndVertical();
-
         }
         if (script.typeOfGun == bl_Gun.weaponType.Shotgun)
         {
@@ -214,7 +212,6 @@ public class bl_GunEditor : Editor {
                  script.ReloadSound3 = EditorGUILayout.ObjectField("Reload End", script.ReloadSound3, typeof(UnityEngine.AudioClip), allowSceneObjects) as UnityEngine.AudioClip;
              }
                 EditorGUILayout.EndVertical();
-
         }
         if (script.typeOfGun == bl_Gun.weaponType.Knife)
         {
@@ -249,7 +246,6 @@ public class bl_GunEditor : Editor {
             script.TakeSound = EditorGUILayout.ObjectField("Take Sound", script.TakeSound, typeof(UnityEngine.AudioClip), allowSceneObjects) as UnityEngine.AudioClip;
 
             EditorGUILayout.EndVertical();
-
         }
         if (script.typeOfGun == bl_Gun.weaponType.Launcher)
         {
@@ -305,10 +301,8 @@ public class bl_GunEditor : Editor {
                  script.ReloadSound3 = EditorGUILayout.ObjectField("Reload End", script.ReloadSound3, typeof(UnityEngine.AudioClip), allowSceneObjects) as UnityEngine.AudioClip;
              }
                  EditorGUILayout.EndVertical();
-
         }
         EditorGUILayout.EndVertical();
         serializedObject.ApplyModifiedProperties();
     }
-
 }

@@ -8,13 +8,9 @@ using UnityEngine.UI;
 public class bl_RoundTime : MonoBehaviour {
 
     public GUISkin Style;
-    /// <summary>
     /// mode of the round room
-    /// </summary>
     public RoundStyle m_RoundStyle;
-    /// <summary>
     /// expected duration in round (automatically obtained)
-    /// </summary>
    [HideInInspector] public int RoundDuration;
     public bl_GameManager m_Manager = null;
     [HideInInspector]
@@ -45,9 +41,8 @@ public class bl_RoundTime : MonoBehaviour {
         m_propiertis = this.GetComponent<bl_SettingPropiertis>();
         RoomMenu = this.GetComponent<bl_RoomMenu>();
     }
-    /// <summary>
+
     /// get the current time and verify if it is correct
-    /// </summary>
     void GetTime()
     {
         RoundDuration = (int)PhotonNetwork.room.customProperties[PropiertiesKeys.TimeRoomKey];
@@ -84,7 +79,7 @@ public class bl_RoundTime : MonoBehaviour {
                 InvokeRepeating("countdown", 1, 1);
             }
         }
-        else//even if I do not photonnetwork.time then obtained to regain time
+        else //even if I do not photonnetwork.time then obtained to regain time
         {
             Refresh();
         }
@@ -129,9 +124,8 @@ public class bl_RoundTime : MonoBehaviour {
                 return null;
         }
     }
-    /// <summary>
+
     /// with this fixed the problem of the time lag in the Photon
-    /// </summary>
     void Refresh()
     {
         if (PhotonNetwork.isMasterClient)
@@ -191,17 +185,12 @@ public class bl_RoundTime : MonoBehaviour {
         }
     }
 
-    bool GetTimeServed
-    {
-        get
-        {
+    bool GetTimeServed {
+        get {
             bool m_bool = false ;
             if (Time.timeSinceLevelLoad > 7)
-            {
                 m_bool = true;
-            }
             return m_bool;
         }
     }
-
 }

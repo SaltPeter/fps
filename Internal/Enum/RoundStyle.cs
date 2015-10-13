@@ -1,3 +1,1 @@
-﻿using UnityEngine;
-
-public enum RoundStyle {Rounds, OneMacht}
+﻿public enum RoundStyle {Rounds, OneMacht}

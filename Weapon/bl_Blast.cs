@@ -5,19 +5,10 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class bl_Blast : bl_PhotonHelper {
-	 /// <summary>
-	 /// This is asigne auto
-	 /// </summary>
-    public float explosionDamage = 50f;
-    /// <summary>
-    /// range of the explosion generates damage
-    /// </summary>
-    public float explosionRadius = 50f;
-    /// <summary>
-    /// the time fire particles disappear
-    /// </summary>
-    public float DisappearIn = 3f;
-    public GameObject ExplosionPrefabs = null;
+    public float explosionDamage = 50f; /// This is asigne auto							
+	public float explosionRadius = 50f; /// range of the explosion generates damage							
+	public float DisappearIn = 3f; /// the time fire particles disappear
+	public GameObject ExplosionPrefabs = null;
     public List<ParticleEmitter> mParticles = new List<ParticleEmitter>();
     [HideInInspector]
     public int WeaponID;
@@ -26,9 +17,7 @@ public class bl_Blast : bl_PhotonHelper {
     [HideInInspector]
     public bool isNetwork = false;
 
-    /// <summary>
     /// is not remote take damage
-    /// </summary>
     void Start()
     {
         if (!isNetwork)
@@ -38,9 +27,8 @@ public class bl_Blast : bl_PhotonHelper {
         }
         StartCoroutine(Init());
     }
-    /// <summary>
+
     /// applying impact damage from the explosion to enemies
-    /// </summary>
     private void ApplyDamage()
     {
         List<PhotonPlayer> playersInRange = this.GetPlayersInRange();
@@ -62,15 +50,12 @@ public class bl_Blast : bl_PhotonHelper {
                 pdm.GetDamage(odi);
             }
             else
-            {
                 Debug.LogError("This Player "+player.name+ " is not found");
-            }
         }
     }
-    /// <summary>
+
     /// When Explosion is local, and take player hit
     /// Send only shake movement
-    /// </summary>
     void ApplyShake()
     {
         if (isMyInRange() == true)
@@ -83,17 +68,12 @@ public class bl_Blast : bl_PhotonHelper {
                 Debug.Log("Send Shakes");
             }
             else
-            {
                 Debug.LogError("This Player " + p.name + " is not found");
-            }
         }
     }
-    /// <summary>
+
     /// calculate the damage it generates, based on the distance
     /// between the player and the explosion
-    /// </summary>
-    /// <param name="p"></param>
-    /// <returns></returns>
     private int CalculatePlayerDamage(PhotonPlayer p)
     {
         if ((string)p.customProperties[PropiertiesKeys.TeamKey] == myTeam)
@@ -103,15 +83,10 @@ public class bl_Blast : bl_PhotonHelper {
         return Mathf.Clamp((int) (this.explosionDamage * ((this.explosionRadius - distance) / this.explosionRadius)), 0, (int) this.explosionDamage);
     }
 
-    /// <summary>
     /// get players who are within the range of the explosion
-    /// </summary>
-    /// <returns></returns>
-    private List<PhotonPlayer> GetPlayersInRange()
-    {
+    private List<PhotonPlayer> GetPlayersInRange() {
         List<PhotonPlayer> list = new List<PhotonPlayer>();
-        foreach (PhotonPlayer p in PhotonNetwork.playerList)
-        {
+        foreach (PhotonPlayer p in PhotonNetwork.playerList) {
             GameObject player = FindPhotonPlayer(p);
             if(player == null)
                 return null;
@@ -121,12 +96,9 @@ public class bl_Blast : bl_PhotonHelper {
         }
         return list;
     }
-    /// <summary>
+
     /// Calculate if player local in explosion radius
-    /// </summary>
-    /// <returns></returns>
-    private bool isMyInRange()
-    {
+    private bool isMyInRange() {
         GameObject p = FindPhotonPlayer(PhotonNetwork.player);
 
         if (p == null)
@@ -136,8 +108,7 @@ public class bl_Blast : bl_PhotonHelper {
         return false;
     }
 
-    IEnumerator Init()
-    {      
+    IEnumerator Init() {      
         if (ExplosionPrefabs != null)
             Instantiate(ExplosionPrefabs, transform.position, transform.rotation);
         yield return new WaitForSeconds(DisappearIn / 2);

@@ -5,14 +5,10 @@ using System.Collections.Generic;
 public class bl_SniperScope : MonoBehaviour {
 
     public Sprite Scope;
-    /// <summary>
     /// Object to desactivate when is aimed
-    /// </summary>
     public List<GameObject> OnScopeDisable = new List<GameObject>();
     public bool m_show_distance = true;
-    /// <summary>
     /// maximum distance raycast
-    /// </summary>
     public float Max_Distance = 1000;
 
     public float m_SmoothAppear = 12;
@@ -89,9 +85,7 @@ public class bl_SniperScope : MonoBehaviour {
         Alpha.alpha = m_alpha;
     }
 
-    /// <summary>
     /// calculate the distance to the first object that raycast hits
-    /// </summary>
     void GetDistance()
     {
         RaycastHit m_ray;
@@ -102,8 +96,6 @@ public class bl_SniperScope : MonoBehaviour {
             m_dist = bl_UtilityHelper.GetDistance(m_point, Camera.main.transform.position);
         }
         else
-        {
             m_dist = 0.0f;
-        }
     }
 }

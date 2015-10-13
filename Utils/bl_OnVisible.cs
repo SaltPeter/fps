@@ -7,19 +7,13 @@ public class bl_OnVisible : MonoBehaviour {
 
     public bl_PlayerAnimations NPA;
     public bl_UpperAnimations Upper;
-    /// <summary>
-    /// when not is visible
-    /// </summary>
-    void OnBecameInvisible()
-    {
+
+    void OnBecameInvisible() {
         NPA.m_Update = false;
         Upper.m_Update = false;
     }
-    /// <summary>
-    /// When is visible
-    /// </summary>
-    void OnBecameVisible()
-    {
+
+    void OnBecameVisible() {
         NPA.m_Update = true;
         Upper.m_Update = true;
     }

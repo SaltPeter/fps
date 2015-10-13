@@ -102,7 +102,6 @@ public class bl_WeaponsUI : MonoBehaviour {
                 GUILayout.Box(Notifications[i]);
                 GUI.color = Color.white;
             }
-            
         }
         GUILayout.EndArea();
     }

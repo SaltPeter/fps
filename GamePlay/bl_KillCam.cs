@@ -9,52 +9,24 @@ public class bl_KillCam : MonoBehaviour {
     public string TagTargets = ""; /// Enemys Tag
 
     /// Distance from camera to target
-
 	public float distance = 10.0f;
 
     /// list with al enemys with same tag
-
     public List<Transform> OtherList = new List<Transform>();
 
-    /// target name to follow
-
-	public string Follow = "";
-    /// <summary>
-    /// in case targets is null see this
-    /// </summary>
-	public Transform Provide;
-    /// <summary>
-    /// Maxime Distance to target
-    /// </summary>
-    public float distanceMax = 15f;
-    /// <summary>
-    /// Min Distance to target
-    /// </summary>
-	public float distanceMin = 0.5f;
-    /// <summary>
-    /// X vector speed
-    /// </summary>
-	public float xSpeed = 120f;
-    /// <summary>
-    /// maxime y vector Limit
-    /// </summary>
-	public float yMaxLimit = 80f;
-    /// <summary>
-    /// minime Y vector limit
-    /// </summary>
-	public float yMinLimit = -20f;
-    /// <summary>
-    /// Y vector speed
-    /// </summary>
-	public float ySpeed = 120f;
-
-    public bool Can_See_Other = true;
+	public string Follow = ""; /// target name to follow
+	public Transform Provide; /// in case targets is null see this
+	public float distanceMax = 15f; /// Maxime Distance to target
+	public float distanceMin = 0.5f; /// Min Distance to target
+	public float xSpeed = 120f; /// X vector speed
+	public float yMaxLimit = 80f; /// maxime y vector Limit
+	public float yMinLimit = -20f; /// minime Y vector limit
+	public float ySpeed = 120f; /// Y vector speed
+	public bool Can_See_Other = true;
     public bool SmoothMovement = true;
-    /// <summary>
-    /// Smooth motion speed
-    /// </summary>
-    public float SpeedSmooth = 5;
-    public string KillCamTitle = "";
+
+    public float SpeedSmooth = 5; /// Smooth motion speed
+	public string KillCamTitle = "";
     [Range(0.01f,5f)]
     public float m_wait;
     public bool isLocal = false;
@@ -76,27 +48,20 @@ public class bl_KillCam : MonoBehaviour {
     private float y;
     private string Killer;
 
-    void OnEnable()
-    {
+    void OnEnable() {
         this.x = 30f;
         this.y = 30f;
         if (GetComponent<Rigidbody>() != null)
-        {
             GetComponent<Rigidbody>().freezeRotation = true;
-        }
         if (Can_See_Other)
-        {
             InvokeRepeating("UpdateOtherList", 1, 1);
-        }
         if (m_wait > 0)
         {
             isWait = true;
             StartCoroutine(Wait());
         }
         else
-        {
             this.transform.parent = null;
-        }
     }
 
     void OnDisable()
@@ -104,43 +69,29 @@ public class bl_KillCam : MonoBehaviour {
         CancelInvoke("UpdateOtherList");
     }
 
-    /// <summary>
     /// update list of targets
-    /// </summary>
     void UpdateOtherList()
     {
         OtherList.Clear();
         GameObject[] others = GameObject.FindGameObjectsWithTag(TagTargets);
         foreach (GameObject ot in others)
-        {
             OtherList.Add(ot.transform);
-        }
     }
 
-    /// <summary>
     /// resfresh all
-    /// </summary>
-    void Refresh()
-    {
-            if (GameObject.Find(Follow) != null)
-            {
-                target = GameObject.Find(Follow).transform;
-            }
-            else
-            {
-                if (!Can_See_Other)
-                {
-                    target = Provide;
-                }
-                else
-                {
-                    OtherList.Clear();
-                    GameObject[] others = GameObject.FindGameObjectsWithTag(TagTargets);
-                    foreach (GameObject ot in others)
-                        OtherList.Add(ot.transform);
-                }
-            }
-        
+    void Refresh() {
+		if (GameObject.Find(Follow) != null)
+			target = GameObject.Find(Follow).transform;
+		else {
+			if (!Can_See_Other)
+				target = Provide;
+			else {
+				OtherList.Clear();
+				GameObject[] others = GameObject.FindGameObjectsWithTag(TagTargets);
+				foreach (GameObject ot in others)
+					OtherList.Add(ot.transform);
+			}
+		}
     }
 
 	void LateUpdate () {
@@ -150,9 +101,8 @@ public class bl_KillCam : MonoBehaviour {
             UpdateTarget();
         }
 	}
-    /// <summary>
+    
     /// update camera movements
-    /// </summary>
     void CamMovements()
     {
         if (this.target != null)
@@ -180,9 +130,7 @@ public class bl_KillCam : MonoBehaviour {
         }
     }
 
-    /// <summary>
     /// Update the camera to follow 
-    /// </summary>
     void UpdateTarget()
     {
 		if (Input.GetButtonDown("Fire1") || Input.GetKeyDown(KeyCode.Space) && OtherList.Count > 0)
@@ -230,9 +178,8 @@ public class bl_KillCam : MonoBehaviour {
 			angle -= 360f;
 		return Mathf.Clamp(angle, min, max);
 	}
-    /// <summary>
+    
     /// recive target name to camera follow
-    /// </summary>
     /// <param name="t_target"> name of target</param>
     public void Send_Target(string t_target)
     {
