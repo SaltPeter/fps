@@ -9,7 +9,6 @@ public class bl_PlayerMovement : MonoBehaviour {
 	public KeyCode CrouchKey = KeyCode.C;
 	public KeyCode RunKey = KeyCode.LeftShift;
 	public KeyCode JumpKey = KeyCode.Space;
-	public KeyCode SuperJumpKey = KeyCode.Space;
 	public bool ToggleCrouch = false;
 	[Header("Movement")]
 	public float crouchSpeed = 2;
@@ -42,11 +41,9 @@ public class bl_PlayerMovement : MonoBehaviour {
 
 	public bool airControl = false; // If checked, then the player can change direction while in the air
 	public float antiBumpFactor = .75f; // Small amounts of this results in bumping when walking down slopes, but large amounts results in falling too fast
+	public int antiBunnyHopFactor = 1; // Player must be grounded for at least this many physics frames before being able to jump again; set to 0 to allow bunny hopping 
 
-	// Player must be grounded for at least this many physics frames before being able to jump again; set to 0 to allow bunny hopping 
-	public int antiBunnyHopFactor = 1;
-
-	public float PushPower = 2;
+	public float PushPower = 2f;
 
 	private Vector3 moveDirection = Vector3.zero;
 	private Vector3 lastPosition = Vector3.zero;
@@ -214,7 +211,7 @@ public class bl_PlayerMovement : MonoBehaviour {
 				moveDirection.z = inputY * speed * inputModifyFactor;
 				moveDirection = myTransform.TransformDirection(moveDirection);
 			}
-			if (Input.GetKeyDown(SuperJumpKey) && canSecond && CanSuperJump) {
+			if (Input.GetKeyDown(JumpKey) && canSecond && CanSuperJump) {
 				jumpTimer = 0;
 				moveDirection.y = SuperJumpSpeed;
 				canSecond = false;
