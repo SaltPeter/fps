@@ -19,7 +19,6 @@ public class bl_PlayerMovement : MonoBehaviour {
 	public float jumpSpeed = 8f;
 	public float gravity = 20f;
 	public float speed;
-	[Space(5)]
 	[Header("SuperJump")]
 	//Can the player take a super jump
 	public bool CanSuperJump = true;
@@ -29,7 +28,6 @@ public class bl_PlayerMovement : MonoBehaviour {
 	public float SuperJumpSpeed = 14f;
 	public AudioSource BoostSource = null;
 	public AudioClip SuperJumpSound;
-	[Space(5)]
 	[Header("Others")]
 	// If the player ends up on a slope which is at least the Slope Limit as set on the character controller, then he will slide down
 	public bool slideWhenOverSlopeLimit = false;
@@ -50,7 +48,6 @@ public class bl_PlayerMovement : MonoBehaviour {
 
 	[HideInInspector]
 	public bool grounded = false;
-	[Space(5)]
 	[Header("Fall Player")]
 	// Units that player can fall before a falling damage function is run. To disable, type "infinity" in the inspector
 	public float fallingDamageThreshold = 10f;
