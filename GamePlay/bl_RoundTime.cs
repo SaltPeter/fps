@@ -1,12 +1,10 @@
-﻿///////////////////////////////bl_RoundTime.cs///////////////////////////////////
-///////////////Use this to manage time in rooms//////////////////////////////////
+﻿//bl_RoundTime.cs = Use this to manage time in rooms
 using UnityEngine;
 using System.Collections;
 using Hashtable = ExitGames.Client.Photon.Hashtable; //Replace default Hashtables with Photon hashtables
 using UnityEngine.UI;
 
 public class bl_RoundTime : MonoBehaviour {
-
     public GUISkin Style;
     /// mode of the round room
     public RoundStyle m_RoundStyle;
@@ -64,9 +62,7 @@ public class bl_RoundTime : MonoBehaviour {
     {
         float t_time = RoundDuration - ((float)PhotonNetwork.time - m_Reference);
         if (t_time > 0)
-        {
             CurrentTime = t_time;
-        }
         else if (t_time <= 0.001 && GetTimeServed == true)//Round Finished
         {
             CurrentTime = 0;
