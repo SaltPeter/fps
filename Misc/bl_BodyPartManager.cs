@@ -10,22 +10,17 @@ using UnityEditor;
 #endif
 
 public class bl_BodyPartManager : bl_PhotonHelper {
-
-    [System.Serializable]
-    public class Part
-    {
+	[System.Serializable]
+    public class Part {
         public string name;
         public Collider m_Collider;
         public float m_Multipler = 1.0f;
         public bool m_HeatShot = false;
     }
-    /// <summary>
     /// Change the tag if you use other
-    /// </summary>
     public string HitBoxTag = "BodyPart";
-    /// <summary>
+
     /// List of information for hitboxes
-    /// </summary>
     public List<Part> HitBoxs = new List<Part>();
     public List<Rigidbody> mRigidBody = new List<Rigidbody>();
     [Space(5)]
@@ -33,8 +28,7 @@ public class bl_BodyPartManager : bl_PhotonHelper {
     public bl_PlayerAnimations PlayerAnimation;
     public Animation mAnimation;
 
-    protected override void Awake()
-    {
+    protected override void Awake() {
         base.Awake();
         GetRigidBodys();
         if (mRigidBody.Count > 0)
@@ -44,14 +38,11 @@ public class bl_BodyPartManager : bl_PhotonHelper {
     #if UNITY_EDITOR
     [ContextMenu("Get HitBoxes")]
      #endif
-    void GetAllCollider()
-    {
+    void GetAllCollider() {
         HitBoxs.Clear();
         Collider[] mCol = transform.GetComponentsInChildren<Collider>();
-        if (mCol.Length > 0)
-        {
-            foreach (Collider c in mCol)
-            {
+        if (mCol.Length > 0) {
+            foreach (Collider c in mCol) {
                 if (c.gameObject.tag != HitBoxTag)
                     c.gameObject.tag = HitBoxTag;
                 Part p = new Part();
@@ -60,8 +51,7 @@ public class bl_BodyPartManager : bl_PhotonHelper {
                 HitBoxs.Add(p);
             }
         }
-        else
-        {
+        else {
             Debug.LogError("This transform no have colliders in childrens");
         }
     }
@@ -69,15 +59,11 @@ public class bl_BodyPartManager : bl_PhotonHelper {
     #if UNITY_EDITOR
     [ContextMenu("Add Script")]
     #endif
-    void AddScript()
-    {
-        if (HitBoxs.Count > 0)
-        {
-            foreach (Part p in HitBoxs)
-            {
+    void AddScript() {
+        if (HitBoxs.Count > 0) {
+            foreach (Part p in HitBoxs) {
                 //DestroyImmediate(p.m_Collider.gameObject.GetComponent<bl_BodyPart>()); //use for remove script
-                if (p.m_Collider != null || p.m_Collider.gameObject.GetComponent<bl_BodyPart>() == null)
-                {
+                if (p.m_Collider != null || p.m_Collider.gameObject.GetComponent<bl_BodyPart>() == null) {
                     p.m_Collider.gameObject.AddComponent<bl_BodyPart>();
                     bl_BodyPart bp = p.m_Collider.gameObject.GetComponent<bl_BodyPart>();
                     bp.TakeHeatShot = p.m_HeatShot;
@@ -86,8 +72,7 @@ public class bl_BodyPartManager : bl_PhotonHelper {
                 }
             }
         }
-        else
-        {
+        else {
             Debug.LogError("Hitbox List is emty, get hitbox before");
         }
     }
@@ -95,22 +80,17 @@ public class bl_BodyPartManager : bl_PhotonHelper {
 #if UNITY_EDITOR
     [ContextMenu("Get RigidBodys")]
 #endif
-    void GetRigidBodys()
-    {
+    void GetRigidBodys() {
         Rigidbody[] R = this.transform.GetComponentsInChildren<Rigidbody>();
 
-        foreach (Rigidbody rb in R)
-        {
+        foreach (Rigidbody rb in R) {
             if (!mRigidBody.Contains(rb))
                 mRigidBody.Add(rb);
         }
     }
-    /// <summary>
-    /// 
-    /// </summary>
+
     /// <param name="b">is Kinematic?</param>
-    public void SetKinematic(bool b = true)
-    {
+    public void SetKinematic(bool b = true) {
         if (mRigidBody == null || mRigidBody.Count <= 0)
             return;
 
@@ -118,12 +98,10 @@ public class bl_BodyPartManager : bl_PhotonHelper {
             r.isKinematic = b;
     }
 
-    public void Ragdolled()
-    {
+    public void Ragdolled() {
         this.transform.parent = null;
         mAnimation.enabled = false;
-        foreach (Rigidbody r in mRigidBody)
-        {
+        foreach (Rigidbody r in mRigidBody) {
             r.isKinematic = false;
             r.useGravity = true;
             r.velocity = PlayerAnimation.velocity;
@@ -133,13 +111,10 @@ public class bl_BodyPartManager : bl_PhotonHelper {
         Destroy(this.gameObject, 10);
     }
 
-    public void IgnorePlayerCollider()
-    {
+    public void IgnorePlayerCollider() {
         Collider Player = FindPlayerRoot(bl_GameManager.m_view).GetComponent<Collider>();
-        if (Player != null)
-        {
-            for (int i = 0; i < HitBoxs.Count; i++)
-            {
+        if (Player != null) {
+            for (int i = 0; i < HitBoxs.Count; i++) {
                 if (HitBoxs[i].m_Collider != null)
                     Physics.IgnoreCollision(HitBoxs[i].m_Collider, Player);
             }

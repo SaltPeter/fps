@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public struct KillFeed  {
+public struct KillFeed {
     public string m_Killer {get; set;}
     public string m_HowKill { get; set; }
     public string m_Killed { get; set; }
@@ -9,8 +9,7 @@ public struct KillFeed  {
     public Color m_KilledColor { get; set; }
     public float m_Timer { get; set; }
 
-    public KillFeed(string t_Killer, string t_Killed,string t_HowKill, int t_GunID, Color t_DeltaC, Color t_ReconC, float t_Timer)
-    {
+    public KillFeed(string t_Killer, string t_Killed,string t_HowKill, int t_GunID, Color t_DeltaC, Color t_ReconC, float t_Timer) {
         m_Killer = t_Killer;
         m_HowKill = t_HowKill;
         m_Killed = t_Killed;

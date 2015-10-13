@@ -21,39 +21,33 @@ public class bl_GunBob : MonoBehaviour {
     float tempWalkSpeed = 0;
     float tempRunSpeed = 0;
     float tempIdleSpeed = 0;
-    void Awake()
-    {
+    void Awake() {
         //Find player and FPScontroller script
         player = transform.root.gameObject;
         motor = player.GetComponent<bl_PlayerMovement>();
         midpoint = transform.localPosition;
         Dsmooth = smooth;
     }
-    void Update()
-    {
+    void Update() {
         //Walk/Run sway speed
-        if (motor.velMagnitude > 0.1f && !motor.running)
-        {
+        if (motor.velMagnitude > 0.1f && !motor.running) {
             bobbingSpeed = tempWalkSpeed;
             BobbingAmount = bobbingAmount;
             smooth = Dsmooth;
         }
-        if (motor.running)
-        {
+        if (motor.running) {
             bobbingSpeed = tempRunSpeed;
             BobbingAmount = RunbobbingAmount;
             smooth = RunSmooth;
         }
 
-        if (!motor.running && motor.velMagnitude < 0.1f)
-        {
+        if (!motor.running && motor.velMagnitude < 0.1f) {
             bobbingSpeed = tempIdleSpeed;
             BobbingAmount = bobbingAmount * 0.2f;
             smooth = Dsmooth;
         }
     }
-    void FixedUpdate()
-    {
+    void FixedUpdate() {
         float waveslice = 0.0f;
         float waveslice2 = 0.0f;
         Vector3 currentPosition = Vector3.zero;
@@ -63,17 +57,14 @@ public class bl_GunBob : MonoBehaviour {
          tempRunSpeed = 0;
          tempIdleSpeed = 0;
 
-        if (Time.timeScale == 1)
-        {
-            if (tempWalkSpeed != walkBobbingSpeed || tempRunSpeed != runBobbingSpeed || tempIdleSpeed != idleBobbingSpeed)
-            {
+        if (Time.timeScale == 1) {
+            if (tempWalkSpeed != walkBobbingSpeed || tempRunSpeed != runBobbingSpeed || tempIdleSpeed != idleBobbingSpeed) {
                 tempWalkSpeed = walkBobbingSpeed;
                 tempRunSpeed = runBobbingSpeed;
                 tempIdleSpeed = idleBobbingSpeed;
             }
         }
-        else
-        {
+        else {
             tempWalkSpeed = walkBobbingSpeed * (Time.fixedDeltaTime / 0.02f);
             tempRunSpeed = runBobbingSpeed * (Time.fixedDeltaTime / 0.02f);
             tempIdleSpeed = idleBobbingSpeed * (Time.fixedDeltaTime / 0.02f);
@@ -82,13 +73,11 @@ public class bl_GunBob : MonoBehaviour {
         waveslice = Mathf.Sin(timer * 2);
         waveslice2 = Mathf.Sin(timer);
         timer = timer + bobbingSpeed;
-        if (timer > Mathf.PI * 2)
-        {
+        if (timer > Mathf.PI * 2) {
             timer = timer - (Mathf.PI * 2);
         }
         //} 
-        if (waveslice != 0)
-        {
+        if (waveslice != 0) {
             var TranslateChange = waveslice * BobbingAmount;
             var TranslateChange2 = waveslice2 * BobbingAmount;
             var TotalAxes = Mathf.Clamp(1.0f, 0.0f, 1.0f);
@@ -96,14 +85,10 @@ public class bl_GunBob : MonoBehaviour {
             var translateChange2 = TotalAxes * TranslateChange2;
 
             if (motor.grounded)
-            {
                 currentPosition = new Vector3(midpoint.x + translateChange2, midpoint.y + translateChange, currentPosition.z); //Player walk
-			}
         }
         else
-        {
             currentPosition = midpoint; //Player not move
-		}
 
         transform.localPosition = Vector3.Lerp(transform.localPosition, currentPosition, Time.deltaTime * smooth);
     }

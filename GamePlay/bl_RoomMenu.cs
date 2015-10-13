@@ -375,7 +375,6 @@ public class bl_RoomMenu : bl_PhotonHelper
                     PhotonView view = PhotonView.Find(bl_GameManager.m_view);
                     if (view != null)
                     {
-
                         bl_PlayerDamageManager pdm = view.GetComponent<bl_PlayerDamageManager>();
                         pdm.Suicide();
                         m_window = 1;
@@ -402,7 +401,6 @@ public class bl_RoomMenu : bl_PhotonHelper
                     {
                         Debug.LogError("This view " + bl_GameManager.m_view + " is not found");
                     }
-
                 }
             }
             if (!isPlaying && !isFinish)

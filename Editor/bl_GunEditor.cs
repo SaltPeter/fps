@@ -21,9 +21,7 @@ public class bl_GunEditor : Editor {
         script.typeOfGun = (bl_Gun.weaponType)EditorGUILayout.EnumPopup("Type of Gun ", script.typeOfGun);
 
         if (script.typeOfGun != bl_Gun.weaponType.Launcher)
-        {
             script.typeOfBullet = (bl_Gun.BulletType)EditorGUILayout.EnumPopup("Type of Ammo ", script.typeOfBullet);
-        }
         //
         script.GunID = EditorGUILayout.IntField("Gun ID ", script.GunID);
         script.GunName = EditorGUILayout.TextField("Gun Name", script.GunName);

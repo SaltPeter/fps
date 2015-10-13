@@ -1,15 +1,12 @@
-////////////////////////////////////////////////////////////////////////////////
 // bl_PlayerSettings.cs
 // This script configures the required settings for the local and remote player
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class bl_PlayerSettings : bl_PhotonHelper
-{
-    /// <summary>
+public class bl_PlayerSettings : bl_PhotonHelper {
+
     /// The tag of Player for default is "Player"
-    /// </summary>
     public const string LocalTag = "Player";
     /// <summary>
     /// please if you have this tag in the tag list, add
@@ -64,9 +61,8 @@ public class bl_PlayerSettings : bl_PhotonHelper
             RemotePlayer();
     }
 
-    /// <summary>
+
     /// We call this function only if we are Remote player
-    /// </summary>
     public void RemotePlayer()
     {
         foreach (MonoBehaviour script in Remote_DisabledScripts)

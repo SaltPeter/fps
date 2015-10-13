@@ -3,26 +3,21 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class bl_KillCam : MonoBehaviour {
-	
-    /// <summary>
-    /// Target to follow
-    /// </summary>
-	public Transform target = null;
-    /// <summary>
-    /// Enemys Tag
-    /// </summary>
-    public string TagTargets = "";
-    /// <summary>
+    
+	public Transform target = null; /// Target to follow
+
+    public string TagTargets = ""; /// Enemys Tag
+
     /// Distance from camera to target
-    /// </summary>
+
 	public float distance = 10.0f;
-    /// <summary>
+
     /// list with al enemys with same tag
-    /// </summary>
+
     public List<Transform> OtherList = new List<Transform>();
-    /// <summary>
+
     /// target name to follow
-    /// </summary>
+
 	public string Follow = "";
     /// <summary>
     /// in case targets is null see this
@@ -71,8 +66,6 @@ public class bl_KillCam : MonoBehaviour {
         public Color UIColor;
         public Texture2D InfoBackGround;
         public GUIStyle TextStyle;
-        
-
     }
     public UI_ UI;
     
@@ -82,7 +75,6 @@ public class bl_KillCam : MonoBehaviour {
     private float x;
     private float y;
     private string Killer;
-
 
     void OnEnable()
     {
@@ -145,10 +137,7 @@ public class bl_KillCam : MonoBehaviour {
                     OtherList.Clear();
                     GameObject[] others = GameObject.FindGameObjectsWithTag(TagTargets);
                     foreach (GameObject ot in others)
-                    {
                         OtherList.Add(ot.transform);
-                    }
-
                 }
             }
         
@@ -185,13 +174,9 @@ public class bl_KillCam : MonoBehaviour {
             Vector3 vector3 = (quaternion * vector) + vector2;
             transform.rotation = quaternion;
             if (!SmoothMovement)
-            {
                 transform.position = vector3;
-            }
             else
-            {
               transform.position = Vector3.Lerp(transform.localPosition,vector3, Time.deltaTime * SpeedSmooth);
-            }
         }
     }
 
@@ -200,68 +185,49 @@ public class bl_KillCam : MonoBehaviour {
     /// </summary>
     void UpdateTarget()
     {
-        if (Input.GetButtonDown("Fire1") || Input.GetKeyDown(KeyCode.Space) && OtherList.Count > 0)
-                {
-      
-                        isSearch = true;
-                    if (CurrentOther <= OtherList.Count  && CurrentOther >= 0)
-                    {
-                        CurrentOther ++;
-                    }
-                    if ( CurrentOther >= OtherList.Count)
-                    {
-                        CurrentOther = 0;
-                    }
-                }
+		if (Input.GetButtonDown("Fire1") || Input.GetKeyDown(KeyCode.Space) && OtherList.Count > 0)
+		{
+			isSearch = true;
+			if (CurrentOther <= OtherList.Count  && CurrentOther >= 0)
+				CurrentOther ++;
+			if ( CurrentOther >= OtherList.Count)
+				CurrentOther = 0;
+		}
 
         if (!isSearch)
         {
             if (GameObject.Find(Follow) != null)
-            {
                 target = GameObject.Find(Follow).transform;
-            }
             else
-            {
                 target = Provide;
-            }
         }
         else
         {
             if (OtherList.Count > 0 && Can_See_Other)
-            {
                 target = OtherList[CurrentOther];
-            }
             else
-            {
                 target = Provide;
-            }
         }
     }
 
 	void OnGUI(){
-            GUI.skin = UI.Skin;
-            GUI.color = UI.UIColor;
-            GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), UI.KillCamEffect);
-            GUI.DrawTexture(new Rect(0, Screen.height - 175, 400, 75), UI.InfoBackGround);
-            GUI.color = Color.white;
-            GUI.Label(new Rect(Screen.width / 2 - 65, 15, 150, 35), "<size=35>" + KillCamTitle + "</size>", UI.TextStyle);
-            if (target)
-            {
-                GUI.Label(new Rect(75, Screen.height - 175, 250, 35), "<size=20><color=#ff0000ff>Spectating:</color></size> " + target.name, UI.TextStyle);
-            }
-            GUI.Label(new Rect(75, Screen.height - 145, 250, 35), "<size=20><color=#ff0000ff>Killed by:</color></size> " + Killer, UI.TextStyle);
+		GUI.skin = UI.Skin;
+		GUI.color = UI.UIColor;
+		GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), UI.KillCamEffect);
+		GUI.DrawTexture(new Rect(0, Screen.height - 175, 400, 75), UI.InfoBackGround);
+		GUI.color = Color.white;
+		GUI.Label(new Rect(Screen.width / 2 - 65, 15, 150, 35), "<size=35>" + KillCamTitle + "</size>", UI.TextStyle);
+		if (target)
+			GUI.Label(new Rect(75, Screen.height - 175, 250, 35), "<size=20><color=#ff0000ff>Spectating:</color></size> " + target.name, UI.TextStyle);
+		GUI.Label(new Rect(75, Screen.height - 145, 250, 35), "<size=20><color=#ff0000ff>Killed by:</color></size> " + Killer, UI.TextStyle);
 	}
 
 	public static float ClampAngle(float angle, float min, float max)
 	{
 		if (angle < -360f)
-		{
 			angle += 360f;
-		}
 		if (angle > 360f)
-		{
 			angle -= 360f;
-		}
 		return Mathf.Clamp(angle, min, max);
 	}
     /// <summary>
@@ -280,6 +246,5 @@ public class bl_KillCam : MonoBehaviour {
         yield return new WaitForSeconds(m_wait);
         this.transform.parent = null;
         isWait = false;
-        
     }
 }

@@ -3,8 +3,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class bl_OnDamageInfo
-{
+public class bl_OnDamageInfo {
     public float mDamage = 10;
     public string mFrom = "";
     public string mWeapon = "";

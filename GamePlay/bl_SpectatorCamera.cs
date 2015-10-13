@@ -34,7 +34,6 @@ public class bl_SpectatorCamera : MonoBehaviour {
         //move camera downwards
         if (Input.GetKey(KeyCode.Q))
             Transform.position = Transform.position + UseCamera.transform.up * -1 * speed * Time.deltaTime;
-
     }
 
     public Camera UseCamera

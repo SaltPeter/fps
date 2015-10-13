@@ -3,8 +3,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class bl_DelaySmooth : MonoBehaviour
-{
+public class bl_DelaySmooth : MonoBehaviour {
     [Header("TilMovement")]  
     private float maxAmount = 0.05F;
     public float amount = 0.02F;
@@ -19,14 +18,12 @@ public class bl_DelaySmooth : MonoBehaviour
     private Vector3 def;
     private Quaternion DefaultRot;
 
-    void Start()
-    {
+    void Start() {
         def = transform.localPosition;
         DefaultRot = this.transform.localRotation;
     }
 
-    void Update()
-    {     
+    void Update() {     
 		float factorX = -Input.GetAxis("Mouse X") * amount;
 		float factorY = -Input.GetAxis("Mouse Y") * amount;
 		factorX = Mathf.Clamp(factorX, -maxAmount, maxAmount);
@@ -36,44 +33,33 @@ public class bl_DelaySmooth : MonoBehaviour
 		this.transform.localRotation = Quaternion.Slerp(this.transform.localRotation, DefaultRot, Time.deltaTime * m_ReturnSpeed);
     }
 
-     void OnEnable()
-     {
+     void OnEnable() {
          bl_EventHandler.OnFall += this.OnFall;
          bl_EventHandler.OnSmallImpact += this.OnSmallImpact;
      }
 
-     void OnDisable()
-     {
+     void OnDisable() {
          bl_EventHandler.OnFall -= this.OnFall;
          bl_EventHandler.OnSmallImpact -= this.OnSmallImpact;
      }
-    /// <summary>
-    /// On event fall 
-    /// </summary>
+    /// On event fall
     /// <param name="t_amount"></param>
-     void OnFall(float t_amount)
-     {
+     void OnFall(float t_amount) {
          StartCoroutine(FallEffect());
      }
-    /// <summary>
+
     /// On Impact event
-    /// </summary>
-     void OnSmallImpact()
-     {
+     void OnSmallImpact() {
          StartCoroutine(FallEffect());
      }
-    /// <summary>
-     /// create a soft impact effect
-    /// </summary>
-    /// <returns></returns>
-    public IEnumerator FallEffect()
-     {
+   
+	/// create a soft impact effect
+	public IEnumerator FallEffect() {
          Quaternion m_default = this.transform.localRotation;
          Quaternion m_finaly = this.transform.localRotation * Quaternion.Euler(new Vector3(DownAmount,Random.Range(-SliderAmount,SliderAmount),0));
          float t_rate = 1.0f / m_time;
          float t_time = 0.0f;
-         while (t_time < 1.0f)
-         {
+         while (t_time < 1.0f) {
              t_time += Time.deltaTime * t_rate;
              this.transform.localRotation = Quaternion.Slerp(m_default, m_finaly, t_time);
              yield return t_rate;

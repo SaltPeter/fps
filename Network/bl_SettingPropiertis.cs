@@ -3,16 +3,14 @@ using System.Collections;
 using Hashtable = ExitGames.Client.Photon.Hashtable; //Replace default Hashtables with Photon hashtables
 using UnityEngine.UI;
 
-public class bl_SettingPropiertis : MonoBehaviour
-{
+public class bl_SettingPropiertis : MonoBehaviour {
     public GUIStyle Style;
     public Texture2D FFABox;
     public GameMode m_GameMode = GameMode.FFA;
     public GameObject CTFObjects;
 
     [System.Serializable]
-    public class UI_
-    {
+    public class UI_ {
         public GameObject TDMScoreRoom;
         public GameObject FFAScoreRoom;
         public Text DeltaScoreText;
@@ -29,8 +27,7 @@ public class bl_SettingPropiertis : MonoBehaviour
     private bl_RoomMenu RMenu;
     private bl_RoundTime RTime;
 
-    void Awake()
-    {
+    void Awake() {
         if (!PhotonNetwork.connected || PhotonNetwork.room == null)
             return;
 
@@ -40,11 +37,9 @@ public class bl_SettingPropiertis : MonoBehaviour
         GetRoomInfo();
     }
 
-    public void SettingPropiertis()
-    {
+    public void SettingPropiertis() {
         //Initialize new properties where the information will stay Room
-        if (PhotonNetwork.isMasterClient)
-        {
+        if (PhotonNetwork.isMasterClient) {
             Hashtable setTeamScore = new Hashtable();
             setTeamScore.Add(PropiertiesKeys.Team1Score, 0);
             PhotonNetwork.room.SetCustomProperties(setTeamScore);
@@ -75,24 +70,20 @@ public class bl_SettingPropiertis : MonoBehaviour
         PhotonNetwork.player.SetCustomProperties(PlayerPing);
     }
 
-    void GetRoomInfo()
-    {
-        if ((string)PhotonNetwork.room.customProperties[PropiertiesKeys.GameModeKey] == GameMode.FFA.ToString())
-        {
+    void GetRoomInfo() {
+        if ((string)PhotonNetwork.room.customProperties[PropiertiesKeys.GameModeKey] == GameMode.FFA.ToString()) {
             m_GameMode = GameMode.FFA;
             CTFObjects.SetActive(false);
             UI.FFAScoreRoom.SetActive(true);
             UI.TDMScoreRoom.SetActive(false);
         }
-        else if ((string)PhotonNetwork.room.customProperties[PropiertiesKeys.GameModeKey] == GameMode.TDM.ToString())
-        {
+        else if ((string)PhotonNetwork.room.customProperties[PropiertiesKeys.GameModeKey] == GameMode.TDM.ToString()) {
             m_GameMode = GameMode.TDM;
             CTFObjects.SetActive(false);
             UI.TDMScoreRoom.SetActive(true);
             UI.FFAScoreRoom.SetActive(false);
         }
-        else if ((string)PhotonNetwork.room.customProperties[PropiertiesKeys.GameModeKey] == GameMode.CTF.ToString())
-        {
+        else if ((string)PhotonNetwork.room.customProperties[PropiertiesKeys.GameModeKey] == GameMode.CTF.ToString()) {
             m_GameMode = GameMode.CTF;
             CTFObjects.SetActive(true);
             UI.TDMScoreRoom.SetActive(true);
@@ -100,31 +91,18 @@ public class bl_SettingPropiertis : MonoBehaviour
         }
         //
         if ((string)PhotonNetwork.room.customProperties[PropiertiesKeys.RoomRoundKey] == "1")
-        {
             RTime.m_RoundStyle = RoundStyle.Rounds;
-        }
         else
-        {
             RTime.m_RoundStyle = RoundStyle.OneMacht;
-        }
         if ((string)PhotonNetwork.room.customProperties[PropiertiesKeys.TeamSelectionKey] == "1")
-        {
             RMenu.AutoTeamSelection = true;
-        }
         else
-        {
             RMenu.AutoTeamSelection = false;
-        }
         if (PlayerPrefs.HasKey("quality"))
-        {
             QualitySettings.SetQualityLevel(PlayerPrefs.GetInt("quality"));
-        }
         if (PlayerPrefs.HasKey("volumen"))
-        {
             AudioListener.volume = PlayerPrefs.GetFloat("volumen");
-        }
-        if (PlayerPrefs.HasKey("anisotropic"))
-        {
+        if (PlayerPrefs.HasKey("anisotropic")) {
             int i = PlayerPrefs.GetInt("anisotropic");
             if (i == 0)
                 QualitySettings.anisotropicFiltering = AnisotropicFiltering.Disable;
@@ -141,16 +119,13 @@ public class bl_SettingPropiertis : MonoBehaviour
         bl_EventHandler.OnRoundEnd += this.OnRoundEnd;
     }
 
-    void OnDisable()
-    {
+    void OnDisable() {
         CancelInvoke("GetPing");
         bl_EventHandler.OnRoundEnd -= this.OnRoundEnd;
     }
 
-    void Update()
-    {
-        if (m_GameMode == GameMode.TDM || m_GameMode == GameMode.CTF)
-        {
+    void Update() {
+        if (m_GameMode == GameMode.TDM || m_GameMode == GameMode.CTF) {
             //Room Score for TDM
             if (PhotonNetwork.room != null)
             {
@@ -168,8 +143,7 @@ public class bl_SettingPropiertis : MonoBehaviour
             }
         }
 
-        if (m_GameMode == GameMode.FFA)
-        {
+        if (m_GameMode == GameMode.FFA) {
             string t_PlayerStart = m_Menu.PlayerStar;
             UI.StarPlayerText.text = "Player Star:\n<size=14><color=" + ColorKeys.MFPSOrange + ">" + t_PlayerStart + "</color></size>";
         }
@@ -177,27 +151,24 @@ public class bl_SettingPropiertis : MonoBehaviour
 
     void OnGUI()
     {
-        if (isFinish) { FinalUI(); }
+        if (isFinish) FinalUI();
     }
     /// <summary>
     /// configure your custom Final GUI
     /// </summary>
-    void FinalUI()
-    {
+    void FinalUI() {
         GUI.Box(new Rect(Screen.width / 2 - 125, Screen.height / 2 - 25, 250, 50), "<size=25><color=" + ColorKeys.MFPSOrange + ">" + FinalRoundText + "</color></size> Won Match", FFA_Style);
     }
     /// <summary>
     /// Get Curren Player Ping and Update Info for other Players
     /// </summary>
-    void GetPing()
-    {
+    void GetPing() {
         int Ping = PhotonNetwork.GetPing();
 
         Hashtable PlayerPing = new Hashtable();
         PlayerPing.Add("Ping", Ping);
         PhotonNetwork.player.SetCustomProperties(PlayerPing);
-        if (m_Menu != null)
-        {
+        if (m_Menu != null) {
             if (Ping > m_Menu.MaxPing)
                 m_Menu.ShowWarningPing = true;
             else
@@ -223,10 +194,8 @@ public class bl_SettingPropiertis : MonoBehaviour
             FinalRoundText = m_Menu.PlayerStar;
         }
     }
-    public GUIStyle FFA_Style
-    {
-        get
-        {
+    public GUIStyle FFA_Style {
+        get {
             GUIStyle t_style = new GUIStyle();
             t_style.font = Style.font;
             t_style.normal.textColor = Style.normal.textColor;
@@ -237,18 +206,15 @@ public class bl_SettingPropiertis : MonoBehaviour
             return t_style;
         }
     }
-    public bl_RoomMenu m_Menu
-    {
-        get
-        {
+    public bl_RoomMenu m_Menu {
+        get {
             if (GetComponent<bl_RoomMenu>() != null)
                 return GetComponent<bl_RoomMenu>();
             else
                 return null;
         }
     }
-    IEnumerator DisableUI()
-    {
+    IEnumerator DisableUI() {
         yield return new WaitForSeconds(10);
         isFinish = false;
     }

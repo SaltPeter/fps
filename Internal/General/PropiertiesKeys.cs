@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PropiertiesKeys
-{
+public class PropiertiesKeys {
     //Room
     public const string TimeRoomKey = "TimeRoom";
     public const string GameModeKey = "GameMode";

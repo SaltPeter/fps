@@ -16,13 +16,13 @@ public class bl_PlayerDamageManager : bl_PhotonHelper {
     [Space(5)]
     //Current Player Health
     public float health = 100.0f;
-    /// <summary>
+
     /// Max Player Health
-    /// </summary>
+
 	public float maxHealth = 100.0f;
-    /// <summary>
+
     /// Time to for the player reappears after dead
-    /// </summary>
+
     public float spawnTime = 5.0f;
     [Space(5)]
     public GameObject m_Ragdoll;
@@ -77,14 +77,12 @@ public class bl_PlayerDamageManager : bl_PhotonHelper {
     protected override void Awake() {
         base.Awake();
     }
-    // Use this for initialization
-    void Start()
-    {
+
+    void Start() {
         if (!isConnected)
             return;
 
-        if (isMine)
-        {
+        if (isMine) {
             bl_GameManager.isAlive = true;
             localPlayerName = PhotonNetwork.player.name;
             transform.name = localPlayerName;
@@ -95,8 +93,7 @@ public class bl_PlayerDamageManager : bl_PhotonHelper {
         }
         this.health = this.maxHealth;
         localPlayer = base.isMine;
-        if (this.m_damageEffect != null)
-        {
+        if (this.m_damageEffect != null) {
             if (this.damageEffectTransform == null)
                 this.damageEffectTransform = this.transform;
         }
@@ -159,10 +156,8 @@ public class bl_PlayerDamageManager : bl_PhotonHelper {
         if (health > 0)
             photonView.RPC("SyncDamage", PhotonTargets.AllBuffered, e.mDamage, e.mFrom, e.mWeapon, e.mDirection, e.mHeatShot, e.mWeaponID, PhotonNetwork.player);
     }
-    /// <summary>
+
     /// Call this when Player Take Damage From fall impact
-    /// </summary>
-    /// <param name="t_damage"></param>
     public void GetFallDamage(float t_damage)
     {
         if (health > 0)
@@ -222,10 +217,8 @@ public class bl_PlayerDamageManager : bl_PhotonHelper {
                 bl_GameManager.isAlive = false;
         }
     }
-    /// <summary>
+
     /// Sync Health when pick up a medkit.
-    /// </summary>
-    /// <param name="t_amount"></param>
     [PunRPC]
     void PickUpHealth(float t_amount)
     {
@@ -233,10 +226,8 @@ public class bl_PlayerDamageManager : bl_PhotonHelper {
         if (health > maxHealth)
             health = maxHealth;
     }
-    /// <summary>
+
     /// Called This when player Die Logic
-    /// </summary>
-    /// <param name="t_from"></param>
 	void Die(string t_from, bool isHeat, string t_weapon, int w_id) {
         dead = true;
         m_charactercontroller.enabled = false;
@@ -262,18 +253,15 @@ public class bl_PlayerDamageManager : bl_PhotonHelper {
             StartCoroutine(DestroyThis());
         }
     }
-    /// <summary>
+
     /// Create a blood particle effect.
-    /// </summary>
     void DamageEffect()
     {
         GameObject blood = Instantiate(this.m_damageEffect, damageEffectTransform.position, Quaternion.identity) as GameObject;
         blood.transform.parent = damageEffectTransform;
         Destroy(blood, 0.85f);
     }
-    /// <summary>
-    /// 
-    /// </summary>
+
     void OnGUI()
     {
         if (localPlayer)
@@ -290,9 +278,8 @@ public class bl_PlayerDamageManager : bl_PhotonHelper {
             HitMarket();
         }
     }
-    /// <summary>
+
     /// Suicide player
-    /// </summary>
     public void Suicide()
     {
         if (localPlayer && bl_GameManager.isAlive)
@@ -307,9 +294,7 @@ public class bl_PlayerDamageManager : bl_PhotonHelper {
         }
     }
 
-    /// <summary>
     /// show interface damage indicating that our player received damage
-    /// </summary>
     void DamageHUD()
     {
         if (PaintFlash == null)
@@ -325,9 +310,8 @@ public class bl_PlayerDamageManager : bl_PhotonHelper {
         }
         GUI.color = Color.white;
     }
-    /// <summary>
+
     /// show a sign of success, when we have done harm to the enemy
-    /// </summary>
     void HitMarket()
     {
         if (HitMark == null)
@@ -337,9 +321,8 @@ public class bl_PlayerDamageManager : bl_PhotonHelper {
         if (hit_alpha > 0.0f)
             GUI.DrawTexture(new Rect((Screen.width / 2 - 13), (Screen.height / 2 - 13), 26, 26), HitMark);
     }
-    /// <summary>
+
     /// when we get a new kill, synchronize and add points to the player
-    /// </summary>
     public void AddKill(bool m_heat, string m_weapon, int W_id)
     {
         //Send a new event keelfeed
@@ -392,9 +375,8 @@ public class bl_PlayerDamageManager : bl_PhotonHelper {
         }
 
     }
-    /// <summary>
+
     /// When Player take a new Death synchronize Die Point
-    /// </summary>
     public void AddDeath()
     {
         PhotonNetwork.player.PostDeaths(1);
@@ -410,11 +392,8 @@ public class bl_PlayerDamageManager : bl_PhotonHelper {
     {
         StartCoroutine(RepeatShake(repeat));
     }
-    /// <summary>
+
     /// Use this for repeat more than 1 shake
-    /// </summary>
-    /// <param name="repeat"></param>
-    /// <returns></returns>
     IEnumerator RepeatShake(int repeat)
     {
         if (repeat > 0)
@@ -475,7 +454,6 @@ public class bl_PlayerDamageManager : bl_PhotonHelper {
                 health = maxHealth;
             }
             photonView.RPC("PickUpHealth", PhotonTargets.OthersBuffered, newHealth);
-
         }
     }
     /// <summary>
@@ -521,6 +499,4 @@ public class bl_PlayerDamageManager : bl_PhotonHelper {
             return this.transform.root.GetComponent<CharacterController>();
         }
     }
-
-
 }

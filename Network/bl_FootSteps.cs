@@ -58,8 +58,6 @@ public class bl_FootSteps : bl_PhotonHelper {
         }
     }
 
-    /// <param name="m_material"></param>
-    /// <returns></returns>
     IEnumerator Crouch(string m_material)
     {
         if (InstanceReference.GetComponent<AudioSource>() == null)
@@ -84,8 +82,6 @@ public class bl_FootSteps : bl_PhotonHelper {
         isStep = true;
     }
 
-    /// <param name="m_material"></param>
-    /// <returns></returns>
     IEnumerator Walk(string m_material) {
         if (InstanceReference.GetComponent<AudioSource>() == null)
             yield return null;
@@ -109,8 +105,6 @@ public class bl_FootSteps : bl_PhotonHelper {
         isStep = true;
     }
 
-    /// <param name="m_material"></param>
-    /// <returns></returns>
     IEnumerator Run(string m_material) {
         if (InstanceReference.GetComponent<AudioSource>() == null)
            yield return null;

@@ -10,16 +10,13 @@ public class bl_PhotonHelper : Photon.PunBehaviour {
 
     protected GameMode mGameMode = GameMode.FFA;
 
-    protected virtual void Awake()
-    {
+    protected virtual void Awake() {
         if (!PhotonNetwork.connected)
             return;      
     }
 
-    public string myTeam
-    {
-        get
-        {
+    public string myTeam {
+        get {
             string t = (string)PhotonNetwork.player.customProperties[PropiertiesKeys.TeamKey];
             return t;
         }
@@ -29,8 +26,7 @@ public class bl_PhotonHelper : Photon.PunBehaviour {
     /// </summary>
     /// <param name="view"></param>
     /// <returns></returns>
-    public GameObject FindPlayerRoot(int view)
-    {
+    public GameObject FindPlayerRoot(int view) {
         PhotonView m_view = PhotonView.Find(view);
 
         if (m_view != null)
@@ -43,8 +39,7 @@ public class bl_PhotonHelper : Photon.PunBehaviour {
     /// </summary>
     /// <param name="view"></param>
     /// <returns></returns>
-    public PhotonView FindPlayerView(int view)
-    {
+    public PhotonView FindPlayerView(int view) {
         PhotonView m_view = PhotonView.Find(view);
 
         if (m_view != null)
@@ -53,26 +48,21 @@ public class bl_PhotonHelper : Photon.PunBehaviour {
             return null;
     }
 
-    public PhotonView GetPhotonView(GameObject go)
-    {
+    public PhotonView GetPhotonView(GameObject go) {
         PhotonView view = go.GetComponent<PhotonView>();
         if (view == null)
             view = go.GetComponentInChildren<PhotonView>();
         return view;
     }
 
-    public Transform Root
-    {
-        get
-        {
+    public Transform Root {
+        get {
             return transform.root;
         }
     }
 
-    public Transform Parent
-    {
-        get
-        {
+    public Transform Parent {
+        get {
             return transform.parent;
         }
     }
@@ -176,9 +166,7 @@ public class bl_PhotonHelper : Photon.PunBehaviour {
                 return n;
             }
             else
-            {
                 return "None";
-            }
         }
     }
 
@@ -193,9 +181,7 @@ public class bl_PhotonHelper : Photon.PunBehaviour {
             List<PhotonPlayer> p = new List<PhotonPlayer>();
 
             foreach (PhotonPlayer pp in PhotonNetwork.playerList)
-            {
                 p.Add(pp);
-            }
             return p;
         }
     }
@@ -211,9 +197,7 @@ public class bl_PhotonHelper : Photon.PunBehaviour {
         foreach (PhotonPlayer pp in PhotonNetwork.playerList)
         {
             if ((string)pp.customProperties[PropiertiesKeys.TeamKey] == team)
-            {
                 p.Add(pp);
-            }
         }
         return p;
     }
