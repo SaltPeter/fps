@@ -1,12 +1,10 @@
-//////////////////////////////bl_GameManager.cs//////////////////////////////////
-/////////////////place this in a scena for Spawn Players in Room/////////////////
+//bl_GameManager.cs - place this in a scena for Spawn Players in Room
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using Hashtable = ExitGames.Client.Photon.Hashtable; //Replace default Hashtables with Photon hashtables
 
 public class bl_GameManager : bl_PhotonHelper {
-
     public static int m_view = -1;
     public static bool isAlive = false;
     public static int SuicideCount = 0;
@@ -23,12 +21,9 @@ public class bl_GameManager : bl_PhotonHelper {
 	public List<PhotonPlayer> connectedPlayerList = new List<PhotonPlayer>();
     /// Camera Preview
     public Camera m_RoomCamera;
-    /// Spawn Points For FFA
-    public Transform[] AllSpawnPoints;
-    /// Spawn Points for TDM Team1
-    public Transform[] ReconSpawnPoint;
-    /// Spawn Points for TDM Team2
-    public Transform[] DeltaSpawnPoint;
+    public Transform[] AllSpawnPoints;    /// Spawn Points For FFA
+    public Transform[] ReconSpawnPoint;   /// Spawn Points for TDM Team1
+    public Transform[] DeltaSpawnPoint; // Spawn Points for TDM Team2
 
     protected override void Awake() {
         base.Awake();
