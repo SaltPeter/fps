@@ -1,5 +1,4 @@
-﻿// bl_EventHandler.cs//Use this to create new internal events////////////////////
-//this helps to improve the communication of the script through delegated events/
+﻿//bl_EventHandler.cs - Use this to create new internal events, this helps to improve the communication of the script through delegated events
 using UnityEngine;
 using System.Collections;
 
@@ -37,9 +36,7 @@ public class bl_EventHandler {
         if (OnFall != null)
             OnFall(m_amount);
     }
-    /// <summary>
     /// Event Callet when recive a new keelfed message
-    /// </summary>
     /// <param name="kl">Killer</param>
     /// <param name="kd">Killed</param>
     /// <param name="hw">How Kill</param>
@@ -50,7 +47,6 @@ public class bl_EventHandler {
         if (OnKillFeed != null)
             OnKillFeed(kl, kd, hw, t_team, gid, t);
     }
-
     /// Called event when pick up a medkit
     /// <param name="t_amount">new healt amount</param>
     public static void PickUpEvent(float t_amount) {
