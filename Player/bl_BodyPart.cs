@@ -1,15 +1,11 @@
-﻿///////////////////////////////////////////////////////////////////////////////////////
 // bl_BodyPart.cs
-//
 // This script receives the information of the damage done by another player
 // place it on a gameobject containing a collider in the hierarchy of the remote player
 // use "bl_BodyPartManager.cs" to automatically configure                       
 using UnityEngine;
 
 public class bl_BodyPart : MonoBehaviour {
-
-    /// so far as the damage is multiplied in this part
-    public float multiplier = 1f;
+    public float multiplier = 1f; /// so far as the damage is multiplied in this part
     public bl_PlayerDamageManager HealtScript;
     /// Its this the heat? if yes them is heatshot :)
     public bool TakeHeatShot = false;
